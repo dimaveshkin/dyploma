@@ -5,6 +5,8 @@ var autoprefixer = require("gulp-autoprefixer");
 var cssnano = require("gulp-cssnano");
 var sass = require("gulp-sass");
 var del = require("del");
+var browserSync = require("browser-sync");
+var reload = browserSync.reload;
 
 var path = {
     src: {
@@ -31,7 +33,20 @@ var path = {
             libs: "public/build/libs/"
         },
         templates: "public/build/templates/"
+    },
+    watch: {
+        scss: "public/src/scss/**/*"
     }
+};
+
+var config = {
+    server: {
+        baseDir: "./public/build"
+    },
+    tunnel: false,
+    host: 'localhost',
+    port: 9000,
+    logPrefix: "Dmytro_Veshkin"
 };
 
 var buildTasks = ["scss:build"];
@@ -50,6 +65,10 @@ var buildTasks = ["scss:build"];
 //        .pipe(gulp.dest(path.build.js));
 //});
 
+gulp.task('webserver', function () {
+    browserSync(config);
+});
+
 gulp.task("scss:build", function () {
     gulp.src(path.src.scss)
         .pipe(sourcemaps.init())
@@ -57,7 +76,8 @@ gulp.task("scss:build", function () {
         .pipe(autoprefixer())
         .pipe(cssnano())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.css));
+        .pipe(gulp.dest(path.build.css))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task("clean", function () {
@@ -69,7 +89,8 @@ for(var i in path.src.copy) {
         gulp.task('copy_' + i, (function (i) {
             return function() {
                 gulp.src(path.src.copy[i])
-                    .pipe(gulp.dest(path.build.copy[i]));
+                    .pipe(gulp.dest(path.build.copy[i]))
+                    .pipe(reload({stream: true}));
             }
         })(i));
         buildTasks.push("copy_"+ i);
@@ -79,13 +100,13 @@ for(var i in path.src.copy) {
 gulp.task('watch', function(){
     for(var i in path.src.copy) {
         if(path.src.copy.hasOwnProperty(i)) {
-            watch(path.src.copy[i], function(event, cb) {
+            watch(path.src.copy[i], (function(i){return function(event, cb) {
                 gulp.start('copy_' + i);
-            });
+            }})(i));
         }
     }
 
-    watch(path.src.scss, function(event, cb) {
+    watch(path.watch.scss, function(event, cb) {
         gulp.start('scss:build');
     });
     //
@@ -99,4 +120,4 @@ gulp.task('watch', function(){
 });
 
 gulp.task('build', buildTasks);
-gulp.task('default', ["build", 'watch']);
+gulp.task('default', ["webserver", "build", 'watch']);

@@ -1,0 +1,27 @@
+.footer {
+  max-width: 1500px;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 30px;
+
+
+  .socials {
+    list-style: none;
+
+    &::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .socials-item {
+      float: right;
+      margin-left: 10px;
+
+      a {
+        color: #fff;
+        font-size: 24px;
+      }
+    }
+  }
+}

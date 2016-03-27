@@ -1,0 +1,68 @@
+.main {
+  margin-top: $mt-gallery;
+  position: relative;
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 100px;
+
+  .gallery {
+    margin: 0 auto;
+    max-width: 1300px;
+    position: relative;
+    z-index: 8;
+  }
+
+  .gallery::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    right: -40px;
+    top: 200px;
+    background: #969696;
+    z-index: -1;
+  }
+
+  .gallery img {
+    height: 100%;
+    width: auto;
+  }
+
+  .gallery-item {
+    display: none;
+  }
+
+  .gallery-item.active {
+    display: block;
+  }
+
+  .gallery-button {
+    position: absolute;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    transform: translate(-50%);
+    color: #fff;
+    z-index: 50;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .gallery-button.prev {
+    left: 80px;
+  }
+
+  .gallery-button.next {
+    right: 50px;
+  }
+
+  .logo {
+    position: absolute;
+    top: 10px;
+    left: 120px;
+    z-index: 10;
+  }
+}

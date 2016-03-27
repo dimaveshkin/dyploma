@@ -1,0 +1,27 @@
+.nav {
+  background: $bg-nav;
+  padding: 0 50px;
+
+  .nav-list {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1500px;
+    margin: 0 auto;
+    list-style: none;
+
+    .nav-list-item {
+      padding: 10px 22px;
+    }
+
+    .nav-list-item a {
+      font: 26px "Forum";
+      line-height: 25px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-list-item a:hover {
+      text-decoration: underline;
+    }
+  }
+}
