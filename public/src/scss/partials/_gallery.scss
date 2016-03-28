@@ -1,0 +1,62 @@
+#gallery-accordion {
+  background: $bg-accordion;
+  padding: 5px;
+}
+
+#gallery-accordion h3 {
+  font: $font-nav;
+  background: $bg-accordion-header;
+  padding: 5px 10px;
+}
+
+.gallery-img {
+  display: inline-block;
+  width: 24%;
+  cursor: pointer;
+  font: 2.5rem 'Roboto';
+  color: $cl-figcaption;
+  margin: 0 .5%;
+}
+
+.accordion-item {
+  padding: 10px 15px;
+}
+.accordion-item .gallery-img:first-child {
+  margin-left: 0;
+}
+
+.accordion-item .gallery-img:last-child {
+  margin-right: 0;
+}
+
+.gallery-img p {
+  line-height: 0;
+}
+
+.gallery-img img {
+  width: 100%;
+  height: 230px;
+}
+
+.gallery-img figcaption {
+  background: $bg-figcaption;
+  text-align: center;
+  padding: 5px 0;
+}
+
+.gallery-img:hover figcaption {
+  background: $bg-figcaption-hover;
+  color: $cl-figcaption-hover;
+}
+
+.gallery-img {
+  height: 230px;
+  width: 25%;
+  background: url("../images/nepal_1.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.gallery-img {
+
+}
