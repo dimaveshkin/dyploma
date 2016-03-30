@@ -30,40 +30,36 @@
             <div class="accordion-item">
                 <ul class="cities-gallery gallery-slider">
                     <li class="gallery-img-item city-item">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Непал</p>
-                        </a>
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Непал</p>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Италия</p>
-                        </a>
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Италия</p>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Россия</p>
-                        </a>
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Россия</p>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Непал</p>
-                        </a>
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Россия</p>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Италия</p>
-                        </a>
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Непал</p>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Россия</p>
-                        </a>
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Италия</p>
+                    </li>
+                    <li class="gallery-img-item city-item">
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Россия</p>
+                    </li>
+                    <li class="gallery-img-item city-item">
+                        <div class="gallery-img"></div>
+                        <p class="img-caption">Россия</p>
                     </li>
                 </ul>
                 <span class="show-all-cities show-all">Показать все</span>
@@ -102,19 +98,19 @@
             <div class="accordion-item">
                 <ul class="all-gallery">
                     <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
+                        <div class="gallery-img"></div>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
+                        <div class="gallery-img"></div>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
+                        <div class="gallery-img"></div>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
+                        <div class="gallery-img"></div>
                     </li>
                     <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
+                        <div class="gallery-img"></div>
                     </li>
                 </ul>
                 <span class="show-all-img show-all">Показать все</span>
@@ -136,11 +132,13 @@
 <div class="overlay"></div>
 <div class="popup">
     <div class="close-popup">&times;</div>
-    <ul class="popup-slider">
-        <li><img src="images/old/israel_1.jpg" title="Israel photo"></li>
-        <li><img src="images/old/italy_1.jpg" title="Italy photo"></li>
-        <li><img src="images/old/nepal_1.jpg" title="Nepal photo"></li>
-        <li><img src="images/old/russia_1.jpg" title="Russia photo"></li>
+    <ul >
+        <li><img src="images/old/israel_1.jpg"></li>
+
+            <img src="images/old/italy_1.jpg">
+            <img src="images/old/nepal_1.jpg">
+            <img src="images/old/russia_1.jpg">
+
     </ul>
 </div>
 
@@ -175,26 +173,33 @@
 
 
     $('.slider-img').on('click', function () {
+//        var slide = img.index(this);
+
+//        bxslider.reloadSlider({ startSlide: slide });
+//       var gallery =  $(this);
+//        console.log(gallery);
+
         $('.popup, .overlay').addClass('js-show');
     });
 
-    $(this).keydown(function (eventObject) {
-        if (eventObject.which == 27) {
+    $(this).keydown(function(eventObject){
+        if (eventObject.which == 27){
             closePopUp();
         }
     });
 
-    $('.overlay, .close-popup').on('click', function () {
+    $('.overlay, .close-popup').on('click', function() {
         closePopUp();
     });
 
 
-    function closePopUp() {
+
+    function  closePopUp() {
         $('.popup, .overlay').removeClass('js-show');
     }
 
     function toggleGallery(element, slider) {
-        if ($(element).prev().hasClass('images-gallery')) {
+        if( $(element).prev().hasClass('images-gallery')) {
             $(element).prev().removeClass('images-gallery');
             slider.bxSlider(slidersOpt);
             $(element).text('Показать все');
@@ -206,11 +211,11 @@
         }
     }
 
-    $('.popup-slider').bxSlider({
-        adaptiveHeight: true,
-        captions: true
-    });
 
+
+    //    $('.gallery-img').on('click', function () {
+    //        console.log($(this).css('background-image'));
+    //    });
 </script>
 </body>
 </html>
