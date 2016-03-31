@@ -1,5 +1,5 @@
 .overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
   bottom: 0;
   cursor: default;
   left: 0;
@@ -12,12 +12,12 @@
 }
 
 .popup {
-  background-color: $bg-figcaption-hover;
+  background-color: #000;
   display: inline-block;
   left: 50%;
   opacity: 0;
-  padding: 40px 15px 0;
-  width: 900px;
+  padding: 40px 15px;
+  width: 800px;
   position: fixed;
   text-align: justify;
   top: 50%;
@@ -37,12 +37,14 @@
   color: #fff;
   cursor: pointer;
   z-index: 10;
-  background: $bg-figcaption;
+  background: #000;
+  border: 2px solid #fff;
   border-radius: 50%;
   height: 25px;
   width: 25px;
   text-align: center;
-  line-height: 25px;
+  line-height: 22px;
+  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.91);
 }
 
 .close-popup:hover {

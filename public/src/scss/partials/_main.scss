@@ -1,7 +1,7 @@
 .main {
   margin-top: $mt-gallery;
   position: relative;
-  max-width: 1500px;
+  max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 100px;
@@ -38,26 +38,26 @@
     display: block;
   }
 
-  .gallery-button {
-    position: absolute;
-    text-align: center;
-    width: 30px;
-    height: 30px;
-    top: 50%;
-    transform: translate(-50%);
-    color: #fff;
-    z-index: 50;
-    font-size: 30px;
-    cursor: pointer;
-  }
-
-  .gallery-button.prev {
-    left: 80px;
-  }
-
-  .gallery-button.next {
-    right: 50px;
-  }
+  //.gallery-button {
+  //  position: absolute;
+  //  text-align: center;
+  //  width: 30px;
+  //  height: 30px;
+  //  top: 50%;
+  //  transform: translate(-50%);
+  //  color: #fff;
+  //  z-index: 50;
+  //  font-size: 30px;
+  //  cursor: pointer;
+  //}
+  //
+  //.gallery-button.prev {
+  //  left: 80px;
+  //}
+  //
+  //.gallery-button.next {
+  //  right: 50px;
+  //}
 
   .logo {
     position: absolute;
@@ -65,4 +65,5 @@
     left: 120px;
     z-index: 10;
   }
+
 }
