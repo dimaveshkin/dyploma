@@ -47,9 +47,15 @@
 .img-caption {
   background: $bg-figcaption;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px;
   font: $font-gallery;
   color: $cl-figcaption;
+}
+
+.best-gallery {
+  & .img-caption {
+    font-size: 1.5rem;
+  }
 }
 
 .show-all {
@@ -63,4 +69,36 @@
     text-decoration: underline;
     color: $cl-figcaption-hover;
   }
+}
+
+
+
+.best-gallery .gallery-img-item .gallery-img  {
+  background-size: 100%;
+  transition:all .5s ease;
+}
+
+.best-gallery .gallery-img-item:hover .gallery-img   {
+  background-size:130%;
+}
+
+.gallery-img-item {
+  position: relative;
+}
+
+.all-gallery .gallery-img:after {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  opacity: 0;
+  transition:all .5s ease;
+}
+
+.all-gallery .gallery-img:hover:after {
+  opacity: .6;
 }

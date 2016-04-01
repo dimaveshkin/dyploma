@@ -73,9 +73,11 @@
                 <ul class="gallery-slider best-gallery">
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption">Lorem ipsum dolor sit amet.</p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
@@ -134,8 +136,8 @@
 </div>
 
 <div class="overlay"></div>
+<button class="close-popup">&times;</button>
 <div class="popup">
-    <div class="close-popup">&times;</div>
     <ul class="popup-slider">
         <li><img src="images/old/israel_1.jpg" title="Israel photo"></li>
         <li><img src="images/old/italy_1.jpg" title="Italy photo"></li>
@@ -175,7 +177,8 @@
 
 
     $('.slider-img').on('click', function () {
-        $('.popup, .overlay').addClass('js-show');
+        $('.popup, .overlay, .close-popup').addClass('js-show');
+
     });
 
     $(this).keydown(function (eventObject) {
@@ -184,13 +187,13 @@
         }
     });
 
-    $('.overlay, .close-popup').on('click', function () {
+    $('/*.overlay, */.close-popup').on('click', function () {
         closePopUp();
     });
 
 
     function closePopUp() {
-        $('.popup, .overlay').removeClass('js-show');
+        $('.popup, .overlay, .close-popup').removeClass('js-show');
     }
 
     function toggleGallery(element, slider) {
@@ -207,7 +210,8 @@
     }
 
     $('.popup-slider').bxSlider({
-        adaptiveHeight: true,
+        pager: false,
+        mode: 'fade',
         captions: true
     });
 

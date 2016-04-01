@@ -1,5 +1,6 @@
 .overlay {
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: #0b0b0b;
+  //opacity: ;
   bottom: 0;
   cursor: default;
   left: 0;
@@ -8,7 +9,12 @@
   right: 0;
   top: 0;
   visibility: hidden;
-  z-index: 99999;
+  transition: all 0.3s ease-out;
+  z-index: 999999;
+}
+
+.overlay.js-show {
+  opacity: .8;
 }
 
 .popup {
@@ -16,8 +22,8 @@
   display: inline-block;
   left: 50%;
   opacity: 0;
-  padding: 40px 15px;
-  width: 800px;
+  width: 70%;
+  max-width: 1300px;
   position: fixed;
   text-align: justify;
   top: 50%;
@@ -28,27 +34,31 @@
 }
 
 .close-popup {
-  position: absolute;
-  top: -10px;
-  right: -10px;
+  visibility: hidden;
+  position: fixed;
+  top: 5%;
+  background: transparent;
+  right: 25px;
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
   color: #fff;
   cursor: pointer;
-  z-index: 10;
-  background: #000;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  z-index: 999999;
+  outline: none;
+  height: 40px;
+  border: 2px solid transparent;
+  width: 40px;
   text-align: center;
-  line-height: 22px;
-  box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.91);
+  line-height: 30px;
+  border-radius: 100px;
+  transition: all 0.2s ease-out;
 }
 
+
 .close-popup:hover {
-  color: #cc0000;
+  border: 2px solid #fff;
+  -webkit-transform: scale(0.8) rotateZ(90deg);
 }
 
 .js-show {
