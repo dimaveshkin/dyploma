@@ -33,6 +33,12 @@
   transition: opacity .5s, top .5s;
 }
 
+.popup .slides-info {
+  color: #fff;
+  font: 1.8rem 'Roboto';
+  padding: 10px;
+}
+
 .close-popup {
   visibility: hidden;
   position: fixed;
@@ -64,4 +70,35 @@
 .js-show {
   opacity: 1;
   visibility: visible;
+}
+
+
+
+.popup.js-show .popup-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  color: #fff;
+  //background: #505050;
+  padding: 5px 15px;
+  background: rgba(80, 80, 80, 0.75);
+  font-family: 'Forum', sans-serif;
+  //background-color: rgba(80, 80, 80, 0.75);
+  //background-image: none;
+  //background-repeat: repeat;
+  //background-attachment: scroll;
+  //background-position: 0% 0%;
+  //background-clip: border-box;
+  //background-origin: padding-box;
+  //background-size: auto auto;
+}
+
+.popup-caption h3 {
+ font-size: 2.5rem;
+}
+
+.popup-caption p {
+  font-size: 2rem;
 }

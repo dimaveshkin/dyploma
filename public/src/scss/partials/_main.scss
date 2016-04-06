@@ -6,14 +6,7 @@
   margin-right: auto;
   margin-bottom: 100px;
 
-  .gallery {
-    margin: 0 auto;
-    max-width: 1300px;
-    position: relative;
-    z-index: 8;
-  }
-
-  .gallery::after {
+  &::after {
     content: "";
     display: block;
     position: absolute;
@@ -22,7 +15,14 @@
     right: -40px;
     top: 200px;
     background: #969696;
-    z-index: -1;
+    z-index: 1;
+  }
+
+  .gallery {
+    margin: 0 auto;
+    max-width: 1300px;
+    position: relative;
+    z-index: 8;
   }
 
   .gallery img {
@@ -36,6 +36,10 @@
 
   .gallery-item.active {
     display: block;
+  }
+
+  .bx-wrapper {
+    z-index: 2;
   }
 
   //.gallery-button {

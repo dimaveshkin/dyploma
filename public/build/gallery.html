@@ -5,6 +5,7 @@
     <title>Title</title>
     <link href='https://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
     <link rel="stylesheet" href="./fonts/fontello/css/fontello.css">
     <link rel="stylesheet" href="./css/main.css">
 </head>
@@ -81,21 +82,27 @@
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, neque, provident. Debitis odio officiis voluptates.</p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, neque, provident. Debitis odio officiis voluptates.</p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption"></p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
                     </li>
                     <li class="gallery-img-item city-item">
                         <div class="gallery-img slider-img"></div>
+                        <p class="img-caption"></p>
                     </li>
                 </ul>
                 <span class="show-all-best show-all">Показать все</span>
@@ -139,11 +146,39 @@
 <button class="close-popup">&times;</button>
 <div class="popup">
     <ul class="popup-slider">
-        <li><img src="images/old/israel_1.jpg" title="Israel photo"></li>
-        <li><img src="images/old/italy_1.jpg" title="Italy photo"></li>
-        <li><img src="images/old/nepal_1.jpg" title="Nepal photo"></li>
-        <li><img src="images/old/russia_1.jpg" title="Russia photo"></li>
+        <li>
+            <img src="images/old/israel_1.jpg">
+            <div class="popup-caption">
+                <h3>Israel</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, voluptatibus.</p>
+            </div>
+        </li>
+        <li>
+            <img src="images/old/italy_1.jpg">
+            <div class="popup-caption">
+                <h3>Italy</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, voluptatibus.</p>
+            </div>
+        </li>
+        <li>
+            <img src="images/old/nepal_1.jpg">
+            <div class="popup-caption">
+                <h3>Nepal</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, voluptatibus.</p>
+            </div>
+        </li>
+        <li>
+            <img src="images/old/russia_1.jpg">
+            <div class="popup-caption">
+                <h3>Russia</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, voluptatibus.</p>
+            </div>
+        </li>
     </ul>
+    <p class="slides-info">
+        <span class="current-slide"></span>
+        /
+        <span class="total-slides"></span></p>
 </div>
 
 <script src="./libs/jquery-2.2.2.min.js"></script>
@@ -212,7 +247,17 @@
     $('.popup-slider').bxSlider({
         pager: false,
         mode: 'fade',
-        captions: true
+        adaptiveHeight: true,
+        captions: true,
+        onSliderLoad: function(newIndex) {
+            var slidesCount = $('.popup-slider li').length;
+
+            $('.total-slides').text(slidesCount);
+            $('.current-slide').text(newIndex + 1);
+        },
+        onSlideBefore: function($slideElement, oldIndex, newIndex){
+            $('.current-slide').text(newIndex + 1);
+        }
     });
 
 </script>
