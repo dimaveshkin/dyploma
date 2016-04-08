@@ -1,0 +1,231 @@
+.tour-page {
+  position: relative;
+  z-index: 2;
+}
+
+.tour-head-imgs {
+  font-size: 0;
+  text-align: center;
+
+  .tour-head-img {
+    display: inline-block;
+    width: 33.3%;
+    height: 0;
+    padding-bottom: 21%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../images/israel_1.jpg");
+  }
+}
+
+.tour-desc {
+  font: 2rem "Roboto";
+
+  h2 {
+    color: #000;
+    background: $bg-accordion-header;
+    font-size: 4rem;
+    text-align: center;
+    margin: 20px -40px;
+  }
+
+  .tour-text {
+    text-align: justify;
+    padding: 0 60px;
+
+  }
+
+  .tour-prop {
+    background: #fff;
+    padding: 0 60px;
+    margin: 30px -40px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .prop-icon {
+    background: $bg-accordion-header;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+    font-size: 50px;
+    color: #fff;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+  }
+
+  .hard-lvl-icon {
+    background: $bg-accordion-header url("../images/icon.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  
+  .prop-text {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    text-transform: uppercase;
+
+    span:first-child:after {
+      border: 1px dashed #1a1a1a;
+      content: '';
+      display: block;
+      height: 0;
+      background: #e1e1e1;
+      width: 100px;
+      margin: 6px auto;
+    }
+
+    span {
+      display: block;
+    }
+  }
+}
+
+.tour-center-imgs {
+  font-size: 0;
+  text-align: center;
+
+  .tour-center-img {
+    display: inline-block;
+    width: 50%;
+    height: 0;
+    padding-bottom: 33%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../images/israel_1.jpg");
+  }
+}
+
+.tour-order {
+  columns: 2;
+  column-gap: 15rem;
+  line-height: 1.5;
+
+  margin: 30px 0 ;
+  &>li {
+    margin: 25px 0;
+  }
+
+  .day-order {
+
+    li {
+      &:before {
+        content:  "-";
+        padding-right: 5px;
+      }
+    }
+  }
+}
+
+.inclusive-list {
+  background: #94a19a;
+  padding: 35px 45px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+
+  .inclusive-icon {
+    background: #fff;
+    color: #94a19a;
+    border-radius: 50%;
+    display: inline-block;
+    //margin-right: 15px;
+    font-size: 50px;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    vertical-align: top;
+  }
+  span {
+    text-transform: uppercase;
+    //margin-left: 30px;
+  }
+  .inclusive-item {
+    width: 50%;
+    li {
+      &:before {
+        content:  "-";
+        padding-right: 5px;
+      }
+
+    }
+  }
+
+  .inclusive-text {
+    display: inline-block;
+    width: 79%;
+    margin-left: 4%;
+  }
+}
+
+.tour-footer-imgs {
+  font-size: 0;
+  text-align: center;
+  margin: 30px -40px;
+
+  .tour-footer-img {
+    display: inline-block;
+    width: 25%;
+    height: 0;
+    padding-bottom: 17%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../images/israel_1.jpg");
+  }
+}
+
+.form-wrapper {
+  background-image: url("../images/form-bg.jpg");
+  background-size: cover;
+
+  width: 75%;
+  margin: 0 auto;
+
+  form {
+    width: 50%;
+    padding: 40px 20px;
+    background: rgba(255, 255 , 255, .3);
+    overflow: hidden;
+  }
+
+  .form-elem {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    border: 1px solid #bbc2bf;
+    resize: none;
+    font: 2.5rem "Monotype Corsiva";
+    padding: 10px;
+  }
+  .submit-btn {
+    width: 130px;
+    background: #94A19A;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+  }
+
+}
+
+.Rectangle_16 {
+  border-width: 1px;
+  border-color: rgb(255, 255, 255);
+  border-style: solid;
+
+  background-color: rgb(148, 161, 154);
+  position: absolute;
+  left: 732px;
+  top: 3046px;
+  width: 131px;
+  height: 48px;
+  z-index: 251;
+}

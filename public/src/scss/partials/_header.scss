@@ -1,5 +1,25 @@
 .header {
   background: $bg-header;
   height: $height-header;
-  padding-top: $pt-header;
+
+  .logo {
+    color: $cl-header;
+    text-decoration: none;
+    font-family: $font-header;
+    text-align: center;
+    font-size: 3rem;
+    padding: 17px;
+    display: block;
+    line-height: 1;
+    transition: all .5s;
+
+    &:hover {
+      color: $cl-header-hover;
+    }
+  }
+
+  h1 {
+    font-weight: normal;
+  }
 }
+
