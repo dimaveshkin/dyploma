@@ -1,0 +1,45 @@
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.main {
+  .left {
+    width: 33%;
+  }
+
+  .right {
+    width: 66%;
+  }
+}
+
+.tours {
+  .img-caption {
+    font-size: 16px;
+  }
+}
+
+.tours-wrapper {
+  background: #fff;
+  padding: 5px;
+
+  h3 {
+    font: 3.6rem Forum;
+    background: #94a19a;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+}
+
+.selected-tour {
+  .selected-tour-img {
+  }
+
+  .selected-tour-body {
+
+  }
+}
