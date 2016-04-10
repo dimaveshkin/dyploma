@@ -29,90 +29,167 @@
     <div class="main clearfix">
         <div class="left map-wrapper">
             <div class="map">
-
+                <div class="google-maps">
+                    <iframe src="https://www.google.com/maps/embed/v1/view?zoom=3&center=54.5260,15.2551&key=AIzaSyCjXPdOQ589nlHK3bD8CtU2Shww5VSApo8" width="600" height="450" frameborder="0" style="border:0"></iframe>
+                </div>
+                <div class="filters">
+                    <input type="checkbox" id="prev-filter" value="">
+                    <input type="checkbox" id="next-filter" value="">
+                    <label for="prev-filter">
+                        <img width="50" src="images/bull-yellow.png" alt="">
+                        Ближайшие фототуры
+                    </label>
+                    <label for="next-filter">
+                        <img width="50" src="images/bull-green.png" alt="">
+                        Завершенные фототуры
+                    </label>
+                </div>
             </div>
             <div class="request">
                 <form action="">
-                    <input name="name" id="name" type="text">
-                    <input name="email" id="email" type="email">
-                    <textarea name="request-text" id="request-text" cols="30" rows="10"></textarea>
+                    <input name="name" id="name" type="text" placeholder="Имя">
+                    <input name="email" id="email" type="email" placeholder="E-mail">
+                    <textarea name="request-text" id="request-text" cols="30" rows="10" placeholder="Заявка"></textarea>
+                    <div class="btn-holder">
+                        <button class="send-request">Отправить</button>
+                    </div>
                 </form>
             </div>
         </div>
         <div class="right tours-wrapper">
             <div class="selected-tour">
-                <h3>Активный фототур</h3>
-                <div class="selected-tour-body">
-                    <div class="gallery-img-item city-item selected-tour-picture">
-                        <a href="cities.html">
-                            <div class="gallery-img"></div>
-                            <p class="img-caption">Непал</p>
-                        </a>
+                <div class="heading clearfix"><h3>Активный фототур</h3></div>
+                <div class="selected-tour-body clearfix">
+                    <div class="selected-tour-img left">
+                        <div class="gallery-img-item city-item selected-tour-picture">
+                            <a href="cities.html">
+                                <div class="gallery-img"></div>
+                            </a>
+                        </div>
                     </div>
-                    <div class="selected-tour-desc">
+                    <div class="selected-tour-desc right">
                         <h4>Непал, сердце долины Катманду (апрель 2016)</h4>
-                        <p>orem ipsum dolor sit amet, consectetur adipisicing elit. Alias corporis dolores enim esse eveniet fugit in odit officia praesentium ratione?</p>
+                        <p>Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть! Непал - хорошее место ,всем советую туда попасть!</p>
                     </div>
                 </div>
             </div>
             <div class="next-tours tours">
-                <h3>Ближайшие фототуры</h3>
-                <ul class="gallery-slider next-tours-gallery">
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption">Lorem ipsum dolor sit amet.</p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, neque,
-                            provident. Debitis odio officiis voluptates.</p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, neque,
-                            provident. Debitis odio officiis voluptates.</p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption"></p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                        <p class="img-caption"></p>
-                    </li>
-                </ul>
+                <div class="heading clearfix">
+                    <h3>Ближайшие фототуры</h3>
+                    <ul class="year-list">
+                        <li>2016</li>
+                        <li class="active">2017</li>
+                        <li>2018</li>
+                    </ul>
+                </div>
+                <div class="gallery-wrapper">
+                    <ul class="gallery-slider next-tours-gallery">
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="prev-tours tours">
-                <h3>Завершенные фототуры</h3>
-                <ul class="prev-tours-gallery">
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                    </li>
-                    <li class="gallery-img-item city-item">
-                        <div class="gallery-img slider-img"></div>
-                    </li>
-                </ul>
+                <div class="heading clearfix">
+                    <h3>Завершенные фототуры</h3>
+                    <ul class="year-list">
+                        <li>2014</li>
+                        <li class="active">2015</li>
+                    </ul>
+                </div>
+                <div class="gallery-wrapper">
+                    <ul class="prev-tours-gallery">
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                        <li class="gallery-img-item city-item">
+                            <div class="gallery-img slider-img"></div>
+                            <div class="img-caption">
+                                <h4 class="tour-name">Крым</h4>
+                                <p class="tour-date">30.07-5.08.2016</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -135,9 +212,10 @@
     var slidersOpt = {
         minSlides: 3,
         maxSlides: 3,
-        slideWidth: 1000,
         slideMargin: 16,
+        slideWidth: 1000,
         pager: false,
+        responsive: true,
         adaptiveHeight: true
     };
 

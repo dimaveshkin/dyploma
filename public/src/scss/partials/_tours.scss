@@ -16,9 +16,98 @@
   }
 }
 
+.map {
+  background: #fff;
+
+  .filters {
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    #prev-filter[checked] ~ label[for="prev-filter"],
+    #next-filter[checked] ~ label[for="next-filter"] {
+      background: #ccc;
+    }
+
+    label {
+      display: block;
+      padding: 10px;
+      font: 2rem Forum;
+
+      img {
+        margin-right: 15px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .google-maps {
+    position: relative;
+    padding-bottom: 75%; // This is the aspect ratio
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .google-maps iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.request {
+  margin-top: 20px;
+
+  input, textarea {
+    font: 1.8rem Forum;
+    width: 100%;
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+  .btn-holder {
+    text-align: right;
+  }
+
+  .send-request {
+    font: 1.8rem Forum;
+    padding: 5px 15px;
+    background: #94a19a;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    color: #fff;
+  }
+}
+
 .tours {
   .img-caption {
     font-size: 16px;
+    height: 70px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    .tour-name, .tour-date {
+      text-align: center;
+      font: 2.4rem Roboto;
+    }
+
+    .tour-date {
+      font-weight: 300;
+      font-size: 1.8rem;
+    }
+
+    .tour-name {
+      font-family: Forum, sans-serif;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
   }
 }
 
@@ -26,12 +115,34 @@
   background: #fff;
   padding: 5px;
 
-  h3 {
-    font: 3.6rem Forum;
+  .heading {
+    font: 2.8rem Forum;
     background: #94a19a;
     padding: 5px 10px;
-    cursor: pointer;
     margin-bottom: 5px;
+
+    h3 {
+      float: left;
+      font-weight: 400;
+    }
+  }
+
+  .year-list {
+    float: right;
+
+    li {
+      padding-top: 5px;
+      float: left;
+      cursor: pointer;
+    }
+
+    li.active {
+      text-decoration: underline;
+    }
+
+    li + li {
+      margin-left: 15px;
+    }
   }
 }
 
@@ -40,6 +151,25 @@
   }
 
   .selected-tour-body {
-
+    padding: 10px;
   }
+
+  .selected-tour-desc {
+    h4 {
+      text-align: center;
+      margin-bottom: 10px;
+      font: 24px Forum;
+      font-weight: bold;
+    }
+
+    p {
+      text-align: center;
+      font: 18px Roboto;
+      font-weight: 300;
+    }
+  }
+}
+
+.gallery-wrapper {
+  padding: 10px;
 }
