@@ -192,7 +192,6 @@
   form {
     width: 50%;
     padding: 40px 20px;
-    background: rgba(255, 255 , 255, .3);
     overflow: hidden;
   }
 
@@ -213,19 +212,4 @@
     cursor: pointer;
     float: right;
   }
-
-}
-
-.Rectangle_16 {
-  border-width: 1px;
-  border-color: rgb(255, 255, 255);
-  border-style: solid;
-
-  background-color: rgb(148, 161, 154);
-  position: absolute;
-  left: 732px;
-  top: 3046px;
-  width: 131px;
-  height: 48px;
-  z-index: 251;
 }

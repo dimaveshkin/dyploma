@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dima Chatrov Photography</title>
     <link href='https://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico'/>
@@ -209,12 +209,13 @@
                 </ul>
             </article>
             <div class="form-wrapper">
-                <form class="apply-form">
+                <form class="apply-form js-background">
                     <input type="text" placeholder="Имя" class="form-elem">
                     <input type="email" placeholder="e-mail" class="form-elem">
                     <textarea cols="20" rows="2" placeholder="Заявка" class="form-elem"></textarea>
                     <input type="submit" class="form-elem submit-btn" value="Отправить">
                 </form>
+                <div class="form-half"></div>
             </div>
         </div>
     </div>
@@ -232,6 +233,10 @@
 <script src="./libs/jquery-2.2.2.min.js"></script>
 <script src="./libs/jquery.bxslider.min.js"></script>
 <script src="./js/all.js"></script>
-
+<script>
+  $('.apply-form .form-elem').on('focus', function () {
+    $('.apply-form:after').addClass('js-background');
+  })
+</script>
 </body>
 </html>
