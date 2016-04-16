@@ -3,10 +3,19 @@
   width: 90%;
   margin: 0 auto;
   padding-bottom: 30px;
+  text-align: right;
 
+  .footer-logo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 40px;
+  }
 
   .socials {
     list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 25px;
 
     &::after {
       content: "";

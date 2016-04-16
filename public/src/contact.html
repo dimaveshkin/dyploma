@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dima Chatrov Photography</title>
+  <link href='https://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link rel='shortcut icon' type='image/x-icon' href='favicon.ico'/>
+  <link rel="stylesheet" href="./fonts/fontello/css/fontello.css">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+<div class="wrapper">
+  <header class="header">
+    <a href="#" class="logo"><h1>Dima Chatrov Photography</h1></a>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-list-item"><a href="index.html">Главная</a></li>
+        <li class="nav-list-item"><a href="">Об авторе</a></li>
+        <li class="nav-list-item"><a href="">Галерея</a></li>
+        <li class="nav-list-item"><a href="">Фототуры</a></li>
+        <li class="nav-list-item"><a href="">Фотоклуб</a></li>
+        <li class="nav-list-item"><a href="http://www.profileschool.ru/teacher/show/id/14">Обучение</a></li>
+        <li class="nav-list-item"><a href="http://dima-chatrov.livejournal.com/">Блог</a></li>
+        <li class="nav-list-item"><a href="">Контакты</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="main">
+    <div class="contact-page">
+      <img src="images/chatrov.jpg" class="chatrov-photo" alt="Dmitriy Chatrov photo"/>
+      <article class="quote">
+        <h3>КОЛЛЕГИ О ДМИТРИИ ШАТРОВЕ</h3>
+        <blockquote>«Редко встречаю людей с такой доброй увлеченностью тем, чем они занимаются. Увлеченных много, но вот
+          так,
+          по-доброму, – редко. Диме всегда хочется улыбнуться в ответ».
+        </blockquote>
+        <p class="author">&copy; Андрей Журавлев</p>
+      </article>
+      <p class="about">Дмитрий – фотограф и путешественник, прошедший с рюкзаком и камерой более шестидесяти стран
+        Европы, Южной и
+        Северной Америки, Азиатского региона. Большую часть времени проводит в пути. Организатор мастер-классов и
+        семинаров по фотографии, аккредитованный фотограф горных экспедиций в Кордильерах, Гималаях, на Памире,
+        Тянь-Шане и Кавказе. Персональные выставки в Торонто, экспозиции во Франкфурте (галерея Leica), Монтре, Матанце,
+        Москве. Его работы приобретены в частные коллекции Америки, Канады, Германии, Франции, Испании, Швейцарии, Кубы,
+        России. Призер международных фотоконкурсов, имеет более семи десятков журнальных и газетных публикаций. Член
+        Союза фотохудожников России и Кавказского горного общества. Основатель клуба «Фотопланета», объединяющего
+        фотографов, прошедших выездные мастер-классы Дмитрия в разных точках мира.</p>
+
+      <div class="write-to">
+        <h2>Пишите Дмитрию</h2>
+        <hr/>
+        <div class="form-wrapper">
+          <form class="feedback-form js-background">
+            <div class="form-half"></div>
+            <input type="text" placeholder="Имя" class="form-elem">
+            <input type="email" placeholder="e-mail" class="form-elem">
+            <textarea cols="20" rows="2" placeholder="Вопросы и пожелания" class="form-elem"></textarea>
+            <input type="text" name="captcha" class="form-elem captcha" placeholder="Введите символы">
+            <img class="captcha-img" src="images/captcha.png"/>
+            <input type="submit" class="form-elem submit-btn" value="Отправить">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <a href="#" class="footer-logo">
+      <img src="images/logo-white.png" alt="logo">
+    </a>
+    <ul class="socials">
+      <li class="socials-item"><a href=""><span class="social-icon icon-twitter"></span></a></li>
+      <li class="socials-item"><a href=""><span class="social-icon icon-facebook"></span></a></li>
+      <li class="socials-item"><a href=""><span class="social-icon icon-vkontakte"></span></a></li>
+      <li class="socials-item"><a href=""><span class="social-icon icon-pinterest"></span></a></li>
+      <li class="socials-item"><a href=""><span class="social-icon icon-instagram"></span></a></li>
+      <li class="socials-item"><a href=""><span class="social-icon icon-gplus"></span></a></li>
+    </ul>
+  </footer>
+</div>
+<script src="./libs/jquery-2.2.2.min.js"></script>
+<script src="./libs/jquery.bxslider.min.js"></script>
+<script src="./js/all.js"></script>
+<script>
+  $('.feedback-form .form-elem').on('focus', function () {
+    $('.form-wrapper .form-half').addClass('js-background');
+    $('.feedback-form').removeClass('js-background');
+  });
+  $('.feedback-form .form-elem').on('focusout', function () {
+    $('.form-wrapper .form-half').removeClass('js-background');
+    $('.feedback-form').addClass('js-background');
+  });
+</script>
+</body>
+</html>

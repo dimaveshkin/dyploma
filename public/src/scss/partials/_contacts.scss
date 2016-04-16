@@ -1,0 +1,100 @@
+.contact-page {
+  background-color: $bg-main-after;
+  padding: 45px 0;
+  color: #08251e;
+
+  .chatrov-photo {
+    width: 50%;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  .quote {
+    display: inline-block;
+    font: $font-about;
+    vertical-align: middle;
+    width: 43%;
+    margin-left: 3%;
+    line-height: 1.5;
+    text-align: center;
+
+    h3 {
+      text-align: center;
+      display: inline-block;
+      font-size: 2.5rem;
+      font-weight: 500;
+      background: url(../images/bull-green.png) left top no-repeat,
+      url(../images/bull-green.png) center top no-repeat,
+      url(../images/bull-green.png) right top no-repeat;
+      padding: 75px 0 0 0;
+    }
+
+    blockquote {
+      text-align: justify;
+    }
+
+    .author {
+      margin-top: 35px;
+    }
+  }
+
+  .about {
+    background: $bg-accordion-header;
+    border-radius: 15px;
+    margin: 50px 25px;
+    line-height: 1.5;
+    padding: 20px;
+    font: $font-about;
+    text-align: justify;
+  }
+
+  .write-to {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  hr {
+    border: none;
+    color: #000;
+    font: $font-about;
+    background-color: #000;
+    height: 1px;
+    margin: 15px 0;
+    width: 55%;
+  }
+
+  h2{
+    font: $font-about;
+    padding-left: 30px;
+  }
+  
+  .form-wrapper {
+    background-image: url("../images/contact-bg.jpg");
+    text-align: right;
+    width: 100%;
+
+    .form-half {
+      left: 0;
+      right: 50%;
+    }
+  }
+}
+
+
+
+.feedback-form {
+  display: inline-block;
+
+  .captcha {
+    width: 45%;
+    margin-top: 0;
+    margin-right: 15px;
+    vertical-align: top;
+    display: inline-block;
+  }
+  .captcha-img {
+    width: 30%;
+    height: auto;
+    margin-right: 20px;
+  }
+}
