@@ -10,5 +10,13 @@ router.get('/', function (req, res) { //get all socials
     });
 });
 
+router.put('/', function (req, res) { //updates all socials
+  db.query('UPDATE contacts SET ?',[{ vkontakte: "vk.com/1",instagram: "pics" }],
+      function(err, result) {
+        if (err) throw err;
+
+        res.send('ok');
+      });
+});
 
 module.exports = router;
