@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dima Chatrov Admin panel</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="./fonts/fontello/css/fontello.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #08251e;
+    }
+    .logo {
+      text-decoration: none;
+    }
+    .logo h1 {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10%;
+      color: #94a19a;
+      text-decoration: none;
+      font-family: Monotype Corsiva;
+      font-size: 3rem;
+    }
+
+    .logo img {
+      vertical-align: middle;
+    }
+    .main {
+      display:table;
+      width: 100%;
+    }
+    .menu {
+      background: #000;
+      padding: 10px;
+      display: table-cell;
+      width: 30%;
+    }
+
+    .menu a {
+      padding: 10px 5px;
+      font: 26px Forum;
+      line-height: 25px;
+      display: block;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      text-decoration: underline;
+    }
+
+    .dashboard {
+      background: #d4d3d3;
+      display: table-cell;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo">
+      <img src="images/logo.png">
+      <h1>Administration Panel</h1>
+    </a>
+  </header>
+  <div class="main">
+    <aside class="menu">
+      <ul>
+        <li><a href="#">Управление категориями</a></li>
+        <li><a href="#">Управление контактами</a></li>
+        <li><a href="#">Управление фототурами</a></li>
+        <li><a href="#">Модерация заявок</a></li>
+        <li><a href="#">Обратная связь</a></li>
+        <li><a href="#">Смена пароля</a></li>
+      </ul>
+    </aside>
+    <div class="dashboard">
+      <form>
+        <input type="password" name="old" placeholder="Введите текущий пароль">
+        <input type="password" name="old" placeholder="Введите новый пароль">
+        <input type="password" name="old" placeholder="Повторите пароль">
+        <input type="submit" value="Сохранить">
+      </form>
+    </div>
+  </div>
+</body>
+</html>
