@@ -41,7 +41,7 @@ var path = {
         templates: "public/build/templates/"
     },
     watch: {
-        scss: "public/src/scss/**/*"
+        scss: "public/src/scss/**/*.scss"
     }
 };
 
@@ -57,9 +57,9 @@ var config = {
 
 var buildTasks = ["scss:build", "js:build"];
 
-gulp.task('webserver', function () {
-    browserSync(config);
-});
+// gulp.task('webserver', function () {
+//     browserSync(config);
+// });
 
 gulp.task("scss:build", function () {
     gulp.src(path.src.scss)
@@ -68,8 +68,8 @@ gulp.task("scss:build", function () {
         .pipe(autoprefixer())
         .pipe(cssnano())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.css))
-        .pipe(reload({stream: true}));
+        .pipe(gulp.dest(path.build.css));
+        // .pipe(reload({stream: true}));
 });
 
 gulp.task("js:build", function () {
@@ -82,8 +82,8 @@ gulp.task("js:build", function () {
         // .pipe(concat('main.js'))
         // .pipe(uglify())
         // .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.js))
-        .pipe(reload({stream: true}));
+        .pipe(gulp.dest(path.build.js));
+        // .pipe(reload({stream: true}));
 });
 
 gulp.task("clean", function () {
@@ -95,8 +95,8 @@ for (var i in path.src.copy) {
         gulp.task('copy_' + i, (function (i) {
             return function () {
                 gulp.src(path.src.copy[i])
-                    .pipe(gulp.dest(path.build.copy[i]))
-                    .pipe(reload({stream: true}));
+                    .pipe(gulp.dest(path.build.copy[i]));
+                    // .pipe(reload({stream: true}));
             }
         })(i));
         buildTasks.push("copy_" + i);
@@ -117,15 +117,15 @@ gulp.task('watch', function () {
     watch(path.watch.scss, function (event, cb) {
         gulp.start('scss:build');
     });
-    //
+    
     watch(path.src.js, function (event, cb) {
         gulp.start('js:build');
     });
-    //
+    
     watch(path.src.templates, function (event, cb) {
         gulp.start('js:build');
     });
 });
 
 gulp.task('build', buildTasks);
-gulp.task('default', ["webserver", "build", 'watch']);
+gulp.task('default', [/*"webserver",*/ "build", 'watch']);
