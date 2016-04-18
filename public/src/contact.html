@@ -52,7 +52,6 @@
         <hr/>
         <div class="form-wrapper">
           <form class="feedback-form js-background">
-            <div class="form-half"></div>
             <input type="text" placeholder="Имя" class="form-elem">
             <input type="email" placeholder="e-mail" class="form-elem">
             <textarea cols="20" rows="2" placeholder="Вопросы и пожелания" class="form-elem"></textarea>
@@ -60,6 +59,7 @@
             <img class="captcha-img" src="images/captcha.png"/>
             <input type="submit" class="form-elem submit-btn" value="Отправить">
           </form>
+          <div class="form-half"></div>
         </div>
       </div>
     </div>
@@ -81,15 +81,5 @@
 <script src="./libs/jquery-2.2.2.min.js"></script>
 <script src="./libs/jquery.bxslider.min.js"></script>
 <script src="./js/all.js"></script>
-<script>
-  $('.feedback-form .form-elem').on('focus', function () {
-    $('.form-wrapper .form-half').addClass('js-background');
-    $('.feedback-form').removeClass('js-background');
-  });
-  $('.feedback-form .form-elem').on('focusout', function () {
-    $('.form-wrapper .form-half').removeClass('js-background');
-    $('.feedback-form').addClass('js-background');
-  });
-</script>
 </body>
 </html>
