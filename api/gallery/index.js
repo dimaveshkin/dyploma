@@ -37,12 +37,11 @@ router.get('/all', function (req, res) { //all
 });
 
 router.get('/country/:location', function (req, res) { //by country
-    connection.query('SELECT p.id, src, title, p.desc, name FROM photos as p, countries as c WHERE p.country_id = 3 AND p.country_id = c.id', function (err, rows, fields) {
+    connection.query('SELECT p.id, src, title, p.desc, name FROM photos as p, countries as c WHERE c.international ="' + req.params.location + '" AND p.country_id = c.id', function (err, rows, fields) {
         if (err) throw err;
 
         res.send(rows);
     });
 });
-
 
 module.exports = router;

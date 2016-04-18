@@ -2,10 +2,10 @@
 -- version 3.5.1
 -- http://www.phpmyadmin.net
 --
--- Хост: 127.0.0.1
--- Время создания: Апр 17 2016 г., 23:36
--- Версия сервера: 5.5.25
--- Версия PHP: 5.3.13
+-- Host: 127.0.0.1
+-- Generation Time: Apr 18, 2016 at 04:19 PM
+-- Server version: 5.5.25
+-- PHP Version: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- База данных: `photographybd`
+-- Database: `photographydb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `contacts`
+-- Table structure for table `contacts`
 --
 
 CREATE TABLE IF NOT EXISTS `contacts` (
@@ -39,37 +39,39 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `countries`
+-- Table structure for table `countries`
 --
 
 CREATE TABLE IF NOT EXISTS `countries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `international` varchar(255) NOT NULL,
+  `cover` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
--- Дамп данных таблицы `countries`
+-- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `name`) VALUES
-(1, 'Бутан'),
-(2, 'Кавказ'),
-(3, 'Куба'),
-(4, 'Франция'),
-(5, 'Индия'),
-(6, 'Израиль'),
-(7, 'Италия'),
-(8, 'Марокко'),
-(9, 'Мьянма'),
-(10, 'Намибия'),
-(11, 'Непал'),
-(12, 'Тибет');
+INSERT INTO `countries` (`id`, `name`, `international`, `cover`) VALUES
+(1, 'Бутан', 'Bhutan', 'Bhutan/D71_5187_1a.jpg'),
+(2, 'Кавказ', 'Caucasus', 'Caucasus/1_D71_0747_1300.jpg'),
+(3, 'Куба', 'Cuba', 'Cuba/D71_2851_1a.jpg'),
+(4, 'Франция', 'France', 'France/1_D71_2602_1300.jpg'),
+(5, 'Индия', 'India', 'India/D71_2851_1a.jpg'),
+(6, 'Израиль', 'Israel', 'Israel/1_D72_1179_1300.jpg'),
+(7, 'Италия', 'Italy', 'Italy/1_DSC_6816_1300.jpg'),
+(8, 'Марокко', 'Marocco', 'Marocco/1_DSC_2941_1300.jpg'),
+(9, 'Мьянма', 'Myanmar', 'Myanmar/1_D72_5640_1300.jpg'),
+(10, 'Намибия', 'Namibia', 'Namibia/DC4_0681_1300_1300.jpg'),
+(11, 'Непал', 'Nepal', 'Nepal/80652544_1300_1300.jpg'),
+(12, 'Тибет', 'Tibet', 'ibet/10_DSC_6008_1300.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `feedbacks`
+-- Table structure for table `feedbacks`
 --
 
 CREATE TABLE IF NOT EXISTS `feedbacks` (
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `feedbacks` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `photos`
+-- Table structure for table `photos`
 --
 
 CREATE TABLE IF NOT EXISTS `photos` (
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `photos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=557 ;
 
 --
--- Дамп данных таблицы `photos`
+-- Dumping data for table `photos`
 --
 
 INSERT INTO `photos` (`id`, `src`, `country_id`, `is_best`, `title`, `desc`) VALUES
@@ -663,7 +665,7 @@ INSERT INTO `photos` (`id`, `src`, `country_id`, `is_best`, `title`, `desc`) VAL
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -675,11 +677,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `photos`
+-- Constraints for table `photos`
 --
 ALTER TABLE `photos`
   ADD CONSTRAINT `Photos_fk0` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`);
