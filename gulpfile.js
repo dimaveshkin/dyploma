@@ -7,10 +7,16 @@ var sass = require("gulp-sass");
 var del = require("del");
 var browserSync = require("browser-sync");
 var reload = browserSync.reload;
+var browserify = require('gulp-browserify');
+var concat = require('gulp-concat');
+var hbsfy = require('hbsfy');
+var uglify = require("gulp-uglify");
 
 var path = {
     src: {
         scss: ["public/src/scss/main.scss"],
+        mainjs: ["public/src/js/main.js"],
+        js: ["public/src/js/**/*.js"],
         copy: {
             html: [
                 "public/src/*.html",
@@ -49,21 +55,7 @@ var config = {
     logPrefix: "Dmytro_Veshkin"
 };
 
-var buildTasks = ["scss:build"];
-
-//gulp.task("type:build", function () {
-//    gulp.src(path.src.mainjs)
-//        //.pipe(sourcemaps.init())
-//        .pipe(browserify({
-//            transform: 'hbsfy',
-//            debug: true
-//        }))
-//        //.pipe(concat('main.js'))
-//        //.pipe(uglify())
-//        //.pipe(sourcemaps.write())
-//        .pipe(gulpif(BUILD_TO_TARGET, gulp.dest(path.buildToTarget.base + path.buildToTarget.js)))
-//        .pipe(gulp.dest(path.build.js));
-//});
+var buildTasks = ["scss:build", "js:build"];
 
 gulp.task('webserver', function () {
     browserSync(config);
@@ -80,43 +72,59 @@ gulp.task("scss:build", function () {
         .pipe(reload({stream: true}));
 });
 
+gulp.task("js:build", function () {
+    gulp.src(path.src.mainjs)
+        // .pipe(sourcemaps.init())
+        .pipe(browserify({
+            transform: 'hbsfy',
+            debug: true
+        }))
+        // .pipe(concat('main.js'))
+        // .pipe(uglify())
+        // .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.js))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task("clean", function () {
     return del(["public/build/*"], {force: true});
 });
 
-for(var i in path.src.copy) {
-    if(path.src.copy.hasOwnProperty(i)) {
+for (var i in path.src.copy) {
+    if (path.src.copy.hasOwnProperty(i)) {
         gulp.task('copy_' + i, (function (i) {
-            return function() {
+            return function () {
                 gulp.src(path.src.copy[i])
                     .pipe(gulp.dest(path.build.copy[i]))
                     .pipe(reload({stream: true}));
             }
         })(i));
-        buildTasks.push("copy_"+ i);
+        buildTasks.push("copy_" + i);
     }
 }
 
-gulp.task('watch', function(){
-    for(var i in path.src.copy) {
-        if(path.src.copy.hasOwnProperty(i)) {
-            watch(path.src.copy[i], (function(i){return function(event, cb) {
-                gulp.start('copy_' + i);
-            }})(i));
+gulp.task('watch', function () {
+    for (var i in path.src.copy) {
+        if (path.src.copy.hasOwnProperty(i)) {
+            watch(path.src.copy[i], (function (i) {
+                return function (event, cb) {
+                    gulp.start('copy_' + i);
+                }
+            })(i));
         }
     }
 
-    watch(path.watch.scss, function(event, cb) {
+    watch(path.watch.scss, function (event, cb) {
         gulp.start('scss:build');
     });
     //
-    //watch(path.src.js, function(event, cb) {
-    //    gulp.start('js:build');
-    //});
+    watch(path.src.js, function (event, cb) {
+        gulp.start('js:build');
+    });
     //
-    //watch(path.src.templates, function(event, cb) {
-    //    gulp.start('js:build');
-    //});
+    watch(path.src.templates, function (event, cb) {
+        gulp.start('js:build');
+    });
 });
 
 gulp.task('build', buildTasks);
