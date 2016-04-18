@@ -1,4 +1,4 @@
-const SOURCE = "images/";
+const SOURCE = "images/gallery/";
 
 module.exports = function (obj, field) {
 
