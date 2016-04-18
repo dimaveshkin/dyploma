@@ -20,6 +20,7 @@
     "handlebars": "^4.0.5",
     "hbsfy": "^2.6.0",
     "jquery": "^2.2.3",
-    "mysql": "^2.10.2"
+    "mysql": "^2.10.2",
+    "transliteration.cyr": "^1.0.5"
   }
 }

@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var galleryAPI = require('./api/gallery/index');
 var socialsAPI = require('./api/socials/index');
+var feedbackAPI = require('./api/feedback/index');
 var app = express();
 
 app.use(bodyParser.json());
@@ -16,6 +17,7 @@ app.get("/", function(req, res, next) {
 
 app.use('/api/gallery', galleryAPI);
 app.use('/api/socials', socialsAPI);
+app.use('/api/feedback', feedbackAPI);
 
 
 app.listen(app.get('port'), function() {
