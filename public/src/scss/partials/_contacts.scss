@@ -23,9 +23,9 @@
       display: inline-block;
       font-size: 2.5rem;
       font-weight: 500;
-      background: url(../images/bull-green.png) left top no-repeat,
-      url(../images/bull-green.png) center top no-repeat,
-      url(../images/bull-green.png) right top no-repeat;
+      background: url(../images/bull-dark-green.png) left top no-repeat,
+      url(../images/bull-dark-green.png) center top no-repeat,
+      url(../images/bull-dark-green.png) right top no-repeat;
       padding: 75px 0 0 0;
     }
 
@@ -80,10 +80,10 @@
   }
 }
 
-
-
 .feedback-form {
   display: inline-block;
+  text-align: center;
+
 
   .captcha {
     width: 45%;
