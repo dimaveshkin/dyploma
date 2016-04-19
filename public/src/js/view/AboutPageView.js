@@ -1,6 +1,6 @@
 var Backbone = require("backbone");
 Backbone.$ = window.$;
-
+var swal = require("sweetalert");
 var aboutPageTmp = require("./templates/AboutPageViewTmp.hbs");
 
 var AboutPageView = Backbone.View.extend({
@@ -21,8 +21,10 @@ var AboutPageView = Backbone.View.extend({
             .done(function (data) {
                 if(!data.error) {
                     $('#feedback-form')[0].reset();
+                  swal("Спасибо", "Спасибо за Ваше сообщение", "success");
                 } else {
-                    alert(data.error)
+//                    alert(data.error)
+                  swal("Ошибка", data.error, "error");
                 }
             });
         e.preventDefault();

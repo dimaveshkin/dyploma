@@ -26,7 +26,7 @@ app.get("/", function(req, res, next) {
 app.get("/captcha.png", function(req, res, next) {
     req.session.captcha = parseInt(Math.random()*9000+1000);
 
-    var p = new captchapng(80,30,req.session.captcha); // width,height,numeric captcha
+    var p = new captchapng(80,33,req.session.captcha); // width,height,numeric captcha
     p.color(255, 255, 255, 255);  // First color: background (red, green, blue, alpha)
     p.color(153, 153, 153, 255); // Second color: paint (red, green, blue, alpha)
     var img = p.getBase64();
