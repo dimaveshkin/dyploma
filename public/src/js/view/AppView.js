@@ -10,19 +10,27 @@ var AppView = Backbone.View.extend({
     template: appTmp,
     events: {
         "click #nav-main": "navMain",
-        "click #nav-gallery": "navGallery"
+        "click #nav-gallery": "navGallery",
+        "click #nav-about": "navAbout"
     },
     initialize: function (options) {
         this.router = options.router;
+        _.bindAll(this, "navGallery", "navMain", "navAbout");
     },
     render: function () {
         this.$el.html(this.template());
     },
-    navMain: function () {
+    navMain: function (e) {
+        e.preventDefault();
         this.router.navigate("", {trigger: true});
     },
-    navGallery: function () {
+    navGallery: function (e) {
+        e.preventDefault();
         this.router.navigate("gallery", {trigger: true});
+    },
+    navAbout: function (e) {
+        e.preventDefault();
+        this.router.navigate("about", {trigger: true});
     }
 });
 

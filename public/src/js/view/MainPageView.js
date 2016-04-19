@@ -10,6 +10,7 @@ var MainPageView = Backbone.View.extend({
 
     },
     render: function (){
+        this.$el.addClass("grey-background-after");
         this.$el.html(this.template());
 
         var slider = $('#gallery').bxSlider({
