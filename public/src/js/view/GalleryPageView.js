@@ -1,7 +1,7 @@
 var Backbone = require("backbone");
 Backbone.$ = window.$;
 
-var galleryPageTmp = require("./templates/GalleryPageViewTmp.hbs");
+var galleryPageTmp = require("./templates/GalleryContainerPageViewTmp.hbs");
 
 var GalleryPageView = Backbone.View.extend({
     el: ".main",
