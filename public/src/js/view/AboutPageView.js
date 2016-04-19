@@ -21,6 +21,8 @@ var AboutPageView = Backbone.View.extend({
             .done(function (data) {
                 if(!data.error) {
                     $('#feedback-form')[0].reset();
+                } else {
+                    alert(data.error)
                 }
             });
         e.preventDefault();

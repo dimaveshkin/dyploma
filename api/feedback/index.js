@@ -13,13 +13,24 @@ router.get('/', function (req, res) { //get all feedabacks
 });
 
 router.post('/add', function (req, res) { //insert new feedback
-    req.body.date = new Date();
+    if(req.session.captcha == req.body.captha) {
+        var feedback = {};
 
-    db.query('INSERT INTO feedbacks SET ?', req.body, function (err, result) {
-        if (err) throw err;
+        feedback.date = new Date();
+        feedback.name = req.body.name;
+        feedback.email = req.body.email;
+        feedback.feedback = req.body.feedback;
 
-        res.send(req.body);
-    });
+        db.query('INSERT INTO feedbacks SET ?',feedback, function (err, result) {
+            if (err) throw err;
+
+            res.send(req.body);
+        });
+    } else {
+        res.send({error: 'foooo'});
+    }
+
+
 });
 
 module.exports = router;
