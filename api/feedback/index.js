@@ -27,7 +27,7 @@ router.post('/add', function (req, res) { //insert new feedback
             res.send(req.body);
         });
     } else {
-        res.send({error: 'foooo'});
+        res.send({error: 'Вы неверно ввели символы'});
     }
 
 

@@ -7,6 +7,7 @@ var GalleryPageView = require("../view/GalleryPageView");
 var MainPageView = require("../view/MainPageView");
 var NotFoundPageView = require("../view/NotFoundPageView");
 var AboutPageView = require("../view/AboutPageView");
+var socials = require("../models/SocialsModel");
 
 var Router = Backbone.Router.extend({
     routes: {
@@ -21,6 +22,8 @@ var Router = Backbone.Router.extend({
         _.bindAll(this, "index", "gallery", "tours", "about");
         
         this.appView = new AppView({router: this});
+
+
         this.appView.render();
 
         this.mainPageView = new MainPageView({router: this});

@@ -5,3 +5,13 @@
 .js-background {
   background: rgba(255, 255 , 255, .3);
 }
+
+.js-hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.error {
+  color: #cb2027;
+  font: 2rem "Roboto";
+}
