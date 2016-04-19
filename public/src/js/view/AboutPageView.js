@@ -22,9 +22,9 @@ var AboutPageView = Backbone.View.extend({
           if (!data.error) {
             $('#feedback-form')[0].reset();
             swal("Спасибо", "Спасибо за Ваше сообщение", "success");
-            $('.error').addClass('js-hide');
+            $('.captcha').removeClass('error');
           } else {
-            $('.error').removeClass('js-hide');
+            $('.captcha').addClass('error');
           }
           $(".captcha-img").attr("src", "/captcha.png?" + (new Date()).getTime());
         });

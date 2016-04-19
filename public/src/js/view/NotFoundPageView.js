@@ -11,6 +11,7 @@ var NotFoundPageView = Backbone.View.extend({
     },
     render: function (){
         this.$el.html(this.template());
+        this.$el.removeClass("grey-background-after");
     }
 });
 

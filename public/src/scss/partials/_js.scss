@@ -11,7 +11,11 @@
   visibility: hidden;
 }
 
-.error {
-  color: #cb2027;
-  font: 2rem "Roboto";
+.form-elem.error {
+  border: 1px solid #cb2027;
 }
+
+.error::-webkit-input-placeholder {color:#cb2027;}
+.error::-moz-placeholder          {color:#cb2027;}
+.error.error:-moz-placeholder     {color:#cb2027;}
+.error:-ms-input-placeholder      {color:#cb2027;}
