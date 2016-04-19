@@ -9,7 +9,7 @@ var AppView = Backbone.View.extend({
     el: "body",
     template: appTmp,
     events: {
-        "click #nav-main": "navMain",
+        "click #nav-main, #logo": "navMain",
         "click #nav-gallery": "navGallery",
         "click #nav-about": "navAbout"
     },

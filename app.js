@@ -18,6 +18,10 @@ app.get("/", function(req, res, next) {
 
 app.use("/api", apiRouter);
 
+app.get("*", function(req, res, next) {
+    res.sendFile(__dirname + "/public/build/index.html");
+});
+
 app.listen(app.get('port'), function() {
     console.log('Express server listening on port %d ', app.get('port'));
 });
