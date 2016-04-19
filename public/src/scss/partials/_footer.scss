@@ -1,4 +1,11 @@
 .footer {
+  //sticky
+  position: absolute;
+  height: 118px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  //sticky footer
   max-width: 1500px;
   width: 90%;
   margin: 0 auto;
