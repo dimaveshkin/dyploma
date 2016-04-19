@@ -9,15 +9,14 @@
     margin: 0 auto;
     list-style: none;
 
-    .nav-list-item {
-      padding: 10px 22px;
-    }
-
     .nav-list-item a {
       font: 26px "Forum";
       line-height: 25px;
+      display: block;
+      padding: 10px 22px;
       color: #fff;
       text-decoration: none;
+      cursor: pointer;
     }
 
     .nav-list-item a:hover {

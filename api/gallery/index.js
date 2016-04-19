@@ -83,10 +83,9 @@ router.get('/getGallery', function (req, res) { //get all galery(all+best+countr
         });
 });
 
-
 function executeQuery(query, path) {
     return new Promise(function (resolve, reject) {
-        db.query(query, function (err, rows, fields) { //all
+        db.query(query, function (err, rows, fields) {
             if (err) reject(new Error(err));
 
             resolve(imgPath(rows, path));
