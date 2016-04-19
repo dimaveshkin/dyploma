@@ -26,7 +26,10 @@
             <li class="socials-item"><a href=""><span class="social-icon icon-vkontakte"></span></a></li>
             <li class="socials-item"><a href=""><span class="social-icon icon-pinterest"></span></a></li>
             <li class="socials-item"><a href=""><span class="social-icon icon-instagram"></span></a></li>
-            <li class="socials-item"><a href=""><span class="social-icon icon-gplus"></span></a></li>
+            {{#if googlePlus}}
+              <li class="socials-item"><a href="{{googlePlus}}"><span class="social-icon icon-gplus"></span></a></li>
+            {{/if}}
+
         </ul>
     </footer>
 </div>
