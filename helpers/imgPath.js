@@ -1,24 +1,28 @@
-const SOURCE = "/images/gallery/";
+const GALLERY_SOURCE = "/images/gallery/",
+      TOURS_SOURCE = "/images/tours/";
 
-module.exports = function (obj, field) {
-
-    if(!field) {
-        field = 'src';
+module.exports = {
+  concatPath: function(obj, field)  {
+    if (!field) {
+      field = 'src';
     }
-
+//   console.log(obj);
     for (var i = 0, length = obj.length; i < length; i++) {
-        obj[i][field] = SOURCE + obj[i][field];
+      obj[i][field] = GALLERY_SOURCE + obj[i][field];
     }
 
     return obj;
-
-
-    //for (var i = 0, length = obj.length; i < length; i++) {
-    //    for (var item in obj[i][field]) {
-    //        obj[i][field][item]  = "gfgfgfhhg";
-    //    }
-    //}
-
+  },
+  JSONPath: function (obj, field) {
+    for (var i = 0, length = obj.length; i < length; i++) {
+      var tpm = JSON.parse(obj[i][field]);
+      for(var img in tpm) {
+        for(var j = 0; j < tpm[img].length; j++){
+          tpm[img][j] = TOURS_SOURCE + tpm[img][j];
+        }
+        obj[i][field] = tpm;
+      }
+    }
     return obj;
-
+  }
 };
