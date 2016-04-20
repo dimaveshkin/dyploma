@@ -11,7 +11,9 @@
     cursor: pointer;
   }
 
-  .accordion-item {  padding: 10px 15px; }
+  .accordion-item {
+    padding: 10px 15px;
+  }
 }
 
 .gallery-img {
@@ -27,7 +29,6 @@
   //background-image: url("../images/israel_1.jpg");
 }
 
-
 .images-gallery {
   font-size: 0;
 
@@ -39,8 +40,9 @@
   }
 }
 
-.gallery-img-item { cursor: pointer; }
-
+.gallery-img-item {
+  cursor: pointer;
+}
 
 .gallery-img-item:hover .img-caption {
   background: $bg-figcaption-hover;
@@ -51,6 +53,8 @@
   background: $bg-figcaption;
   text-align: center;
   padding: 5px;
+  position: relative;
+  z-index: 2;
   font: $font-gallery;
   color: $cl-figcaption;
 }
@@ -82,14 +86,19 @@
   }
 }
 
-
- .gallery-img-item .gallery-img  {
-  background-size: 100%;
-  transition:all .5s ease;
+.gallery-img-item .gallery-img {
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+  transition: all .5s ease;
 }
 
-.gallery-img-item:hover .gallery-img   {
-  background-size:130%;
+.gallery-img-item {
+  overflow: hidden;
+}
+
+.gallery-img-item:hover .gallery-img {
+  transform: scale(1.3);
 }
 
 .link-block {
