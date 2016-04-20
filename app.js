@@ -37,7 +37,7 @@ app.get("/captcha.png", function(req, res, next) {
 
 app.use("/api", apiRouter);
 
-app.get("*", function(req, res, next) {
+app.use(function(req, res, next) {
     res.sendFile(__dirname + "/public/build/index.html");
 });
 

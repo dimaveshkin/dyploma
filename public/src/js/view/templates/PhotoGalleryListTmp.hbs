@@ -1,5 +1,7 @@
 {{#each all}}
     <li class="gallery-img-item city-item">
-        <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
+        <a href="{{src}}" title="{{#if desc}}{{desc}}<br/>{{/if}}" class="fancybox link-block" rel="all-gallery" onmouseover="this.setAttribute('org_title', this.title); this.title='';" onclick="this.title = this.getAttribute('org_title');" onmouseout="this.title = this.getAttribute('org_title');">
+            <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
+        </a>
     </li>
 {{/each}}

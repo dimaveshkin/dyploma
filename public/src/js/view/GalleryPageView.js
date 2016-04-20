@@ -2,91 +2,85 @@ var Backbone = require("backbone");
 Backbone.$ = window.$;
 
 var galleryPageTmp = require("./templates/GalleryContainerPageViewTmp.hbs");
+var countriesListTmp = require("./templates/CountriesGalleryListTmp.hbs");
+var bestListTmp = require("./templates/BestPhotoGalleryListTmp.hbs");
+var allListTmp = require("./templates/PhotoGalleryListTmp.hbs");
 
 var GalleryPageView = Backbone.View.extend({
     el: ".main",
     template: galleryPageTmp,
-    initialize: function () {
-
+    initialize: function (options) {
+        this.router = options.router;
     },
     render: function () {
+        var that = this;
+
         this.$el.html(this.template());
 
-        var slidersOpt = {
-            minSlides: 4,
-            maxSlides: 4,
-            slideWidth: 1000,
-            slideMargin: 16,
-            pager: false,
-            adaptiveHeight: true
-        };
+        $.get("/api/gallery/getGallery", function (gallery) {
+            $('.cities-gallery').html(countriesListTmp({countries: gallery.counties}));
+            $('.best-gallery').html(bestListTmp({best: gallery.best}));
+            $('.all-gallery').html(allListTmp({all: gallery.all}));
 
-        var citiesSlider = $('.cities-gallery').bxSlider(slidersOpt),
-            bestSlider = $('.best-gallery').bxSlider(slidersOpt),
-            allSlider = $('.all-gallery').bxSlider(slidersOpt);
+            $(".fancybox").fancybox({
+                prevEffect	: 'none',
+                nextEffect	: 'none',
+                helpers	: {
+                    title	: {
+                        type: 'outside'
+                    }
+                },
+                beforeShow : function() {
+                    this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' of ' + this.group.length + ' </span>';
+                }
+            });
+
+            var slidersOpt = {
+                minSlides: 4,
+                maxSlides: 4,
+                slideWidth: 1000,
+                slideMargin: 16,
+                pager: false,
+                adaptiveHeight: true,
+                preloadImages: "visible"
+            };
+
+            var citiesSlider = $('.cities-gallery').bxSlider(slidersOpt),
+                bestSlider = $('.best-gallery').bxSlider(slidersOpt),
+                allSlider = $('.all-gallery').bxSlider(slidersOpt);
 
 
-        $('.show-all-cities').on('click', function () {
-            toggleGallery(this, citiesSlider);
-        });
+            $('.show-all-cities').on('click', function () {
+                toggleGallery(this, citiesSlider);
+            });
 
-        $('.show-all-best').on('click', function () {
-            toggleGallery(this, bestSlider);
-        });
-        $('.show-all-img').on('click', function () {
-            toggleGallery(this, allSlider);
-        });
+            $('.show-all-best').on('click', function () {
+                toggleGallery(this, bestSlider);
+            });
+            $('.show-all-img').on('click', function () {
+                toggleGallery(this, allSlider);
+            });
 
+            $('.country-gallery-link').on('click', function (e) {
+                e.preventDefault();
+                that.router.navigate("gallery/" + $(e.currentTarget).data("countryname"), {trigger: true});
+            });
 
-        $('.slider-img').on('click', function () {
-            $('.popup, .overlay, .close-popup').addClass('js-show');
+            function toggleGallery(element, slider) {
+                if ($(element).prev().hasClass('images-gallery')) {
+                    $(element).prev().removeClass('images-gallery');
+                    slider.bxSlider(slidersOpt);
+                    $(element).text('Показать все');
 
-        });
-
-        $(this).keydown(function (eventObject) {
-            if (eventObject.which == 27) {
-                closePopUp();
+                } else {
+                    slider.destroySlider();
+                    $(element).prev().addClass('images-gallery');
+                    $(element).text('Скрыть');
+                }
             }
+
+
         });
-
-        $('/*.overlay, */.close-popup').on('click', function () {
-            closePopUp();
-        });
-
-
-        function closePopUp() {
-            $('.popup, .overlay, .close-popup').removeClass('js-show');
-        }
-
-        function toggleGallery(element, slider) {
-            if ($(element).prev().hasClass('images-gallery')) {
-                $(element).prev().removeClass('images-gallery');
-                slider.bxSlider(slidersOpt);
-                $(element).text('Показать все');
-
-            } else {
-                slider.destroySlider();
-                $(element).prev().addClass('images-gallery');
-                $(element).text('Скрыть');
-            }
-        }
-
-        $('.popup-slider').bxSlider({
-            pager: false,
-            mode: 'fade',
-            adaptiveHeight: true,
-            captions: true,
-            onSliderLoad: function(newIndex) {
-                var slidesCount = $('.popup-slider li').length;
-
-                $('.total-slides').text(slidesCount);
-                $('.current-slide').text(newIndex + 1);
-            },
-            onSlideBefore: function($slideElement, oldIndex, newIndex){
-                $('.current-slide').text(newIndex + 1);
-            }
-        });
-
     }
 });
 

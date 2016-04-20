@@ -1,0 +1,14 @@
+<div id="gallery-accordion">
+    <h3>{{countryName}}</h3>
+    <div class="accordion-item">
+        <ul class="cities-gallery images-gallery">
+            {{#each photos}}
+                <li class="gallery-img-item city-item">
+                    <a href="{{src}}" class="fancybox" title="{{#if title}}<b>{{title}}</b><br/>{{/if}}{{#if desc}}{{desc}}<br/>{{/if}}" rel="city-gallery" onmouseover="this.setAttribute('org_title', this.title); this.title='';" onclick="this.title = this.getAttribute('org_title');" onmouseout="this.title = this.getAttribute('org_title');">
+                        <div class="gallery-img" style="background-image: url({{src}})"></div>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 {{#each countries}}
     <li class="gallery-img-item city-item">
-        <a href="#country/{{id}}">
+        <a href data-countryname="{{international}}" class="country-gallery-link">
             <div class="gallery-img" style="background-image: url({{cover}})"></div>
             <p class="img-caption">{{name}}</p>
         </a>

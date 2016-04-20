@@ -35,6 +35,7 @@
     width: 24%;
     display: inline-block;
     margin: 10px .5%;
+    vertical-align: top;
   }
 }
 
@@ -62,6 +63,12 @@
   }
 }
 
+.best-gallery, .country-gallery, .all-gallery {
+  .fancybox {
+    display: block;
+  }
+}
+
 .show-all {
   display: block;
   cursor: pointer;
@@ -83,5 +90,9 @@
 
 .gallery-img-item:hover .gallery-img   {
   background-size:130%;
+}
+
+.link-block {
+  display: block;
 }
 
