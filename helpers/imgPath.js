@@ -11,4 +11,14 @@ module.exports = function (obj, field) {
     }
 
     return obj;
+
+
+    //for (var i = 0, length = obj.length; i < length; i++) {
+    //    for (var item in obj[i][field]) {
+    //        obj[i][field][item]  = "gfgfgfhhg";
+    //    }
+    //}
+
+    return obj;
+
 };
