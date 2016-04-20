@@ -27,7 +27,7 @@ var path = {
             fonts: ["public/src/fonts/**/*"],
             libs: ["public/src/libs/**/*"]
         },
-        templates: ["public/src/templates/**/*.hbs"]
+        templates: ["public/src/**/*.hbs"]
     },
     build: {
         css: "public/build/css",

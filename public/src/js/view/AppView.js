@@ -4,6 +4,7 @@ Backbone.$ = window.$;
 
 var appTmp = require("./templates/AppViewTmp.hbs");
 var MainPageView = require("./MainPageView");
+var FooterView = require("./FooterView");
 
 var AppView = Backbone.View.extend({
     el: "body",
@@ -19,6 +20,9 @@ var AppView = Backbone.View.extend({
     },
     render: function () {
         this.$el.html(this.template());
+
+        var footerView = new FooterView();
+        footerView.render();
     },
     navMain: function (e) {
         e.preventDefault();
