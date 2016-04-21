@@ -32,7 +32,7 @@ router.post('/add', function (req, res) {//add new request
     //    date: new Date(),
     //    status: 1
     //};
-
+var request = {};
     //if(req.session.captcha == req.body.captha) {
     //    var request = {};
 
@@ -46,7 +46,7 @@ router.post('/add', function (req, res) {//add new request
         db.query('INSERT INTO requests SET ?', request, function (err, result) {
 
             console.log(err);
-            res.send(post);
+            res.send(request);
         });
     //} else {
     //    res.send({error: 'Вы неверно ввели символы'});
