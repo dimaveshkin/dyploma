@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2016 at 04:19 PM
+-- Generation Time: Apr 21, 2016 at 04:37 PM
 -- Server version: 5.5.25
 -- PHP Version: 5.3.13
 
@@ -35,6 +35,13 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `facebook` varchar(255) DEFAULT NULL,
   `twitter` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`email`, `googlePlus`, `instagram`, `pinterest`, `vkontakte`, `facebook`, `twitter`) VALUES
+('dm.sopin@epam.com', 'googlePlus	', NULL, NULL, 'vk.com/123', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -81,7 +88,25 @@ CREATE TABLE IF NOT EXISTS `feedbacks` (
   `feedback` text NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `feedbacks`
+--
+
+INSERT INTO `feedbacks` (`id`, `name`, `email`, `feedback`, `date`) VALUES
+(1, 'Дмитрий', 'dmytro_sopin@epam.com', 'Cool design!', '2016-04-19 13:04:10'),
+(2, '2', 'sdimas-best@mail.ru', '4', '0000-00-00 00:00:00'),
+(3, '2', 'sdimas-best@mail.ru', '4', '2016-04-19 13:18:51'),
+(4, 'Вешкин', 'vesh@univer.com', 'Классный сайт!', '2016-04-19 13:20:57'),
+(5, '1', 'dmytro_sopin@epam.com', '324', '2016-04-19 13:22:27'),
+(6, 'Dmytro', 'dmytro_sopin@epam.com', 'pppp', '2016-04-19 13:23:31'),
+(7, 'fd', 'fdfdf@ikljkljnh.nj', 'fdf', '2016-04-19 13:24:00'),
+(8, 'des', 'dmytro_sopin@epam.com', 'd', '2016-04-19 13:24:51'),
+(9, 'Dmytro', 'dmytro_sopin@epam.com', 'fan', '2016-04-19 13:26:08'),
+(10, '', '', '', '2016-04-19 16:47:42'),
+(11, 'Тест', 'dmytro_sopin@epam.com', 'Тест', '2016-04-19 18:04:00'),
+(12, 'hgh', 'sdimas-best@mail.ru', 'fdf', '2016-04-20 13:54:54');
 
 -- --------------------------------------------------------
 
@@ -665,6 +690,88 @@ INSERT INTO `photos` (`id`, `src`, `country_id`, `is_best`, `title`, `desc`) VAL
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `requests`
+--
+
+CREATE TABLE IF NOT EXISTS `requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tour_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `application` text NOT NULL,
+  `date` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Requests_fk0` (`tour_id`),
+  KEY `Requests_fk1` (`status`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `requests`
+--
+
+INSERT INTO `requests` (`id`, `tour_id`, `name`, `email`, `application`, `date`, `status`) VALUES
+(1, 1, '', '@@@', 'want', '2016-04-21 16:09:56', 1),
+(2, 1, '', '', '', '2016-04-21 16:32:02', 1),
+(3, 1, '', '', '', '2016-04-21 16:32:35', 1),
+(4, 1, 'Дмитрий', 'sdimas-best@mail.ru', 'Hello!', '2016-04-21 16:36:04', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `request_statuses`
+--
+
+CREATE TABLE IF NOT EXISTS `request_statuses` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `status` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `request_statuses`
+--
+
+INSERT INTO `request_statuses` (`id`, `status`) VALUES
+(1, 'Новая'),
+(2, 'Принятая'),
+(3, 'Отклоненная');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tours`
+--
+
+CREATE TABLE IF NOT EXISTS `tours` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `desc` text NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `cost` int(11) NOT NULL,
+  `places` tinyint(4) NOT NULL,
+  `complexity` tinyint(4) NOT NULL,
+  `longitude` varchar(25) NOT NULL,
+  `latitude` varchar(25) NOT NULL,
+  `inclusive` text NOT NULL,
+  `not_inclusive` text NOT NULL,
+  `img` text NOT NULL,
+  `schedule` text NOT NULL,
+  `cover` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tours`
+--
+
+INSERT INTO `tours` (`id`, `title`, `desc`, `startDate`, `endDate`, `cost`, `places`, `complexity`, `longitude`, `latitude`, `inclusive`, `not_inclusive`, `img`, `schedule`, `cover`) VALUES
+(1, 'Непал. Сердце долины Катманду', 'Друзья, в начале апреля мы повторяем наш традиционный "жанровый" мастер-класс в Катманду, но с небольшими корректировками по программе (учитывая землетрясения 2015 года). В программе по-прежнему предлагается проход по лучшим фото-местам, помощь новичкам и базовое обучение с разбором отснятого материала: долина Катманду, Нагаркот, Бхактапур, джунгли Читвана; уцелевшие храмовые комплексы и повседневная жизнь непальцев, "зернобабки" на уборке урожая и слоны на рассвете в джунглях… Десять дней плотного погружения в Непал. Эта программа отточена годами работы', '2016-04-22', '2016-04-29', 1000, 12, 2, '27.6666651', '85.3324904', '["завтрак + полный пансион в Читване", "всобой иметь две паспортные фотографии"]', '["перелет до Катманду и обратно", "визовый сбор на прилете в Катманду"]', '{"head":["2.jpg","3.jpg","4.jpg"],"center":["5.jpg","6.jpg "],"footer":["7.jpg","8.jpg","9.jpg","10.jpg"]}', '[{"day":"7 апреля. 1 день","schedule":["Прилет в Катманду. Встреча в аэропорту. Размещение в отеле."]},{"day":"8 апреля. 2 день","schedule":["Утренний Катманду: Дурбар, Тамель, храмы и старый город","Храмовый комплекс Сваямбуднах (жанровая + закатная съемка)"]}]', '1.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -685,6 +792,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 ALTER TABLE `photos`
   ADD CONSTRAINT `Photos_fk0` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`);
+
+--
+-- Constraints for table `requests`
+--
+ALTER TABLE `requests`
+  ADD CONSTRAINT `Requests_fk1` FOREIGN KEY (`status`) REFERENCES `request_statuses` (`id`),
+  ADD CONSTRAINT `Requests_fk0` FOREIGN KEY (`tour_id`) REFERENCES `tours` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
