@@ -9,6 +9,7 @@ var NotFoundPageView = require("../view/NotFoundPageView");
 var AboutPageView = require("../view/AboutPageView");
 var CountryGalleryPageView = require("../view/CountryGalleryPageView");
 var TourPageView = require("../view/TourPageView");
+var ToursPageView = require("../view/ToursPageView");
 var socials = require("../models/SocialsModel");
 
 var Router = Backbone.Router.extend({
@@ -17,14 +18,13 @@ var Router = Backbone.Router.extend({
         "gallery": "gallery",
         "tours": "tours",
         "about": "about",
-        "tour": "about",
         "gallery/:name": "countryGallery",
         "tours/:id": "tourInfo",
         "*NotFound": "notFound"
     },
     initialize: function (options) {
         _.bindAll(this, "index", "gallery", "tours", "about", "countryGallery");
-        
+
         this.appView = new AppView({router: this});
 
 
@@ -36,6 +36,7 @@ var Router = Backbone.Router.extend({
         this.countryGalleryPageView = new CountryGalleryPageView({router: this});
         this.notFoundPageView = new NotFoundPageView({router: this});
         this.tourPageView = new TourPageView({router: this});
+        this.toursPageView = new ToursPageView({router: this});
     },
     index: function () {
         this.mainPageView.render();
@@ -44,7 +45,7 @@ var Router = Backbone.Router.extend({
         this.galleryPageView.render();
     },
     tours: function () {
-        //TODO: implement tour view render
+        this.toursPageView.render();
     },
     countryGallery: function (name) {
         this.countryGalleryPageView.render(name);
@@ -53,7 +54,7 @@ var Router = Backbone.Router.extend({
         this.aboutPageView.render();
     },
     tourInfo: function (id) {
-      this.tourPageView.render(id);
+        this.tourPageView.render(id);
     },
     notFound: function () {
         this.notFoundPageView.render();

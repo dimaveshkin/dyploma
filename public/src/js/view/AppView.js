@@ -12,11 +12,12 @@ var AppView = Backbone.View.extend({
     events: {
         "click #nav-main, #logo": "navMain",
         "click #nav-gallery": "navGallery",
-        "click #nav-about": "navAbout"
+        "click #nav-about": "navAbout",
+        "click #nav-tours": "navTours"
     },
     initialize: function (options) {
         this.router = options.router;
-        _.bindAll(this, "navGallery", "navMain", "navAbout");
+        _.bindAll(this, "navGallery", "navMain", "navAbout", "navTours");
     },
     render: function () {
         this.$el.html(this.template());
@@ -35,6 +36,10 @@ var AppView = Backbone.View.extend({
     navAbout: function (e) {
         e.preventDefault();
         this.router.navigate("about", {trigger: true});
+    },
+    navTours: function (e) {
+        e.preventDefault();
+        this.router.navigate("tours", {trigger: true});
     }
 });
 
