@@ -28,12 +28,11 @@ var TourPageView = Backbone.View.extend({
           if (!data.error) {
             $(' #apply-form')[0].reset();
             swal("Спасибо", "Спасибо за Вашу заявку", "success");
-          //  $('.captcha').removeClass('error');
+            $('.captcha').removeClass('error');
           } else {
-            swal("Спасибо", "Спасибо за Ваше сообщение", "error");
-          //  $('.captcha').addClass('error');
+            $('.captcha').addClass('error');
           }
-         // $(".captcha-img").attr("src", "/captcha.png?" + (new Date()).getTime());
+          $(".captcha-img").attr("src", "/captcha.png?" + (new Date()).getTime());
         });
     e.preventDefault();
   }

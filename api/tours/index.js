@@ -13,29 +13,20 @@ router.get('/', function (req, res) { //get tours list
 });
 
 router.get('/:id', function (req, res) { //get tour by id
-  db.query('SELECT *  FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
-    if (err) throw err;
+    db.query('SELECT *  FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
+        if (err) throw err;
 
-      rows[0].schedule = JSON.parse(rows[0].schedule);
-      rows[0].not_inclusive = JSON.parse(rows[0].not_inclusive);
-      rows[0].inclusive = JSON.parse(rows[0].inclusive);
-    res.send(imgPath.JSONPath(rows, 'img'));
-  });
+        rows[0].schedule = JSON.parse(rows[0].schedule);
+        rows[0].not_inclusive = JSON.parse(rows[0].not_inclusive);
+        rows[0].inclusive = JSON.parse(rows[0].inclusive);
+        res.send(imgPath.JSONPath(rows, 'img'));
+    });
 });
 
 
 router.post('/add', function (req, res) {//add new request
-    //var post = {
-    //    tour_id: 1,
-    //    email: '@@@',
-    //    application: 'want',
-    //    date: new Date(),
-    //    status: 1
-    //};
-var request = {};
-    //if(req.session.captcha == req.body.captha) {
-    //    var request = {};
-
+    var request = {};
+    if (req.session.captcha == req.body.captha) {
         request.date = new Date();
         request.name = req.body.name;
         request.email = req.body.email;
@@ -48,12 +39,9 @@ var request = {};
             console.log(err);
             res.send(request);
         });
-    //} else {
-    //    res.send({error: 'Вы неверно ввели символы'});
-    //}
-
-
-
+    } else {
+        res.send({error: 'Вы неверно ввели символы'});
+    }
 });
 
 module.exports = router;
