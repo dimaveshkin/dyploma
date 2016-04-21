@@ -26,13 +26,14 @@ router.get('/:id', function (req, res) { //get tour by id
 
 router.post('/add', function (req, res) {//add new request
     var request = {};
+
     if (req.session.captcha == req.body.captha) {
         request.date = new Date();
         request.name = req.body.name;
         request.email = req.body.email;
         request.application = req.body.application;
         request.status = 1;
-        request.tour_id = 1;
+        request.tour_id = req.body.tour_id;
 
         db.query('INSERT INTO requests SET ?', request, function (err, result) {
 

@@ -15,6 +15,10 @@
   border: 1px solid #cb2027;
 }
 
+.form-elem.js-valid {
+  border: 1px solid #3f8514;
+}
+
 .error::-webkit-input-placeholder {color:#cb2027;}
 .error::-moz-placeholder          {color:#cb2027;}
 .error.error:-moz-placeholder     {color:#cb2027;}
