@@ -27,7 +27,6 @@ var Router = Backbone.Router.extend({
 
         this.appView = new AppView({router: this});
 
-
         this.appView.render();
 
         this.mainPageView = new MainPageView({router: this});
