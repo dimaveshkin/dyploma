@@ -205,6 +205,20 @@
     }
   }
 
+  .captcha-img {
+    height: auto;
+    margin-left: 20px;
+    vertical-align: middle;
+  }
+
+  .captcha {
+    width: 45%;
+    margin-top: 0;
+    margin-right: 15px;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
   .form-half {
     position: absolute;
     top: 0;
@@ -222,6 +236,10 @@
     resize: none;
     font: 2.5rem "Monotype Corsiva";
     padding: 10px;
+
+    &.captcha {
+      width: 50%;
+    }
   }
   .submit-btn {
     width: 130px;

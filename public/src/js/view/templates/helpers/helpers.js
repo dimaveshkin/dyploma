@@ -14,7 +14,7 @@ Handlebars.registerHelper('getDate', function (start, end) {
     month = date.getMonth() + 1;
     year = date.getFullYear();
 
-    endStr = (day.toString() < 10 ? '0' : '') + day.toString() + "." + (month < 10 ? '0' : '') + month + year;
+    endStr = (day.toString() < 10 ? '0' : '') + day.toString() + "." + (month < 10 ? '0' : '') + month + '.' + year;
 
     return startStr + '-' + endStr;
 

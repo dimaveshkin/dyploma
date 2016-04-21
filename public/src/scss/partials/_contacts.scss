@@ -77,7 +77,14 @@
       left: 0;
       right: 50%;
     }
-  }
+
+    .captcha {
+      width: 45%;
+      margin-top: 0;
+      margin-right: 15px;
+      vertical-align: top;
+      display: inline-block;
+    }
 }
 
 .feedback-form {
@@ -85,15 +92,8 @@
   text-align: center;
 
 
-  .captcha {
-    width: 45%;
-    margin-top: 0;
-    margin-right: 15px;
-    vertical-align: top;
-    display: inline-block;
-  }
+}
   .captcha-img {
-    width: 30%;
     height: auto;
     margin-right: 20px;
   }
