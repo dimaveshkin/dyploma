@@ -23,6 +23,39 @@ router.get('/:id', function (req, res) { //get tour by id
   });
 });
 
+
+router.post('/add', function (req, res) {//add new request
+    //var post = {
+    //    tour_id: 1,
+    //    email: '@@@',
+    //    application: 'want',
+    //    date: new Date(),
+    //    status: 1
+    //};
+
+    //if(req.session.captcha == req.body.captha) {
+    //    var request = {};
+
+        request.date = new Date();
+        request.name = req.body.name;
+        request.email = req.body.email;
+        request.application = req.body.application;
+        request.status = 1;
+        request.tour_id = 1;
+
+        db.query('INSERT INTO requests SET ?', request, function (err, result) {
+
+            console.log(err);
+            res.send(post);
+        });
+    //} else {
+    //    res.send({error: 'Вы неверно ввели символы'});
+    //}
+
+
+
+});
+
 module.exports = router;
 
 
