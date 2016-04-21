@@ -2,6 +2,7 @@ var Backbone = require("backbone");
 Backbone.$ = window.$;
 
 var TourPageViewTmp = require("./templates/TourPageView.hbs");
+var helpers = require('./templates/helpers/helpers');
 
 var TourPageView = Backbone.View.extend({
   el: ".main",

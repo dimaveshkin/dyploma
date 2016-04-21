@@ -13,12 +13,11 @@
 
         <p class="prop-text">
           <span>Дата</span>
-          <span>{{startDate}}-{{endDate}}</span>
+          <span>{{#getDate startDate endDate}}{{/getDate}}</span>
         </p>
       </li>
       <li class="tour-prop-item">
         <i class="hard-lvl-icon prop-icon"></i>
-
         <p class="prop-text">
           <span>Сложность</span>
           <span>{{complexity}}/5</span>
@@ -90,14 +89,16 @@
         {{/each}}
     </ul>
   </article>
-  <div class="form-wrapper">
-    <form class="apply-form js-background">
-      <input type="text" placeholder="Имя" class="form-elem">
-      <input type="email" placeholder="e-mail" class="form-elem">
-      <textarea cols="20" rows="2" placeholder="Заявка" class="form-elem"></textarea>
-      <input type="submit" class="form-elem submit-btn" value="Отправить">
-    </form>
+  {{#isActiveTour startDate}}
+    <div class="form-wrapper">
+      <form class="apply-form js-background">
+        <input type="text" placeholder="Имя" class="form-elem">
+        <input type="email" placeholder="e-mail" class="form-elem">
+        <textarea cols="20" rows="2" placeholder="Заявка" class="form-elem"></textarea>
+        <input type="submit" class="form-elem submit-btn" value="Отправить">
+      </form>
     <div class="form-half"></div>
-  </div>
+    </div>
+  {{/isActiveTour}}
 </div>
 
