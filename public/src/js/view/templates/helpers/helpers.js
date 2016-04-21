@@ -30,12 +30,3 @@ Handlebars.registerHelper('isActiveTour', function(date, opt) {
 
     return opt.inverse(this);
 });
-//
-//Handlebars.registerHelper('isAdminOrUnitOwner', function(str, isUnitOwner, opt) {
-//    if (str === roles.ADMIN || isUnitOwner) {
-//        return opt.fn(this);
-//    }
-//    return opt.inverse(this);
-//});
-
-
