@@ -18,7 +18,6 @@ var ToursPageView = Backbone.View.extend({
     },
     render: function (id){
         this.$el.removeClass("grey-background-after");
-        this.$el.addClass("clearfix");
 
         this.$el.html(this.template());
 

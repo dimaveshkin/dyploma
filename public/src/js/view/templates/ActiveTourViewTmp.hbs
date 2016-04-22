@@ -1,14 +1,17 @@
-<div class="heading clearfix"><h3>Активный фототур</h3></div>
-<div class="selected-tour-body clearfix">
-    <div class="selected-tour-img left">
-        <div class="gallery-img-item city-item selected-tour-picture">
-            <a href="cities.html">
-                <div class="gallery-img"></div>
-            </a>
+{{#if id}}
+    <div class="heading clearfix"><h3>Активный фототур</h3></div>
+    <div class="selected-tour-body clearfix">
+        <div class="selected-tour-img left">
+            <div class="gallery-img-item city-item selected-tour-picture">
+                <div class="gallery-img" style="background-image: url({{cover}})"></div>
+            </div>
+        </div>
+        <div class="selected-tour-desc right">
+            <h4>{{title}} {{getDate startDate endDate}}</h4>
+            <p>{{desc}}</p>
+            <div class="active-tour-btn-holder">
+                <button class="active-tour-btn">Узнать подробнее</button>
+            </div>
         </div>
     </div>
-    <div class="selected-tour-desc right">
-        <h4>Непал, сердце долины Катманду (апрель 2016)</h4>
-        <p>{{desc}}</p>
-    </div>
-</div>
+{{/if}}

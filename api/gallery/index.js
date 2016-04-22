@@ -75,7 +75,7 @@ router.get('/getGallery', function (req, res) { //get all galery(all+best+countr
         })
         .then(function (img) {
             gallery.best = img;
-            return executeQuery('SELECT * FROM countries', 'cover');
+            return executeQuery('SELECT c.id, c.name, c.international, c.cover FROM countries AS c INNER JOIN photos AS p ON p.country_id = c.id GROUP BY c.name ORDER BY c.id ASC ', 'cover');
         })
         .then(function (list) {
             gallery.counties = list;

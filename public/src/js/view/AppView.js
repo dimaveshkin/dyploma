@@ -1,5 +1,6 @@
 var Backbone = require("backbone");
 var _ = require("underscore");
+var EventBus = require("../helpers/EventBus");
 Backbone.$ = window.$;
 
 var appTmp = require("./templates/AppViewTmp.hbs");
