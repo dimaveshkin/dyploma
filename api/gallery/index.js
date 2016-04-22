@@ -15,7 +15,7 @@ router.get('/countries', function (req, res) {//countries list
 
 router.post('/countries/add', function (req, res) {//add new empty country
     var post = {
-        name: "Киев",
+        name: req.body.country,
         international: transliteration.transliterate('Киев'),
         cover: ""
     };

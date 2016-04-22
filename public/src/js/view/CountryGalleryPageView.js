@@ -25,7 +25,7 @@ var CountryGalleryPageView = Backbone.View.extend({
                     }
                 },
                 beforeShow : function() {
-                    this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' of ' + this.group.length + ' </span>';
+                    this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' / ' + this.group.length + ' </span>';
                 }
             });
         });

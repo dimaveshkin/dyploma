@@ -1,16 +1,24 @@
-header {
-  background: #08251e;
+.all-wrapper {
+  min-height: 100%;
+  height: 100%;
 
-  h1 {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10%;
-    color: #94a19a;
-    text-decoration: none;
-    font-family: Monotype Corsiva;
-    font-size: 4rem;
+  header {
+    background: #08251e;
+    height: 185px;
+
+    h1 {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10%;
+      color: #94a19a;
+      text-decoration: none;
+      font-family: Monotype Corsiva;
+      font-size: 4rem;
+    }
   }
 }
+
+
 
 .logo {
   text-decoration: none;
@@ -27,6 +35,7 @@ header {
 .main-container {
   display: table;
   width: 100%;
+  height: calc(100% - 185px);
   font-family: 'Forum';
 }
 
@@ -34,7 +43,9 @@ header {
   background: #222;
   padding: 10px;
   display: table-cell;
-  width: 30%;
+  width: 18%;
+  min-width: 150px;
+
 
   a {
     padding: 10px 5px;
@@ -83,40 +94,30 @@ header {
     border-radius: 5px;
   }
 
-  .back-btn {
+  .btn {
     display: inline-block;
     cursor: pointer;
     padding: 5px 40px;
+    color: #fff;
+    font-size: 2rem;
+    border-radius: 5px;
+    margin: 5px;
+  }
+  .back-btn {
     border: 1px solid #33a2c7;
     background: linear-gradient(top, #3BA4C7 0%, #1982A5 100%);
     text-shadow: 0 -1px 0 #396715;
     box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
-    color: #fff;
-    font-size: 2rem;
-    border-radius: 5px;
   }
 
   .delete-btn {
-    display: inline-block;
-    cursor: pointer;
-    padding: 5px 40px;
     border: 1px solid #c73c3e;
     background: linear-gradient(top, #c76e62 0%, #db423b 100%);
     text-shadow: 0 -1px 0 #396715;
     box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
-    color: #fff;
-    font-size: 2rem;
-    border-radius: 5px;
   }
 }
 
-#pass-frm {
-  text-align: center;
-}
-
-.pass-input {
-  width: 200px;
-}
 
 .table {
   border: 1px solid #999;
@@ -142,7 +143,6 @@ header {
     &:hover {
 
     }
-//    border: 1px solid #000;
   }
   .tbl-text {
     width: 30%;

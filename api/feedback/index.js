@@ -12,6 +12,22 @@ router.get('/', function (req, res) { //get all feedabacks
     });
 });
 
+router.get('/:id', function (req, res) { //get feedback by id
+    db.query('SELECT * FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
+        if (err) throw err;
+
+        res.send(rows[0]);
+    });
+});
+
+router.delete('/:id', function (req, res) { //delete feedback by id
+    db.query('DELETE  FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
+        if (err) throw err;
+
+        res.send(true);
+    });
+});
+
 router.post('/add', function (req, res) { //insert new feedback
     if(req.session.captcha == req.body.captha) {
         var feedback = {};
@@ -29,8 +45,6 @@ router.post('/add', function (req, res) { //insert new feedback
     } else {
         res.send({error: 'Вы неверно ввели символы'});
     }
-
-
 });
 
 module.exports = router;

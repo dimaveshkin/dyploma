@@ -23,3 +23,50 @@
 .error::-moz-placeholder          {color:#cb2027;}
 .error.error:-moz-placeholder     {color:#cb2027;}
 .error:-ms-input-placeholder      {color:#cb2027;}
+
+.fancybox-skin {
+  padding: 0 !important;
+}
+
+.fancybox-nav span {
+  background: none !important;
+}
+
+.fancybox-prev:after {
+  content: '\2329';
+  display: block;
+  position: relative;
+  height: 4rem;
+  width: 4rem;
+  margin-top: -3rem;
+  font-size: 4rem;
+  color: #fff;
+  left: 10px;
+  top: 50%;
+}
+
+.fancybox-next:after {
+  content: '\232A';
+  display: block;
+  position: absolute;
+  height: 4rem;
+  width: 4rem;
+  margin-top: -3rem;
+  font-size: 4rem;
+  color: #fff;
+  right: -10px;
+  top: 50%;
+}
+
+.fancybox-title {
+  position: absolute !important;
+  background: rgba(18, 9, 10, 0.6);
+  padding: 5px 20px;
+  font-size: 1.5rem !important;
+  bottom: 0;
+  width: 100%;
+}
+//
+//.bx-wrapper .bx-next:after {
+//  content: '\232A';
+//}

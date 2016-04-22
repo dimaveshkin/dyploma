@@ -10,6 +10,7 @@ var AboutPageView = require("../view/AboutPageView");
 var CountryGalleryPageView = require("../view/CountryGalleryPageView");
 var TourPageView = require("../view/TourPageView");
 var ToursPageView = require("../view/ToursPageView");
+var LoginPageView = require("../view/LoginPageView");
 var socials = require("../models/SocialsModel");
 
 var Router = Backbone.Router.extend({
@@ -19,6 +20,8 @@ var Router = Backbone.Router.extend({
         "tours": "tours",
         "about": "about",
         "gallery/:name": "countryGallery",
+        "login": "login",
+        "admin/password": "adminPassword",
         "tours/:id": "tourInfo",
         "*NotFound": "notFound"
     },
@@ -36,6 +39,7 @@ var Router = Backbone.Router.extend({
         this.notFoundPageView = new NotFoundPageView({router: this});
         this.tourPageView = new TourPageView({router: this});
         this.toursPageView = new ToursPageView({router: this});
+        this.loginPageView = new LoginPageView({router: this});
     },
     index: function () {
         this.mainPageView.render();
@@ -57,6 +61,12 @@ var Router = Backbone.Router.extend({
     },
     notFound: function () {
         this.notFoundPageView.render();
+    },
+    login: function () {
+        this.loginPageView.render();
+    },
+    adminPassword: function() {
+
     }
 });
 
