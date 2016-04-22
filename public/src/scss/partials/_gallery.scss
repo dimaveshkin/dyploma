@@ -44,6 +44,14 @@
   cursor: pointer;
 }
 
+.gallery-img-item {
+  .slide-wrapper {
+    max-width: 350px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
+
 .gallery-img-item:hover .img-caption {
   background: $bg-figcaption-hover;
   color: $cl-figcaption-hover;

@@ -1,18 +1,23 @@
 <div class="heading clearfix">
     <h3>Завершенные фототуры</h3>
     <ul class="year-list">
-        <li>2014</li>
-        <li class="active">2015</li>
+        {{#each years}}
+            <li class="year-link" data-year="{{this}}">{{this}}</li>
+        {{/each}}
     </ul>
 </div>
 <div class="gallery-wrapper">
     <ul class="prev-tours-gallery">
-        <li class="gallery-img-item city-item">
-            <div class="gallery-img slider-img"></div>
-            <div class="img-caption">
-                <h4 class="tour-name">Крым</h4>
-                <p class="tour-date">30.07-5.08.2016</p>
-            </div>
-        </li>
+        {{#each tours}}
+            <li class="gallery-img-item city-item" data-tourid="{{id}}">
+                <div class="slide-wrapper">
+                    <div class="gallery-img slider-img" style="background-image: url({{cover}})"></div>
+                    <div class="img-caption">
+                        <h4 class="tour-name">{{title}}</h4>
+                        <p class="tour-date">{{getDate startDate endDate}}</p>
+                    </div>
+                </div>
+            </li>
+        {{/each}}
     </ul>
 </div>
