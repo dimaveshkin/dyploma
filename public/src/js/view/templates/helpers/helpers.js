@@ -30,3 +30,7 @@ Handlebars.registerHelper('isActiveTour', function(date, opt) {
 
     return opt.inverse(this);
 });
+
+Handlebars.registerHelper('setClassIfEqual', function(className, a, b) {
+    return a === b ? className : "";
+});
