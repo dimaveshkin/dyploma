@@ -19,7 +19,8 @@
       cursor: pointer;
     }
 
-    .nav-list-item a:hover {
+    .nav-list-item a:hover,
+    .item-active {
       text-decoration: underline;
     }
   }

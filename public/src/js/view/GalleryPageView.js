@@ -16,7 +16,6 @@ var GalleryPageView = Backbone.View.extend({
         var that = this;
 
         this.$el.html(this.template());
-
         $.get("/api/gallery/getGallery", function (gallery) {
             $('.cities-gallery').html(countriesListTmp({countries: gallery.counties}));
             $('.best-gallery').html(bestListTmp({best: gallery.best}));
@@ -31,7 +30,7 @@ var GalleryPageView = Backbone.View.extend({
                     }
                 },
                 beforeShow : function() {
-                    this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' of ' + this.group.length + ' </span>';
+                    this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' / ' + this.group.length + ' </span>';
                 }
             });
 
