@@ -82,17 +82,33 @@
     margin-bottom: 10px;
   }
 
+  .error {
+    color: red;
+  }
   textarea {
     height: 100px;
   }
 
   .btn-holder {
+    display: inline-block;
+    width: 49%;
     text-align: right;
+  }
+
+  .form-elem.captcha {
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+  }
+
+  .captcha-img{
+    width: 50%;
   }
 
   .send-request {
     font: 1.8rem Forum;
-    padding: 5px 15px;
+    padding: 10px 15px;
+    width: 100%;
     background: #94a19a;
     border-radius: 5px;
     border: 1px solid #fff;

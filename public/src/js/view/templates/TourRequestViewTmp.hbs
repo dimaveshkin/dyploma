@@ -1,9 +1,11 @@
-<form action="">
+<form action="" id="tour-request">
     <input name="name" id="name" type="text" placeholder="Имя">
     <input name="email" id="email" type="email" placeholder="E-mail">
-    <input name="tourname" id="tourname" type="text" disabled>
-    <textarea name="request-text" id="request-text" cols="30" rows="10" placeholder="Заявка"></textarea>
+    <input name="tourname" id="tourname" type="text" disabled value="{{#if tour}}{{tour.title}}{{/if}}">
+    <textarea name="application" id="request-text" cols="30" rows="10" placeholder="Заявка"></textarea>
+    <input type="text" name="captha" class="form-elem captcha" placeholder="Введите символы">
     <div class="btn-holder">
-        <button class="send-request">Отправить</button>
+        <button class="send-request" id="send-request">Отправить</button>
     </div>
+    <img class="captcha-img" src="/captcha.png"/>
 </form>
