@@ -31,10 +31,6 @@ app.set('port', 3000);
 app.use("/images", express.static(__dirname + '/images/build', {maxAge: oneDay}));
 app.use(express.static(__dirname + '/public/build'));
 
-app.get("/", function(req, res, next) {
-    res.sendFile(__dirname + "/public/build/index.html");
-});
-
 app.get("/captcha.png", function(req, res, next) {
     req.session.captcha = parseInt(Math.random()*9000+1000);
 
@@ -47,9 +43,8 @@ app.get("/captcha.png", function(req, res, next) {
     res.send(imgbase64);
 });
 
-
-console.log(cryptPassword('admin'));
 app.use("/api", apiRouter);
+
 
 app.use("/admin", function (req, res) {
     if(req.session.admin) {
@@ -59,7 +54,8 @@ app.use("/admin", function (req, res) {
     }
 });
 
-app.use("/admin", checkAdmin, express.static(__dirname + '/admin_public/build'));
+app.use("/adminstatic/**", checkAdmin);
+app.use("/adminstatic", express.static(__dirname + '/admin_public/build'));
 
 app.use(function(req, res, next) {
     res.sendFile(__dirname + "/public/build/index.html");
