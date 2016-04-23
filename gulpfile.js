@@ -117,6 +117,10 @@ gulp.task('watch', function () {
     watch(path.src.templates, function (event, cb) {
         gulp.start('js:build');
     });
+
+    watch(path.src.images, function (event, cb) {
+        gulp.start('img:build');
+    });
 });
 
 gulp.task('build', buildTasks);
