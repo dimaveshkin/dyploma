@@ -5,11 +5,13 @@ Backbone.$ = window.$;
 var AppView = require("../view/AppView");
 var MainPageView = require("../view/MainPageView");
 var ContactsPageView = require("../view/ContactsPageView");
+var FeedbacksPageView = require("../view/FeedbacksPageView");
 
 var Router = Backbone.Router.extend({
   routes: {
     "admin": "index",
-    "admin/contacts": "contacts"
+    "admin/contacts": "contacts",
+    "admin/feedbacks": "feedbacks"
   },
   initialize: function (options) {
     _.bindAll(this, "index");
@@ -20,6 +22,7 @@ var Router = Backbone.Router.extend({
 
     this.mainPageView = new MainPageView({router: this});
     this.contactsPageView = new ContactsPageView({router: this});
+    this.feedbacksPageView = new FeedbacksPageView({router: this});
 
   },
   index: function () {
@@ -27,6 +30,9 @@ var Router = Backbone.Router.extend({
   },
   contacts: function () {
     this.contactsPageView.render();
+  },
+  feedbacks: function () {
+    this.feedbacksPageView.render();
   }
 });
 

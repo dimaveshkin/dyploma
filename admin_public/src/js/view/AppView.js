@@ -9,7 +9,8 @@ var AppView = Backbone.View.extend({
   template: appTmp,
   events: {
     "click #password": "navMain",
-    "click #contacts": "navContacts"
+    "click #contacts": "navContacts",
+    "click #feedbacks": "navFeedbacks"
   },
   initialize: function (options) {
     this.router = options.router;
@@ -25,6 +26,10 @@ var AppView = Backbone.View.extend({
   navContacts: function (e) {
     e.preventDefault();
     this.router.navigate("/admin/contacts", {trigger: true});
+  },
+  navFeedbacks: function (e) {
+    e.preventDefault();
+    this.router.navigate("/admin/feedbacks", {trigger: true});
   }
 });
 

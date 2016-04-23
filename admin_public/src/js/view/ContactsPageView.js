@@ -13,7 +13,6 @@ var ContactsPageView = Backbone.View.extend({
     var self = this;
 
     $.get('/api/socials', function (socials) {
-      console.log(socials[0]);
       self.$el.html(self.template(socials[0]));
     });
   },
