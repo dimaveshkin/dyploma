@@ -4,12 +4,16 @@ var apiRouter = require("./api");
 var captchapng = require('captchapng');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var compression = require('compression');
 var app = express();
+
+var oneDay = 86400000;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(compression());
 
 app.use(session({
     secret: 'epam',
@@ -18,6 +22,7 @@ app.use(session({
 }));
 app.set('port', 3000);
 
+app.use("/images", express.static(__dirname + '/public/build/images', {maxAge: oneDay}));
 app.use(express.static(__dirname + '/public/build'));
 
 app.get("/", function(req, res, next) {
