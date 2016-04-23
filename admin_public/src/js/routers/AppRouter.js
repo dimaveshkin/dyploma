@@ -8,8 +8,8 @@ var ContactsPageView = require("../view/ContactsPageView");
 
 var Router = Backbone.Router.extend({
   routes: {
-    "": "index",
-    "contacts": "contacts"
+    "admin": "index",
+    "admin/contacts": "contacts"
   },
   initialize: function (options) {
     _.bindAll(this, "index");
