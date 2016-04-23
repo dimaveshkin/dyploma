@@ -8,17 +8,18 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   background: #94a19a;
-  padding: 15px;
+  padding: 50px 90px;
   border-radius: 10px;
 
   input {
     display: block;
-    margin: 15px auto;
+    margin: 25px auto;
     transition: all .3s ease-in-out;
     padding: 5px;
     font-size: 2rem;
     border-radius: 5px;
     outline: none;
+    width: 300px;
     border: 1px solid #DDDDDD;
     &:focus {
       box-shadow: 0 0 5px rgba(81, 203, 238, 1);
@@ -26,6 +27,18 @@ body {
     }
   }
 
+  .captcha {
+    width: 139px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    margin-right: 65px;
+  }
+  .captcha-img {
+    vertical-align: middle;
+    height: 33px;
+    border-radius: 5px;
+  }
   #submit {
     cursor: pointer;
     padding: 5px 40px;

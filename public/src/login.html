@@ -9,11 +9,16 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-   <form class="login-form" method="POST" action="/api/password/login">
-     <input type="text" name="login" placeholder="логин">
-     <input type="password" name="password" placeholder="пароль">
-     <input type="submit" id="submit" value="войти">
-   </form>
+<form class="login-form" method="POST" action="/api/password/login">
+  <input type="text" name="login" placeholder="логин">
+  <input type="password" name="password" placeholder="пароль">
+
+  <div class="captcha-wrapper">
+    <input type="captcha" name="captcha" placeholder="символы" class="captcha">
+    <img src="/captcha.png" class="captcha-img">
+  </div>
+  <input type="submit" id="submit" value="войти">
+</form>
 <script src="./libs/jquery-2.2.2.min.js"></script>
 </body>
 </html>

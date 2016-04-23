@@ -10,7 +10,6 @@ var cryptPassword = require('./helpers/cryptPassword');
 var app = express();
 
 var oneDay = 86400000;
-console.log(cryptPassword('admin'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -18,7 +17,7 @@ app.use(bodyParser.json());
 app.use(compression());
 
 app.use(session({
-    secret: 'epam',
+    secret: 'secret',
     resave: true,
     saveUninitialized: true,
     cookie: {

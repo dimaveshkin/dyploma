@@ -4,7 +4,8 @@
 
   header {
     background: #08251e;
-    height: 185px;
+    height: 125px;
+    border-bottom: 6px solid #3ab7ae;
 
     h1 {
       display: inline-block;
@@ -18,16 +19,14 @@
   }
 }
 
-
-
 .logo {
   text-decoration: none;
   display: inline-block;
-  padding: 25px;
+  padding: 15px;
 
   img {
     vertical-align: middle;
-    width: 70%;
+    width: 50%;
     height: auto;
   }
 }
@@ -35,7 +34,7 @@
 .main-container {
   display: table;
   width: 100%;
-  height: calc(100% - 185px);
+  height: calc(100% - 125px);
   font-family: 'Forum';
 }
 

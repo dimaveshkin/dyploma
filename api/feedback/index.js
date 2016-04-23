@@ -5,7 +5,7 @@ const express = require('express'),
 
 
 router.get('/', function (req, res) { //get all feedabacks
-    db.query('SELECT * FROM feedbacks', function (err, rows, fields) {
+    db.query('SELECT * FROM feedbacks ORDER BY date desc', function (err, rows, fields) {
         if (err) throw err;
 
         res.send(rows);
