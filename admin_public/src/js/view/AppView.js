@@ -14,7 +14,7 @@ var AppView = Backbone.View.extend({
   },
   initialize: function (options) {
     this.router = options.router;
-    _.bindAll(this, "navContacts", "navMain");
+    _.bindAll(this, "navContacts", "navMain", "navFeedbacks");
   },
   render: function () {
     this.$el.html(this.template());
