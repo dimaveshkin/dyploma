@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var compression = require('compression');
 var checkAdmin = require("./middleware/checkAdmin");
+var cryptPassword = require('./helpers/cryptPassword');
 var app = express();
 
 var oneDay = 86400000;
@@ -43,6 +44,8 @@ app.get("/captcha.png", function(req, res, next) {
     res.send(imgbase64);
 });
 
+
+console.log(cryptPassword('admin'));
 app.use("/api", apiRouter);
 
 app.use("/admin", function (req, res) {

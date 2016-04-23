@@ -1,0 +1,29 @@
+.menu {
+  background: #33363f;
+  display: table-cell;
+  width: 18%;
+  min-width: 150px;
+  vertical-align: top;
+
+  a {
+    padding: 13px;
+    font: 20px Roboto;
+    line-height: 25px;
+    display: block;
+    text-decoration: none;
+    box-shadow: inset 0px -1px 0px 0px #4e515b, inset 0px -2px 0px 0px #242730;
+    background-image: linear-gradient(to top, #1c202c 0%, #33363f 100%);
+    transition: all 0.3s ease-in-out;
+    color: #939393;
+
+    i {
+      font-family: 'admin-icons';
+    }
+    &:hover,
+    &.active {
+      color: #3ab7ae;
+      box-shadow: none;
+//      text-decoration: underline;
+    }
+  }
+}
