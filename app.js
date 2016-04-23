@@ -46,7 +46,6 @@ app.get("/captcha.png", function(req, res, next) {
 app.use("/api", apiRouter);
 
 app.use("/admin", function (req, res) {
-    
     if(req.session.admin) {
         res.sendFile(__dirname + "/admin_public/build/pass.html");
     } else {

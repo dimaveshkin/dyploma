@@ -66,9 +66,9 @@ var NotFoundPageView = Backbone.View.extend({
             var image, marker, latlng;
 
             if(isActive) {
-                image = "/images/bull-green.png";
-            } else {
                 image = "/images/bull-yellow.png";
+            } else {
+                image = "/images/bull-green.png";
             }
 
             //TODO: change to normal lng lat
