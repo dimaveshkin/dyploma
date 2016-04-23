@@ -9,6 +9,7 @@
     "body-parser": "^1.15.0",
     "browser-sync": "^2.11.2",
     "captchapng": "0.0.1",
+    "compression": "^1.6.1",
     "cookie-parser": "^1.4.1",
     "crypto": "0.0.3",
     "del": "^2.2.0",
