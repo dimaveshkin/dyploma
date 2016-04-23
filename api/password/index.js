@@ -5,7 +5,9 @@ const express = require('express'),
     cryptPassword = require('../../helpers/cryptPassword');
 
 router.post('/change', checkAdmin, function (req, res) {//change password
-    if (compare(req.body.oldPassword)) {
+  compare('admin', function (err, rows, fields) {
+    if(rows && rows[0].password == cryptPassword(req.body.oldPassword)) {
+      console.log(req.body.password);
         db.query('UPDATE users SET ?', [{password: cryptPassword(req.body.password)}],
             function (err, result) {
                 if (err) throw err;
@@ -13,8 +15,10 @@ router.post('/change', checkAdmin, function (req, res) {//change password
                 res.send(true);
             });
     } else {
-        res.send({error: 'Пароль не верный'})
+      res.send({error: 'Пароль не верный'})
     }
+  });
+
 });
 
 router.post('/login', function (req, res) {//compare password

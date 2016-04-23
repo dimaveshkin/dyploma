@@ -10,7 +10,7 @@ var cryptPassword = require('./helpers/cryptPassword');
 var app = express();
 
 var oneDay = 86400000;
-
+console.log(cryptPassword('admin'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 

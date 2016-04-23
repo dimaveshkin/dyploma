@@ -20,11 +20,11 @@ var AppView = Backbone.View.extend({
   },
   navMain: function (e) {
     e.preventDefault();
-    this.router.navigate("", {trigger: true});
+    this.router.navigate("/admin", {trigger: true});
   },
   navContacts: function (e) {
     e.preventDefault();
-    this.router.navigate("contacts", {trigger: true});
+    this.router.navigate("/admin/contacts", {trigger: true});
   }
 });
 
