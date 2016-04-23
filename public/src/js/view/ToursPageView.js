@@ -17,6 +17,8 @@ var ToursPageView = Backbone.View.extend({
         this.router = options.router;
     },
     render: function (id){
+        $('.item-active').removeClass('item-active');
+        $('#nav-tours').addClass('item-active');
         this.$el.removeClass("grey-background-after");
 
         this.$el.html(this.template());

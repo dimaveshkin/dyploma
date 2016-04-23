@@ -1,7 +1,10 @@
 <div class="tour-page">
   <ul class="tour-head-imgs">
     {{#each img.head}}
-      <li class="tour-head-img" style="background-image: url({{this}})"></li>
+      <li class="tour-head-img " style="background-image: url({{this}})">
+        <a href="{{this}}" title="{{#if desc}}{{desc}}<br/>{{/if}}" class="fancybox link-block" rel="all-gallery" onmouseover="this.setAttribute('org_title', this.title); this.title='';" onclick="this.title = this.getAttribute('org_title');" onmouseout="this.title = this.getAttribute('org_title');">
+        </a>
+      </li>
     {{/each}}
   </ul>
   <article class="tour-desc">

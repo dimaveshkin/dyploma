@@ -17,10 +17,13 @@
       color: #fff;
       text-decoration: none;
       cursor: pointer;
+
+      &.item-active {
+        text-decoration: underline;
+      }
     }
 
-    .nav-list-item a:hover,
-    .item-active {
+    .nav-list-item a:hover {
       text-decoration: underline;
     }
   }

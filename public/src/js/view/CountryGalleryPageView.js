@@ -10,6 +10,9 @@ var CountryGalleryPageView = Backbone.View.extend({
 
     },
     render: function (countryName){
+      $('.item-active').removeClass('item-active');
+      $('#nav-gallery').addClass('item-active');
+
         var that = this;
         this.$el.removeClass("grey-background-after");
 

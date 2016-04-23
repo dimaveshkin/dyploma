@@ -20,7 +20,7 @@
 }
 
 .tour-desc {
-  font: 2rem "Forum";
+  font: 2rem "Roboto";
 
   h2 {
     color: #000;
@@ -28,6 +28,7 @@
     font-size: 4rem;
     text-align: center;
     margin: 20px -40px;
+    font-family: "Forum";
   }
 
   .tour-text {
@@ -40,6 +41,7 @@
     background: #fff;
     padding: 0 60px;
     margin: 30px -40px;
+    font-family: "Forum";
     display: flex;
     justify-content: space-between;
   }

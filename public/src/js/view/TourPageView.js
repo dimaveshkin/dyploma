@@ -13,13 +13,27 @@ var TourPageView = Backbone.View.extend({
 
     },
     render: function (id) {
+        $('.item-active').removeClass('item-active');
+        $('#nav-tours').addClass('item-active');
         var that = this;
         this.id = id;
         this.$el.addClass("grey-background-after");
 
         $.get("/api/tours/" + id, function (tour) {
-            console.log(tour);
-            that.$el.html(that.template(tour[0]));
+          that.$el.html(that.template(tour[0]));
+
+          $(".fancybox").fancybox({
+            prevEffect	: 'none',
+            nextEffect	: 'none',
+            helpers	: {
+              title	: {
+                type: 'outside'
+              }
+            },
+            beforeShow : function() {
+              this.title = (this.index + 1) + ' / ' + this.group.length + ' </span>';
+            }
+          });
         });
     },
     events: {

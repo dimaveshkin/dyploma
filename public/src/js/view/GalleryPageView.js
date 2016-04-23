@@ -14,6 +14,8 @@ var GalleryPageView = Backbone.View.extend({
     },
     render: function () {
         var that = this;
+        $('.item-active').removeClass('item-active');
+        $('#nav-gallery').addClass('item-active');
 
         this.$el.html(this.template());
         $.get("/api/gallery/getGallery", function (gallery) {
