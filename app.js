@@ -5,6 +5,7 @@ var captchapng = require('captchapng');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var compression = require('compression');
+var checkAdmin = require("./middleware/checkAdmin");
 var app = express();
 
 var oneDay = 86400000;
@@ -22,12 +23,14 @@ app.use(session({
 }));
 app.set('port', 3000);
 
-app.use("/images", express.static(__dirname + '/public/build/images', {maxAge: oneDay}));
+app.use("/images", express.static(__dirname + '/images/build', {maxAge: oneDay}));
 app.use(express.static(__dirname + '/public/build'));
+app.use("/admin", checkAdmin, express.static(__dirname + '/admin_public/build'));
 
 app.get("/", function(req, res, next) {
     res.sendFile(__dirname + "/public/build/index.html");
 });
+
 app.get("/captcha.png", function(req, res, next) {
     req.session.captcha = parseInt(Math.random()*9000+1000);
 
@@ -41,6 +44,14 @@ app.get("/captcha.png", function(req, res, next) {
 });
 
 app.use("/api", apiRouter);
+
+app.use("/admin", function (req, res) {
+    if(req.session.admin) {
+        res.sendFile(__dirname + "/admin_public/build/pass.html");
+    } else {
+        res.sendFile(__dirname + "/admin_public/build/login.html");
+    }
+});
 
 app.use(function(req, res, next) {
     res.sendFile(__dirname + "/public/build/index.html");

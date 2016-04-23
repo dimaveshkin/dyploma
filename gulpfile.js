@@ -18,7 +18,7 @@ var path = {
         scss: ["public/src/scss/main.scss"],
         mainjs: ["public/src/js/main.js"],
         js: ["public/src/js/**/*.js"],
-        images: "public/src/images/**/*",
+        images: "images/src/**/*",
         copy: {
             html: [
                 "public/src/*.html",
@@ -34,7 +34,7 @@ var path = {
     build: {
         css: "public/build/css",
         js: "public/build/js",
-        images: "public/build/images/",
+        images: "images/build/",
         copy: {
             html: "public/build/",
             // images: "public/build/images/",
@@ -48,7 +48,7 @@ var path = {
     }
 };
 
-var buildTasks = ["scss:build", "js:build", "img:build"];
+var buildTasks = ["scss:build", "js:build"];
 
 gulp.task("scss:build", function () {
     gulp.src(path.src.scss)

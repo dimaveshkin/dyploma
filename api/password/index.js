@@ -1,7 +1,7 @@
 const express = require('express'),
     router = express.Router(),
     db = require('../../helpers/db'),
-    checkAdmin = require(__dirname + '/middleware/checkAdmin'),
+    checkAdmin = require('../../middleware/checkAdmin'),
     cryptPassword = require('../../helpers/cryptPassword');
 
 router.post('/change', checkAdmin, function (req, res) {//change password
