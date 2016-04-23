@@ -1,9 +1,10 @@
 const express = require('express'),
     router = express.Router(),
     db = require('../../helpers/db'),
+    checkAdmin = require(__dirname + '/middleware/checkAdmin'),
     cryptPassword = require('../../helpers/cryptPassword');
 
-router.post('/change', function (req, res) {//change password
+router.post('/change', checkAdmin, function (req, res) {//change password
     if (compare(req.body.oldPassword)) {
         db.query('UPDATE users SET ?', [{password: cryptPassword(req.body.password)}],
             function (err, result) {
