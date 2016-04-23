@@ -18,24 +18,25 @@ router.post('/change', checkAdmin, function (req, res) {//change password
 });
 
 router.post('/login', function (req, res) {//compare password
-    if(compare(req.body.password)){
-        req.session.userId = user._id;
-        req.session.admin = true;
+    compare(req.body.login, function (err, rows, fields) {
+        if(rows && rows[0].password == cryptPassword(req.body.password)) {
+            req.session.userId = rows[0].id;
+            req.session.admin = true;
+            res.redirect('/admin');
+        } else {
+            res.send({error: 'Логин и/или пароль ошибочны!'})
+        }
+    });
+});
 
-        res.redirect('/admin');
-    } else {
-        res.send({error: 'Пароль не верный'})
-    }
+router.use('/logout', function (req, res, next) {//compare password
+    req.session.destroy();
+    res.redirect("/admin");
 });
 
 
-function compare(password) {
-    return db.query('SELECT * FROM users', function (err, rows, fields) {
-        if(rows[0].password == cryptPassword(password)) {
-            return rows[0].id
-        }
-        return false;
-    });
+function compare(login, cb) {
+    db.query('SELECT * FROM users WHERE users.login = "' + login + '"', cb);
 }
 module.exports = router;
 

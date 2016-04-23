@@ -11,22 +11,25 @@ var app = express();
 
 var oneDay = 86400000;
 
-app.use(bodyParser.json());
 app.use(cookieParser());
-
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
 app.use(compression());
 
 app.use(session({
     secret: 'epam',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 900000 //15 mins
+    }
 }));
+
 app.set('port', 3000);
 
 app.use("/images", express.static(__dirname + '/images/build', {maxAge: oneDay}));
 app.use(express.static(__dirname + '/public/build'));
-app.use("/admin", checkAdmin, express.static(__dirname + '/admin_public/build'));
 
 app.get("/", function(req, res, next) {
     res.sendFile(__dirname + "/public/build/index.html");
@@ -52,9 +55,11 @@ app.use("/admin", function (req, res) {
     if(req.session.admin) {
         res.sendFile(__dirname + "/admin_public/build/pass.html");
     } else {
-        res.sendFile(__dirname + "/admin_public/build/login.html");
+        res.sendFile(__dirname + "/public/build/login.html");
     }
 });
+
+app.use("/admin", checkAdmin, express.static(__dirname + '/admin_public/build'));
 
 app.use(function(req, res, next) {
     res.sendFile(__dirname + "/public/build/index.html");
