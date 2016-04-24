@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var compression = require('compression');
 var checkAdmin = require("./middleware/checkAdmin");
+var checkCaptcha = require("./middleware/checkCaptcha");
 var cryptPassword = require('./helpers/cryptPassword');
 var app = express();
 

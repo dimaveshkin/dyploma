@@ -11,6 +11,15 @@ body {
   padding: 50px 90px;
   border-radius: 10px;
 
+  .error-message {
+    margin-top: 10px;
+    background: rgba(255,0,0,.2);
+    padding: 15px;
+    display: none;
+    font: 16px Roboto;
+    width: 300px;
+  }
+
   input {
     display: block;
     margin: 25px auto;
