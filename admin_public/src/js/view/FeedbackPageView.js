@@ -9,18 +9,13 @@ var FeedbackPageView = Backbone.View.extend({
   row: null,
   template: feedbackPageTmp,
   initialize: function (feedback) {
-    _.bindAll(this, "render", "removeFeedback");
+    _.bindAll(this, "render");
     this.id = feedback.id;
-    console.log(this.id);
     this.render(feedback);
 
   },
   render: function (feedback) {
    this.el = this.$el.append(this.template(feedback));
-  },
-
-  removeFeedback: function () {
-    console.log(this.id);
   }
 
 });

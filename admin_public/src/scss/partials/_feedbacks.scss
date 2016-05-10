@@ -4,3 +4,15 @@
 .remove-feedback:hover {
   color: #FF4500;
 }
+
+.feedbacks-tbl tr td {
+  cursor: auto;
+}
+
+.table.feedbacks-tbl tr:hover {
+  background: #f9f9f9;
+}
+
+.no-feedbacks {
+  color: #cecece;
+}
