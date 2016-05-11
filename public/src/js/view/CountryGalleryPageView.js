@@ -17,7 +17,7 @@ var CountryGalleryPageView = Backbone.View.extend({
         this.$el.removeClass("grey-background-after");
 
         $.get("/api/gallery/country/" + countryName, function (photos) {
-            that.$el.html(that.template({photos: photos, countryName: photos[0].name}));
+            that.$el.html(that.template({photos: photos.list, countryName: photos.list[0].name}));
 
             $(".fancybox").fancybox({
                 prevEffect	: 'none',

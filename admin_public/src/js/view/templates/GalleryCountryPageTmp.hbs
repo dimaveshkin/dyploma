@@ -1,9 +1,18 @@
 <ul class="images-gallery">
     {{#each photos}}
-        <li class="gallery-img-item city-item">
-            <a href="{{src}}" title="{{#if desc}}{{desc}}<br/>{{/if}}" rel="city-gallery" class="fancybox link-block">
-                <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
-            </a>
-        </li>
+      <li class="gallery-img-item city-item" data-photo-id="{{id}}">
+        <a href="{{src}}" title="{{#if desc}}{{desc}}<br/>{{/if}}" rel="city-gallery" class="fancybox link-block">
+          <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
+          <p class="img-caption">
+              {{#if is_best}}
+                <i class="icon-star best-remove" title="Удалить из избранного"></i>
+              {{else}}
+                <i class="icon-star-empty best-add" title="Добавить в избранное"></i>
+              {{/if}}
+            <i class="icon-cancel remove-photo" title="Удалить"></i>
+            <i class="icon-picture" title="Сделать обложкой альбома"></i>
+          </p>
+        </a>
+      </li>
     {{/each}}
 </ul>

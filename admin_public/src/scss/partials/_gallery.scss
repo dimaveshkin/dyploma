@@ -69,6 +69,26 @@
   }
 }
 
-.delete-country {
+.best-add {
+  color: #696969;
 
+  &:hover {
+    color: #ffd400;
+  }
+}
+
+.best-remove {
+   color: #ffd400;
+
+   &:hover {
+     color: #FF4500;
+   }
+ }
+
+.remove-photo {
+  color: #696969;
+
+  &:hover {
+    color: #FF4500;
+  }
 }
