@@ -2,7 +2,10 @@ const express = require('express'),
     router = express.Router(),
     db = require('../../helpers/db'),
     imgPath = require('../../helpers/imgPath'),
-    transliteration = require('transliteration.cyr');
+    del = require('del'),
+    transliteration = require('transliteration.cyr'),
+    imgSrcDeletePath = "images/src/",
+    imgBuildDeletePath = "images/build/";
 
 
 router.get('/countries', function (req, res) {//countries list
@@ -61,6 +64,41 @@ router.get('/country/:location', function (req, res) { //by country
     db.query('SELECT p.id, src, title, p.desc, name FROM photos as p, countries as c WHERE c.international ="' + req.params.location + '" AND p.country_id = c.id', function (err, rows, fields) {
         if (err) throw err;
         res.send(imgPath.concatPath(rows));
+    });
+});
+
+//TODO: check admin
+router.get('/country/remove/:location', function (req, res) { //by country
+
+    db.query('SELECT id FROM countries WHERE c.international ="' + req.params.location + '"', function (err, rows, fields) {
+        var id, photos;
+
+        if (err) throw err;
+
+        if(rows){
+            id = rows[0].id;
+
+            db.query('SELECT src FROM photos WHERE country_id = ' + id, function (err, rows, fields) {
+                rows.forEach(function (row) {
+                    photos.push(imgBuildDeletePath + row.src);
+                });
+
+                db.query('DELETE FROM countries WHERE c.international ="' + req.params.location + '"', function (err, rows) {
+                    if (err) throw err;
+
+                    del(photos).then(function (paths) {
+                        if(paths) {
+                            console.log("Deleted:\n" + paths.join("\n"))
+                            res.json({code: 200, message:"Success!"})
+                        } else {
+                            res.json({code: 500, message:"Nothing has been deleted!"})
+                        }
+                    });
+                });
+            });
+        } else {
+            res.json({code: 404, message:"No country found!"})
+        }
     });
 });
 
