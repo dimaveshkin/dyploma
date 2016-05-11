@@ -10,11 +10,12 @@ var AppView = Backbone.View.extend({
   events: {
     "click #password": "navMain",
     "click #contacts": "navContacts",
-    "click #feedbacks": "navFeedbacks"
+    "click #feedbacks": "navFeedbacks",
+    "click #categories": "navCategories"
   },
   initialize: function (options) {
     this.router = options.router;
-    _.bindAll(this, "navContacts", "navMain", "navFeedbacks");
+    _.bindAll(this, "navContacts", "navMain", "navFeedbacks", "navCategories");
   },
   render: function () {
     this.$el.html(this.template());
@@ -30,6 +31,10 @@ var AppView = Backbone.View.extend({
   navFeedbacks: function (e) {
     e.preventDefault();
     this.router.navigate("/admin/feedbacks", {trigger: true});
+  },
+  navCategories: function(e) {
+    e.preventDefault();
+    this.router.navigate("/admin/categories", {trigger: true});
   }
 });
 

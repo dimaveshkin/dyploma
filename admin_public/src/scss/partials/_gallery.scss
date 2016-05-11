@@ -1,0 +1,74 @@
+.gallery-img {
+  width: 100%;
+  height: 0;
+  padding-bottom: 60%;
+}
+
+.gallery-img-item .gallery-img {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  //background-image: url("../images/israel_1.jpg");
+}
+
+.images-gallery {
+  font-size: 0;
+
+  .gallery-img-item {
+    width: 24%;
+    display: inline-block;
+    margin: .5%;
+    vertical-align: top;
+  }
+}
+
+.gallery-img-item {
+  cursor: pointer;
+}
+
+.gallery-img-item {
+  .slide-wrapper {
+    max-width: 350px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
+
+.gallery-img-item:hover .img-caption {
+  background: $bg-figcaption-hover;
+  color: $cl-figcaption-hover;
+
+  .delete-country {
+      color: #000;
+    &:hover {
+      color: #FF4500;
+    }
+  }
+}
+
+.img-caption {
+  background: $bg-figcaption;
+  text-align: center;
+  padding: 5px;
+  position: relative;
+  z-index: 2;
+  font: $font-gallery;
+  color: $cl-figcaption;
+}
+
+.add-city {
+  border: 2px dashed #c0c0c0;
+  text-align: center;
+  color: #c0c0c0;
+  transition: all .6s;
+  font-size: 168px;
+
+  &:hover {
+    color: #000;
+    border-color: #000;
+  }
+}
+
+.delete-country {
+
+}

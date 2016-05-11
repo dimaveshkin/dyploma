@@ -1,8 +1,13 @@
 .feedback-text {
   text-align: justify;
 }
-.remove-feedback:hover {
-  color: #FF4500;
+
+.remove-feedback {
+  cursor: pointer;
+
+  &:hover {
+    color: #FF4500;
+  }
 }
 
 .feedbacks-tbl tr td {
