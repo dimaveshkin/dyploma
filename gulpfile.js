@@ -194,15 +194,15 @@ gulp.task('watch', function () {
     });
 
     watch(adminPath.watch.scss, function (event, cb) {
-        gulp.start('scss:build');
+        gulp.start('admin:scss:build');
     });
 
     watch(adminPath.src.js, function (event, cb) {
-        gulp.start('js:build');
+        gulp.start('admin:js:build');
     });
 
     watch(adminPath.src.templates, function (event, cb) {
-        gulp.start('js:build');
+        gulp.start('admin:js:build');
     });
 
     watch(path.src.images, function (event, cb) {

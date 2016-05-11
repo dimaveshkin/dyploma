@@ -15,7 +15,8 @@ var Router = Backbone.Router.extend({
     "admin/contacts": "contacts",
     "admin/feedbacks": "feedbacks",
     "admin/categories": "categories",
-    "admin/categories/:name": "countryCategory"
+    "admin/categories/:name": "countryCategory",
+    "*NotFound": "notFound"
   },
   initialize: function (options) {
     _.bindAll(this, "index");
@@ -45,6 +46,9 @@ var Router = Backbone.Router.extend({
   },
   countryCategory: function (name) {
     this.galleryCountryPageTmp.render(name);
+  },
+  notFound: function () {
+    this.mainPageView.render();
   }
 });
 

@@ -23,6 +23,8 @@ var GalleryPageView = Backbone.View.extend({
             });
 
             $('.delete-country').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 console.log($(e.currentTarget).closest('li').data("countryname"));
                 //that.router.navigate("categories/" + $(e.currentTarget).data("countryname"), {trigger: true});
             });
