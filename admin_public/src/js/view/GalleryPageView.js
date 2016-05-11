@@ -27,7 +27,7 @@ var GalleryPageView = Backbone.View.extend({
                 var countryItem = $(e.currentTarget).closest('li');
 
                 //FIXME: isnt working
-                $.get("/api/country/remove/" + countryItem.data("countryname")).done(function (response) {
+                $.get("/api/gallery/country/remove/" + countryItem.data("countryname")).done(function (response) {
                     if(response.code === 200) {
                         countryItem.remove();
                     } else {

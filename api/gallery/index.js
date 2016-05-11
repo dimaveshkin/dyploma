@@ -103,24 +103,24 @@ router.get('/country/:location', function (req, res) { //by country
 
 //TODO: check admin
 router.get('/country/remove/:location', function (req, res) { //by country
-
-    db.query('SELECT id FROM countries as c WHERE c.international ="' + req.params.location + '"', function (err, rows, fields) {
+    console.log("here");
+    db.query('SELECT id FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows, fields) {
         var id, photos = [];
 
         if (err) throw err;
-
+        console.log(rows);
         if(rows){
             id = rows[0].id;
-
+            console.log(id);
             db.query('SELECT src FROM photos WHERE country_id = ' + id, function (err, rows, fields) {
                 rows.forEach(function (row) {
                     photos.push(imgBuildDeletePath + row.src);
                 });
 
-
-                db.query('DELETE FROM countries as c WHERE c.international ="' + req.params.location + '"', function (err, rows) {
+                console.log(photos);
+                db.query('DELETE FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows) {
                     if (err) throw err;
-
+                    console.log(rows);
                     del(photos).then(function (paths) {
                         if(paths) {
                             console.log("Deleted:\n" + paths.join("\n"))
