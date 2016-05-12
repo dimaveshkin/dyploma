@@ -70,8 +70,13 @@ var GalleryPageView = Backbone.View.extend({
       closeOnCancel: true
     }, function () {
 
-      $.get("/api/gallery/photo/remove/" + id, function () {
-        $(e.target).closest('li').remove();
+      $.get("/api/gallery/photo/remove/" + id, function (response) {
+        if(response.code === 200) {
+          $(e.target).closest('li').remove();
+        } else {
+          swal("Ошибка", response.error);
+        }
+
       });
     });
 

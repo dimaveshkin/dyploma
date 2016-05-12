@@ -14,7 +14,7 @@ var GalleryPageView = Backbone.View.extend({
         var that = this;
 
         $.get("/api/gallery/countries", function (countries) {
-            that.$el.html(that.template({countries:countries}));
+            that.$el.html(that.template({countries: countries}));
 
             $('.country-gallery-link').on('click', function (e) {
                 e.preventDefault();
@@ -25,14 +25,25 @@ var GalleryPageView = Backbone.View.extend({
 
             $('.delete-country').on('click', function (e) {
                 var countryItem = $(e.currentTarget).closest('li');
-
-                //FIXME: isnt working
-                $.get("/api/gallery/country/remove/" + countryItem.data("countryname")).done(function (response) {
-                    if(response.code === 200) {
-                        countryItem.remove();
-                    } else {
-                        swal("Ошибка", response.message);
-                    }
+                swal({
+                    title: "Удалить альбом",
+                    text: "Вы действительно хотите безворвзратно удалить альбом?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Удалить",
+                    cancelButtonText: "Отмена",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function () {
+                    //FIXME: isnt working
+                    $.get("/api/gallery/country/remove/" + countryItem.data("countryname")).done(function (response) {
+                        if (response.code === 200) {
+                            countryItem.remove();
+                        } else {
+                            swal("Ошибка", response.message);
+                        }
+                    });
                 });
                 //that.router.navigate("categories/" + $(e.currentTarget).data("countryname"), {trigger: true});
 

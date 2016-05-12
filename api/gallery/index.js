@@ -9,7 +9,7 @@ const express = require('express'),
 
 
 router.get('/countries', function (req, res) {//countries list
-    db.query('SELECT c.id, c.name, c.international, c.cover FROM countries AS c INNER JOIN photos AS p ON p.country_id = c.id GROUP BY c.name ORDER BY c.id ASC', function (err, rows, fields) {
+    db.query('SELECT * FROM countries', function (err, rows, fields) {
         if (err) throw err;
 
         res.send(imgPath.concatPath(rows, 'cover'));
