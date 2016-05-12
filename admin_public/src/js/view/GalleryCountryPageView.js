@@ -22,12 +22,10 @@ var GalleryPageView = Backbone.View.extend({
     //$('#nav-gallery').addClass('item-active');
 
     var that = this;
-    this.countryName = countryName;
-    //this.$el.removeClass("grey-background-after");
 
     $.get("/api/gallery/country/" + countryName, function (photos) {
-      that.$el.html(that.template({photos: photos.list, countryName: photos.list[0].name}));
-
+      that.$el.html(that.template({photos: photos.list, countryName: photos.list[0].name, id: photos.id}));
+      that.countryId = photos.id;
       $(".fancybox").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -86,7 +84,7 @@ var GalleryPageView = Backbone.View.extend({
     e.stopPropagation();
   },
   addPhoto: function () {
-    this.router.navigate("/admin/categories/" + this.countryName + "/add", {trigger: true});
+    this.router.navigate("/admin/categories/" + this.countryId + "/add", {trigger: true});
   }
 });
 

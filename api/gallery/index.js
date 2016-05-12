@@ -13,23 +13,33 @@ http = require('http'),
     multiparty = require('multiparty');
 
 router.post('/upload', function (req, res) {//upload photo
-
-    var form = new multiparty.Form({uploadDir: "test"});
-    //res.send('ok');
+    var form = new multiparty.Form({uploadDir: 'test'});
     form.parse(req, function(err, fields, files) {
+      console.log(files);
+
+      db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
+        if (err) throw err;
+        console.log(name);
+        var international = name[0].international;
 
         for(var i = 0, length = files.image.length; i < length; i++) {
-            console.log(files.image[i].path);
-            console.log(files.image[i].originalFilename);
+          fs.rename(files.image[i].path, imgBuildDeletePath + international + "/" + files.image[i].originalFilename, function(err) {
+            if ( err ) console.log('ERROR: ' + err);
+          });
 
-            fs.rename(files.image[i].path, 'test/' + files.image[i].originalFilename, function(err) {
-                if ( err ) console.log('ERROR: ' + err);
-            });
+          var photo = {
+            src: international + "/" + files.image[i].originalFilename,
+            country_id: fields.id,
+            is_best: 0,
+            title: fields['title[]'][i],
+            desc: fields['desc[]'][i]
+          };
+
+          db.query('INSERT INTO photos SET ?', photo, function (err, result) {
+            if (err) throw err;
+          });
         }
-
-        //res.writeHead(200, {'content-type': 'text/plain'});
-        //res.write('received upload:\n\n');
-        //res.end(util.inspect({fields: fields, files: files}));
+      });
 
         res.send(util.inspect({fields: fields, files: files}));
     });
@@ -120,9 +130,12 @@ router.get('/country/:location', function (req, res) { //by country
         if (err) throw err;
 //        res.send(imgPath.concatPath(rows));
       country.list = imgPath.concatPath(rows);
-      db.query('SELECT cover FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
+      db.query('SELECT cover, id FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
         if (err) throw err;
-        country.cover = imgPath.concatPath(rows, 'cover');
+        country.id = rows[0].id;
+        imgPath.concatPath(rows, 'cover')
+        country.cover = rows[0].cover;
+
         res.send(country);
       });
     });

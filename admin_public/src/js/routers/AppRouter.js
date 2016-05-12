@@ -16,7 +16,7 @@ var Router = Backbone.Router.extend({
     "admin/contacts": "contacts",
     "admin/feedbacks": "feedbacks",
     "admin/categories": "categories",
-    "admin/categories/:name/add": "addPhoto",
+    "admin/categories/:id/add": "addPhoto",
     "admin/categories/:name": "countryCategory",
 
     "*NotFound": "notFound"
@@ -54,8 +54,8 @@ var Router = Backbone.Router.extend({
   notFound: function () {
     this.mainPageView.render();
   },
-  addPhoto: function(name) {
-    this.newPhotoPageView.render(name);
+  addPhoto: function(id) {
+    this.newPhotoPageView.render(id);
   }
 });
 
