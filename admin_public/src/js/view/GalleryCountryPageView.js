@@ -9,18 +9,20 @@ var GalleryPageView = Backbone.View.extend({
   template: galleryPageTmp,
   initialize: function (options) {
     this.router = options.router;
-    _.bindAll(this, "render", "addToBest");
+    _.bindAll(this, "render", "addToBest", "addPhoto");
   },
   events: {
     "click li .best-add": "addToBest",
     "click li .best-remove": "removeFromBest",
-    "click li .remove-photo": "removePhoto"
+    "click li .remove-photo": "removePhoto",
+    "click .add-photo": "addPhoto"
   },
   render: function (countryName) {
     //$('.item-active').removeClass('item-active');
     //$('#nav-gallery').addClass('item-active');
 
     var that = this;
+    this.countryName = countryName;
     //this.$el.removeClass("grey-background-after");
 
     $.get("/api/gallery/country/" + countryName, function (photos) {
@@ -82,6 +84,9 @@ var GalleryPageView = Backbone.View.extend({
 
     e.preventDefault();
     e.stopPropagation();
+  },
+  addPhoto: function () {
+    this.router.navigate("/admin/categories/" + this.countryName + "/add", {trigger: true});
   }
 });
 

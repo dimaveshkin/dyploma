@@ -8,6 +8,7 @@ var ContactsPageView = require("../view/ContactsPageView");
 var FeedbacksPageView = require("../view/FeedbacksPageView");
 var GalleryPageView = require("../view/GalleryPageView");
 var GalleryCountryPageTmp = require("../view/GalleryCountryPageView");
+var NewPhotoPageView = require("../view/NewPhotoPageView");
 
 var Router = Backbone.Router.extend({
   routes: {
@@ -15,7 +16,9 @@ var Router = Backbone.Router.extend({
     "admin/contacts": "contacts",
     "admin/feedbacks": "feedbacks",
     "admin/categories": "categories",
+    "admin/categories/:name/add": "addPhoto",
     "admin/categories/:name": "countryCategory",
+
     "*NotFound": "notFound"
   },
   initialize: function (options) {
@@ -30,6 +33,7 @@ var Router = Backbone.Router.extend({
     this.feedbacksPageView = new FeedbacksPageView({router: this});
     this.galleryPageView = new GalleryPageView({router: this});
     this.galleryCountryPageTmp = new GalleryCountryPageTmp({router: this});
+    this.newPhotoPageView = new NewPhotoPageView({router: this});
 
   },
   index: function () {
@@ -49,6 +53,9 @@ var Router = Backbone.Router.extend({
   },
   notFound: function () {
     this.mainPageView.render();
+  },
+  addPhoto: function(name) {
+    this.newPhotoPageView.render(name);
   }
 });
 

@@ -7,6 +7,33 @@ const express = require('express'),
     imgSrcDeletePath = "images/src/",
     imgBuildDeletePath = "images/build/gallery/";
 
+http = require('http'),
+    util = require('util'),
+    fs = require('fs'),
+    multiparty = require('multiparty');
+
+router.post('/upload', function (req, res) {//upload photo
+
+    var form = new multiparty.Form({uploadDir: "test"});
+    //res.send('ok');
+    form.parse(req, function(err, fields, files) {
+
+        for(var i = 0, length = files.image.length; i < length; i++) {
+            console.log(files.image[i].path);
+            console.log(files.image[i].originalFilename);
+
+            fs.rename(files.image[i].path, 'test/' + files.image[i].originalFilename, function(err) {
+                if ( err ) console.log('ERROR: ' + err);
+            });
+        }
+
+        //res.writeHead(200, {'content-type': 'text/plain'});
+        //res.write('received upload:\n\n');
+        //res.end(util.inspect({fields: fields, files: files}));
+
+        res.send(util.inspect({fields: fields, files: files}));
+    });
+});
 
 router.get('/countries', function (req, res) {//countries list
     db.query('SELECT * FROM countries', function (err, rows, fields) {
