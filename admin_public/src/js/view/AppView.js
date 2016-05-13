@@ -11,6 +11,7 @@ var AppView = Backbone.View.extend({
     "click #password": "navMain",
     "click #contacts": "navContacts",
     "click #feedbacks": "navFeedbacks",
+    "click #tours": "navTours",
     "click #categories": "navCategories"
   },
   initialize: function (options) {
@@ -35,6 +36,10 @@ var AppView = Backbone.View.extend({
   navCategories: function(e) {
     e.preventDefault();
     this.router.navigate("/admin/categories", {trigger: true});
+  },
+  navTours: function(e) {
+    e.preventDefault();
+    this.router.navigate("/admin/tours", {trigger: true});
   }
 });
 

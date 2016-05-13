@@ -2,7 +2,7 @@ const GALLERY_SOURCE = "/images/gallery/",
       TOURS_SOURCE = "/images/tours/";
 
 module.exports = {
-  concatPath: function(obj, field, src)  {
+  concatPath: function(objArray, field, src)  {
     if (!field) {
       field = 'src';
     }
@@ -11,11 +11,11 @@ module.exports = {
       src = GALLERY_SOURCE;
     }
 
-    for (var i = 0, length = obj.length; i < length; i++) {
-      obj[i][field] = src + obj[i][field];
+    for (var i = 0, length = objArray.length; i < length; i++) {
+      objArray[i][field] = src + objArray[i][field];
     }
 
-    return obj;
+    return objArray;
   },
   JSONPath: function (obj, field) {
     for (var i = 0, length = obj.length; i < length; i++) {

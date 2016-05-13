@@ -5,9 +5,8 @@ const express = require('express'),
     del = require('del'),
     transliteration = require('transliteration.cyr'),
     imgSrcDeletePath = "images/src/",
-    imgBuildDeletePath = "images/build/gallery/";
-
-http = require('http'),
+    imgBuildDeletePath = "images/build/gallery/",
+    http = require('http'),
     util = require('util'),
     fs = require('fs'),
     multiparty = require('multiparty');
@@ -143,21 +142,16 @@ router.get('/country/:location', function (req, res) { //by country
 
 //TODO: check admin
 router.get('/country/remove/:location', function (req, res) { //by country
-    console.log("here");
     db.query('SELECT id FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows, fields) {
         var id, photos = [];
-
         if (err) throw err;
-        console.log(rows);
         if(rows){
             id = rows[0].id;
-            console.log(id);
             db.query('SELECT src FROM photos WHERE country_id = ' + id, function (err, rows, fields) {
                 rows.forEach(function (row) {
                     photos.push(imgBuildDeletePath + row.src);
                 });
 
-                console.log(photos);
                 db.query('DELETE FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows) {
                     if (err) throw err;
                     console.log(rows);

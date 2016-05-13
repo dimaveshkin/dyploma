@@ -9,6 +9,7 @@ var FeedbacksPageView = require("../view/FeedbacksPageView");
 var GalleryPageView = require("../view/GalleryPageView");
 var GalleryCountryPageTmp = require("../view/GalleryCountryPageView");
 var NewPhotoPageView = require("../view/NewPhotoPageView");
+var ToursPageView = require("../view/ToursPageView");
 
 var Router = Backbone.Router.extend({
   routes: {
@@ -16,6 +17,7 @@ var Router = Backbone.Router.extend({
     "admin/contacts": "contacts",
     "admin/feedbacks": "feedbacks",
     "admin/categories": "categories",
+    "admin/tours": "tours",
     "admin/categories/:id/add": "addPhoto",
     "admin/categories/:name": "countryCategory",
 
@@ -34,7 +36,7 @@ var Router = Backbone.Router.extend({
     this.galleryPageView = new GalleryPageView({router: this});
     this.galleryCountryPageTmp = new GalleryCountryPageTmp({router: this});
     this.newPhotoPageView = new NewPhotoPageView({router: this});
-
+    this.toursPageView = new ToursPageView({router: this});
   },
   index: function () {
     this.mainPageView.render();
@@ -47,6 +49,9 @@ var Router = Backbone.Router.extend({
   },
   categories: function() {
     this.galleryPageView.render();
+  },
+  tours: function() {
+    this.toursPageView.render();
   },
   countryCategory: function (name) {
     this.galleryCountryPageTmp.render(name);
