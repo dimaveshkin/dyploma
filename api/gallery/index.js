@@ -48,6 +48,11 @@ router.post('/upload', function (req, res) {//upload photo
 router.get('/countries', function (req, res) {//countries list
     db.query('SELECT * FROM countries', function (err, rows, fields) {
         if (err) throw err;
+        for(var i = 0; i < rows.length; i++) {
+            if(rows[i].cover === '') {
+                rows[i].cover = 'default.jpg';
+            }
+        }
 
         res.send(imgPath.concatPath(rows, 'cover'));
     });
