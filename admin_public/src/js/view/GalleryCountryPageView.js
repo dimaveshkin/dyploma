@@ -24,7 +24,7 @@ var GalleryPageView = Backbone.View.extend({
     var that = this;
 
     $.get("/api/gallery/country/" + countryName, function (photos) {
-      that.$el.html(that.template({photos: photos.list, countryName: photos.list[0].name, id: photos.id}));
+      that.$el.html(that.template({photos: photos.list, countryName: photos.name, id: photos.id}));
       that.countryId = photos.id;
       $(".fancybox").fancybox({
         prevEffect: 'none',

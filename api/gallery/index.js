@@ -135,11 +135,12 @@ router.get('/country/:location', function (req, res) { //by country
         if (err) throw err;
 //        res.send(imgPath.concatPath(rows));
       country.list = imgPath.concatPath(rows);
-      db.query('SELECT cover, id FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
+      db.query('SELECT cover, id, name FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
         if (err) throw err;
         country.id = rows[0].id;
-        imgPath.concatPath(rows, 'cover')
+        imgPath.concatPath(rows, 'cover');
         country.cover = rows[0].cover;
+        country.name = rows[0].name;
 
         res.send(country);
       });
