@@ -23,13 +23,13 @@ var ToursPageView = Backbone.View.extend({
         var $prevList, $nextList, $prevHeader, $nextHeader;
         this.$el.html(this.template());
 
-        $prevList = this.$el.find("#prev-tours-list");
-        $nextList = this.$el.find("#next-tours-list");
-        $prevHeader = this.$el.find(".prev-tour-header");
-        $nextHeader = this.$el.find(".next-tour-header");
+        this.$prevList = this.$el.find("#prev-tours-list");
+        this.$nextList = this.$el.find("#next-tours-list");
+        this.$prevHeader = this.$el.find(".prev-tours-header");
+        this.$nextHeader = this.$el.find(".next-tours-header");
 
-        this.getAndRenderTours("/api/tours/prev", $prevList, this.prevTours);
-        this.getAndRenderTours("/api/tours/next", $nextList, this.nextTours);
+        this.getAndRenderTours("/api/tours/prev", this.$prevList, this.prevTours);
+        this.getAndRenderTours("/api/tours/next", this.$nextList, this.nextTours);
     },
     getAndRenderTours: function (url, $el, tourArray) {
         var that = this;
@@ -47,11 +47,15 @@ var ToursPageView = Backbone.View.extend({
         this.prevTours.forEach(function (tourView) {
             tourView.toggle();
         });
+
+        this.$prevHeader.toggleClass("hidden");
     },
     toggleNextTours: function () {
         this.nextTours.forEach(function (tourView) {
             tourView.toggle();
         });
+
+        this.$nextHeader.toggleClass("hidden");
     }
 });
 
