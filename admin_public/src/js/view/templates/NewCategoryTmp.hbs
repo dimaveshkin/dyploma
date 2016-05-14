@@ -1,5 +1,19 @@
-<form id="new-city">
+<form id="new-city"
+      enctype="multipart/form-data"
+      action="/api/gallery/upload"
+      method="POST">
   <input type="text" placeholder="Название категории" name="country" class="frm-input country-name" maxlength="200">
   <input type="text" placeholder="Транслитерация" name="international" class="frm-input country-international" maxlength="200">
-  <input type="submit" value="Добавить категорию" class="frm-ok">
+  <label class="select-label">
+    <input type="file" name="image" id="select-file" multiple="multiple" />
+    <span class="frm-ok">Выбрать фото <i class=" icon-upload"></i></span>
+  </label>
+  <input type="hidden" name="cover" class="cover"/>
+  <input type="hidden" name="id" class="country-id" value="{{countryId}}"/>
+  <ul class="images-gallery"></ul>
+  <button type="submit" class="upload frm-ok">
+    <span>Добавить категорию</span>
+    <i class="spinner icon-spin4 animate-spin js-hide"></i>
+  </button>
+  <!--<input type="submit" value="Добавить категорию" class="frm-ok">-->
 </form>

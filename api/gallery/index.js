@@ -14,10 +14,8 @@ const express = require('express'),
 router.post('/upload', function (req, res) {//upload photo
     var form = new multiparty.Form({uploadDir: 'test'});
     form.parse(req, function(err, fields, files) {
-      console.log(files);
-      console.log(fields.id);
-
-
+//      console.log(files);
+//      console.log(fields.id);
 
       db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
         if (err) throw err;
@@ -79,17 +77,31 @@ router.get('/cover/:countryId/:photoId', function (req, res) {//change cover for
 
 
 router.post('/countries/add', function (req, res) {//add new empty country
+
     var post = {
         name: req.body.country,
         international: req.body.international || transliteration.transliterate(req.body.country),
         cover: ""
     };
 
+    if(req.body.cover) {
+      post.cover = post.international + "/" + req.body.cover;
+    }
+
     db.query('INSERT INTO countries SET ?', post, function (err, result) {
-      res.send(true);
+//      console.log(result);
+      if (err) {
+        res.json({code: 500, error:"Category not added"});
+        throw err;
+      }
+
+
+
       if (!fs.existsSync(imgBuildDeletePath + post.international)){
         fs.mkdirSync(imgBuildDeletePath + post.international);
       }
+
+      res.send({id: result.insertId});
     });
 
 
@@ -143,6 +155,7 @@ router.get('/photo/remove/:id', function (req, res) { //remove photo by id
         }
       });
     });
+
 
 //    res.send('ok');
 //    db.query('DELETE FROM photos WHERE id ="' + req.params.id + '"', function (err, rows) {
