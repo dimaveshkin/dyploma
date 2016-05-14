@@ -15,6 +15,9 @@ router.post('/upload', function (req, res) {//upload photo
     var form = new multiparty.Form({uploadDir: 'test'});
     form.parse(req, function(err, fields, files) {
       console.log(files);
+      console.log(fields.id);
+
+
 
       db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
         if (err) throw err;
@@ -73,16 +76,23 @@ router.get('/cover/:countryId/:photoId', function (req, res) {//change cover for
   });
 });
 
+
+
 router.post('/countries/add', function (req, res) {//add new empty country
     var post = {
         name: req.body.country,
-        international: transliteration.transliterate('Киев'),
+        international: req.body.international || transliteration.transliterate(req.body.country),
         cover: ""
     };
 
     db.query('INSERT INTO countries SET ?', post, function (err, result) {
-        res.send('ok');
+      res.send(true);
+      if (!fs.existsSync(imgBuildDeletePath + post.international)){
+        fs.mkdirSync(imgBuildDeletePath + post.international);
+      }
     });
+
+
 });
 
 router.get('/best', function (req, res) {//best
