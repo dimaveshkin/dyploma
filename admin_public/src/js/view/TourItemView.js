@@ -50,7 +50,6 @@ var ToursItemView = Backbone.View.extend({
             $.get("/api/tours/remove/" + that.tour.id).done(function (response) {
                 if (response.code === 200) {
                     that.$el.remove();
-                    swal("Успех", "Тур успешно удален.", "success");
                 } else {
                     swal("Ошибка", response.message);
                 }

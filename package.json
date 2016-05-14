@@ -29,6 +29,7 @@
     "handlebars": "^4.0.5",
     "hbsfy": "^2.6.0",
     "jquery": "^2.2.3",
+    "jquery-ui": "^1.10.5",
     "multiparty": "^4.1.2",
     "mysql": "^2.10.2",
     "nodemon": "^1.9.1",

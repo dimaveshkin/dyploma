@@ -570,6 +570,3 @@ INSERT INTO `photos` (`id`, `src`, `country_id`, `is_best`, `title`, `desc`) VAL
 (555, 'Tibet/8_DSC_6050_1300.jpg', 12, 1, '', ''),
 (556, 'Tibet/9_DSC_4766_1300.jpg', 12, 1, '', '');
 
-
-ALTER TABLE `photos`
-  ADD CONSTRAINT `photos_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
