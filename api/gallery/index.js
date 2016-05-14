@@ -57,6 +57,22 @@ router.get('/countries', function (req, res) {//countries list
     });
 });
 
+
+router.get('/cover/:countryId/:photoId', function (req, res) {//change cover for country
+  db.query('SELECT src FROM photos WHERE id = ' + req.params.photoId, function (err, pic, fields) {
+    if (err) throw err;
+
+    db.query('UPDATE countries SET cover = "' +  pic[0].src + '" WHERE id = ?', [req.params.countryId],
+        function (err, result) {
+          if (err) {
+            res.json({code: 500, error:"Cover not changed"});
+            throw err;
+          }
+          res.json({code: 200, message:"Success!"})
+        });
+  });
+});
+
 router.post('/countries/add', function (req, res) {//add new empty country
     var post = {
         name: req.body.country,
@@ -163,7 +179,7 @@ router.get('/country/remove/:location', function (req, res) { //by country
                     console.log(rows);
                     del(photos).then(function (paths) {
                         if(paths) {
-                            console.log("Deleted:\n" + paths.join("\n"))
+                            console.log("Deleted:\n" + paths.join("\n"));
                             res.json({code: 200, message:"Success!"})
                         } else {
                             res.json({code: 500, message:"Nothing has been deleted!"})

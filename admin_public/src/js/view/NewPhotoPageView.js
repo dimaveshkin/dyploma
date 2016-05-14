@@ -27,25 +27,39 @@ var GalleryPageView = Backbone.View.extend({
         reader.onload = function (event) {
           var the_url = event.target.result;
           $('.images-gallery').append(fileUploadTmp({src: the_url}));
+          $('.select-label').addClass('js-hide');
+          $('.upload').removeClass('js-hide');
         };
 
         reader.readAsDataURL(this.files[i]);
       }
 
+
+
+    //another way
+//      window.URL = window.webkitURL || window.URL; // Vendor prefixed in Chrome.
+//
+//      for (var i = 0; i < this.files.length; i++) {
+////        var src = window.URL.createObjectURL(this.files[i]);
+//        $('.images-gallery').append(fileUploadTmp({src: window.URL.createObjectURL(this.files[i])}));
+//        $('.select-label').addClass('js-hide');
+//          $('.upload').removeClass('js-hide');
+////        window.URL.revokeObjectURL(src);
+//      }
     });
 
 
     $('#uploadForm').submit(function () {
       $("#status").empty().text("File is uploading...");
+
+      $('.spinner').removeClass('js-hide');
+
+      $('.upload span').text('Загрузка');
       $(this).ajaxSubmit({
-
-        error: function (xhr) {
-          status('Error: ' + xhr.status);
-        },
-
         success: function (response) {
-          $("#status").empty().text(response);
-          console.log(response);
+          swal("Загрузка завершена", "Фотографии успешно добавлены в альбом", "success");
+          console.log(1);
+          window.history.back();
         }
       });
       //Very important line, it disable the page refresh.

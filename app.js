@@ -10,6 +10,7 @@ var checkCaptcha = require("./middleware/checkCaptcha");
 var cryptPassword = require('./helpers/cryptPassword');
 var app = express();
 
+
 var oneDay = 86400000;
 app.use(cookieParser());
 app.use(bodyParser.json());

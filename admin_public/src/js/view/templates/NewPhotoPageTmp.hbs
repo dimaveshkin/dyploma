@@ -1,13 +1,13 @@
 <!--<iframe style="display: none;" name="hIFrame" src="about:blank"></iframe>-->
 <!--<form method="POST" enctype="multipart/form-data" action="/api/gallery/upload" id="upload-form">-->
-    <!--<input type="text" value="text" name="country">-->
-    <!--<input type="file" id="select-file" name="image" multiple="multiple">-->
-    <!--<input id="upload" type="submit" value="Upload Image">-->
+<!--<input type="text" value="text" name="country">-->
+<!--<input type="file" id="select-file" name="image" multiple="multiple">-->
+<!--<input id="upload" type="submit" value="Upload Image">-->
 <!--</form>-->
 
 <!--<form method="post" enctype="multipart/form-data" action="/api/gallery/upload">-->
-  <!--<input type="file" id="select-file" name="image" multiple="multiple">-->
-  <!--<input  type="submit" value="Upload Image">-->
+<!--<input type="file" id="select-file" name="image" multiple="multiple">-->
+<!--<input  type="submit" value="Upload Image">-->
 <!--</form>-->
 
 
@@ -15,11 +15,18 @@
       enctype="multipart/form-data"
       action="/api/gallery/upload"
       method="POST">
-  <input type="file" name="image" id="select-file" multiple="multiple" />
-  <input type="hidden" name="id" value="{{countryId}}" />
-  <input type="submit" value="Upload Image" name="submit">
-  <span id = "status"></span>
+  <label class="select-label">
+    <input type="file" name="image" id="select-file" multiple="multiple" />
+    <span class="frm-ok">Выбрать фото <i class=" icon-upload"></i></span>
+  </label>
+  <input type="hidden" name="id" value="{{countryId}}"/>
   <ul class="images-gallery"></ul>
+  <!--<input type="submit" value="Загрузить" name="submit" class="upload frm-ok js-hide icon-spin6 animate-spin">-->
+
+  <button type="submit" class="upload frm-ok js-hide">
+  <span>Загрузить</span>
+  <i class="spinner icon-spin4 animate-spin js-hide"></i>
+  </button>
 </form>
 
 <!--<img id="image" src="#" alt="" />-->

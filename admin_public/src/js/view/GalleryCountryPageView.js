@@ -2,6 +2,7 @@ var Backbone = require("backbone");
 Backbone.$ = window.$;
 var _ = require("underscore");
 var galleryPageTmp = require("./templates/GalleryCountryPageTmp.hbs");
+var helpers = require('./templates/helpers/helpers');
 var swal = require("sweetalert");
 
 var GalleryPageView = Backbone.View.extend({
@@ -9,12 +10,13 @@ var GalleryPageView = Backbone.View.extend({
   template: galleryPageTmp,
   initialize: function (options) {
     this.router = options.router;
-    _.bindAll(this, "render", "addToBest", "addPhoto");
+    _.bindAll(this, "render", "addToBest", "addPhoto", "doCover");
   },
   events: {
     "click li .best-add": "addToBest",
     "click li .best-remove": "removeFromBest",
     "click li .remove-photo": "removePhoto",
+    "click li .do-cover": "doCover",
     "click .add-photo": "addPhoto"
   },
   render: function (countryName) {
@@ -24,8 +26,7 @@ var GalleryPageView = Backbone.View.extend({
     var that = this;
 
     $.get("/api/gallery/country/" + countryName, function (photos) {
-      that.$el.html(that.template({photos: photos.list, countryName: photos.name, id: photos.id}));
-      that.countryId = photos.id;
+      that.$el.html(that.template({photos: photos.list, countryName: photos.name, id: photos.id, catCover: photos.cover}));
       $(".fancybox").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -71,7 +72,7 @@ var GalleryPageView = Backbone.View.extend({
     }, function () {
 
       $.get("/api/gallery/photo/remove/" + id, function (response) {
-        if(response.code === 200) {
+        if (response.code === 200) {
           $(e.target).closest('li').remove();
         } else {
           swal("Ошибка", response.error);
@@ -85,6 +86,51 @@ var GalleryPageView = Backbone.View.extend({
   },
   addPhoto: function () {
     this.router.navigate("/admin/categories/" + this.countryId + "/add", {trigger: true});
+  },
+  editDesc: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    swal({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      type: "warning", showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    }, function () {
+      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+    });
+  },
+  doCover: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var id = $(e.target).closest('li').attr("data-photo-id");
+    var countryId = $(e.target).attr("data-city-id");
+
+
+    swal({
+      title: "Сменить обложку",
+      text: "Вы действительно хотите сменить обложку альбома?",
+      type: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#8CD4F5",
+      confirmButtonText: "OK",
+      cancelButtonText: "Отмена",
+      closeOnConfirm: true,
+      closeOnCancel: true
+    }, function () {
+
+      $.get("/api/gallery/cover/" + countryId + "/" + id, function (response) {
+        if (response.error) {
+          swal(response.error);
+        } else {
+          $('.is-cover').removeClass('is-cover').addClass('do-cover').attr('title', 'Сделать обложкой альбома');
+
+          $(e.target).removeClass('do-cover').addClass('is-cover').attr('title', 'Текущая обложка альбома');
+        }
+      });
+    });
   }
 });
 

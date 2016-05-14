@@ -70,6 +70,18 @@
   }
 }
 
+.is-cover {
+  color: #ffd400;
+}
+
+.do-cover {
+  color: #696969;
+
+  &:hover {
+    color: #509111;
+  }
+}
+
 .best-add {
   color: #696969;
 
@@ -99,4 +111,23 @@
     width: 100%;
     resize: none;
   }
+}
+
+
+#uploadForm {
+  text-align: center;
+}
+
+#select-file {
+  display: none;
+}
+
+span.frm-ok {
+  font-family:  Arial;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.upload {
+  margin-top: 20px;
 }

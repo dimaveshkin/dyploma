@@ -1,11 +1,15 @@
 <ul class="images-gallery">
-    <li class="gallery-img-item city-item add-photo" data-city-id="{{id}}">
-        +
-        <p class="img-caption">Добавить</p>
-    </li>
+  <li class="gallery-img-item city-item add-photo" data-city-id="{{id}}">
+    +
+    <p class="img-caption">Добавить</p>
+  </li>
     {{#each photos}}
       <li class="gallery-img-item city-item" data-photo-id="{{id}}">
-        <a href="{{src}}" title="{{#if desc}}{{desc}}<br/>{{/if}}" rel="city-gallery" class="fancybox link-block">
+        <a href="{{src}}" rel="city-gallery" class="fancybox link-block"
+           title="{{#if title}}<b>{{title}}</b><br/>{{/if}}{{#if desc}}{{desc}}<br/>{{/if}}"
+           onmouseover="this.setAttribute('org_title', this.title); this.title='';"
+           onclick="this.title = this.getAttribute('org_title');"
+           onmouseout="this.title = this.getAttribute('org_title');">
           <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
           <p class="img-caption">
               {{#if is_best}}
@@ -14,7 +18,11 @@
                 <i class="icon-star-empty best-add" title="Добавить в избранное"></i>
               {{/if}}
             <i class="icon-cancel remove-photo" title="Удалить"></i>
-            <i class="icon-picture" title="Сделать обложкой альбома"></i>
+            {{#if_eq src ../catCover}}
+              <i class="icon-picture is-cover" title="Текущая обложка альбома" data-city-id="{{../id}}"></i>
+            {{else}}
+              <i class="icon-picture do-cover" title="Сделать обложкой альбома" data-city-id="{{../id}}"></i>
+            {{/if_eq}}
           </p>
         </a>
       </li>
