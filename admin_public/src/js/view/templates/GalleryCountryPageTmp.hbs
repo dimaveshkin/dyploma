@@ -1,6 +1,6 @@
 <ul class="images-gallery">
   <li class="gallery-img-item city-item add-photo" data-city-id="{{id}}">
-    +
+    <div class="plus">+</div>
     <p class="img-caption">Добавить</p>
   </li>
     {{#each photos}}
@@ -23,6 +23,7 @@
             {{else}}
               <i class="icon-picture do-cover" title="Сделать обложкой альбома" data-city-id="{{../id}}"></i>
             {{/if_eq}}
+            <i class="edit-desc"></i>
           </p>
         </a>
       </li>

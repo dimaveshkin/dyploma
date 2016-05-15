@@ -17,6 +17,7 @@ var GalleryPageView = Backbone.View.extend({
     "click li .best-remove": "removeFromBest",
     "click li .remove-photo": "removePhoto",
     "click li .do-cover": "doCover",
+    "click li .edit-desc": "editDesc",
     "click .add-photo": "addPhoto"
   },
   render: function (countryName) {
@@ -27,6 +28,7 @@ var GalleryPageView = Backbone.View.extend({
 
     $.get("/api/gallery/country/" + countryName, function (photos) {
       that.$el.html(that.template({photos: photos.list, countryName: photos.name, id: photos.id, catCover: photos.cover}));
+      that.countryId = photos.id;
       $(".fancybox").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -91,16 +93,7 @@ var GalleryPageView = Backbone.View.extend({
     e.preventDefault();
     e.stopPropagation();
 
-    swal({
-      title: "Are you sure?",
-      text: "You will not be able to recover this imaginary file!",
-      type: "warning", showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, delete it!",
-      closeOnConfirm: false
-    }, function () {
-      swal("Deleted!", "Your imaginary file has been deleted.", "success");
-    });
+
   },
   doCover: function (e) {
     e.preventDefault();
