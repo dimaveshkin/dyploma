@@ -55,6 +55,9 @@ var ToursItemView = Backbone.View.extend({
                 }
             });
         });
+    },
+    editTour: function () {
+        this.router.navigate("/admin/tours/" + this.tour.id, {trigger: true});
     }
 });
 

@@ -63,3 +63,70 @@
 .tour-control:hover {
   color: red;
 }
+
+.edit-tours-header {
+  &::after {
+    content: " " !important;
+  }
+}
+
+.tour-fields {
+  font-family: Roboto;
+  padding-left: 15px;
+  padding-top: 15px;
+
+  .btn {
+    font: 1.8rem Forum;
+    padding: 5px 15px;
+    background: #94a19a;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    color: #fff;
+  }
+
+  .tour-field + .tour-field {
+    border-top: 1px solid #000;
+  }
+
+  .tour-field {
+    padding: 10px 0;
+
+    label {
+      display: inline-block;
+      width: 200px;
+      vertical-align: top;
+    }
+
+    input, textarea {
+      width: 300px;
+      padding: 10px;
+      font: 16px Roboto;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .input-group {
+      padding-left: 15px;
+
+      .input-group-item {
+        margin-bottom: 15px;
+      }
+
+      .wide-input {
+        width: 90%;
+      }
+    }
+
+    ol {
+      list-style-position: inside
+    }
+
+    .input-group-header {
+      display: block;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+  }
+}

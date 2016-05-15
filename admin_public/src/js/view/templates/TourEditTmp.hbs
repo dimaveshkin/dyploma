@@ -1,0 +1,88 @@
+<h2 class="tour-category-header edit-tours-header">{{title}}</h2>
+<div class="tour-fields">
+    <div class="tour-field">
+        <label for="title">Название: </label>
+        <input type="text" name="title" id="title" value="{{title}}">
+    </div>
+    <div class="tour-field">
+        <label for="startDate">Начало тура: </label>
+        <input type="text" name="startDate" id="startDate" value="{{startDate}}">
+    </div>
+    <div class="tour-field">
+        <label for="endDate">Конец тура: </label>
+        <input type="text" name="endDate" id="endDate" value="{{endDate}}">
+    </div>
+    <div class="tour-field">
+        <label for="desc">Описание:</label>
+        <textarea name="desc" id="desc" cols="30" rows="10">{{desc}}</textarea>
+    </div>
+    <div class="tour-field">
+        <span class="input-group-header">Расположение на карте</span>
+        <ul class="input-group">
+            <li class="input-group-item">
+                <label for="longitude">Долгота: </label>
+                <input type="number" name="longitude" id="longitude" value="{{longitude}}">
+            </li>
+            <li class="input-group-item">
+                <label for="latitude">Широта: </label>
+                <input type="number" name="latitude" id="latitude" value="{{latitude}}">
+            </li>
+        </ul>
+        <div class="map"></div>
+    </div>
+    <div class="tour-field">
+        <label for="price">Цена: </label>
+        <input type="number" name="cost" id="cost" value="{{cost}}">
+    </div>
+    <div class="tour-field">
+        <label for="complexity">Сложность: </label>
+        <input type="number" name="complexity" id="complexity" min="1" max="5" value="{{complexity}}">
+    </div>
+    <div class="tour-field">
+        <span class="input-group-header">Что включено: </span>
+        <ol class="input-group" id="inclusive-list">
+            {{#each inclusive}}
+                <li class="input-group-item">
+                    <input type="text" class="wide-input" value="{{this}}">
+                    <span class="icon-cancel tour-control delete-field"></span>
+                </li>
+            {{/each}}
+        </ol>
+        <button class="btn add-field-btn" id="add-inclusive">Добавить поле</button>
+    </div>
+    <div class="tour-field">
+        <span class="input-group-header">Что не включено: </span>
+        <ol class="input-group" id="not-inclusive-list">
+            {{#each not_inclusive}}
+                <li class="input-group-item">
+                    <input type="text" class="wide-input" value="{{this}}">
+                    <span class="icon-cancel tour-control delete-field"></span>
+                </li>
+            {{/each}}
+        </ol>
+        <button class="btn add-field-btn" id="add-not-inclusive">Добавить поле</button>
+    </div>
+    <div class="tour-field">
+        <span class="input-group-header">Расписание: </span>
+        <ul class="input-group" id="trip-schedule-list">
+            {{#each schedule}}
+                <li class="input-group-item">
+                    <p class="input-group-header">{{this.day}}</p>
+                    <ol class="day-schedule-list">
+                        {{#each this.schedule}}
+                            <li class="input-group-item">
+                                <input type="text" class="wide-input" value="{{this}}">
+                                <span class="icon-cancel tour-control delete-field"></span>
+                            </li>
+                        {{/each}}
+                    </ol>
+                    <button class="add-day-schedule btn">Добавить пункт</button>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+<div class="tour-controls">
+    <button class="save-changes btn" id="save-changes">Сохранить изменения</button>
+    <button class="cancel-changes btn" id="cancel-changes">Отменить</button>
+</div>
