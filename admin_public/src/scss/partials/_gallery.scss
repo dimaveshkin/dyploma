@@ -104,6 +104,18 @@
    }
  }
 
+.edit-desc {
+  color: #696969;
+
+  &:hover {
+    color: #509111;
+  }
+
+  &.icon-cancel-circled:hover {
+    color: #ffd400;
+  }
+}
+
 .remove-photo {
   color: #696969;
 

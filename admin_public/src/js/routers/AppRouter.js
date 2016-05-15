@@ -3,10 +3,11 @@ var _ = require("underscore");
 Backbone.$ = window.$;
 
 var AppView = require("../view/AppView");
-var MainPageView = require("../view/MainPageView");
+//var MainPageView = require("../view/MainPageView");
+var MainPageView = require("../view/GalleryPageView");
 var ContactsPageView = require("../view/ContactsPageView");
 var FeedbacksPageView = require("../view/FeedbacksPageView");
-var GalleryPageView = require("../view/GalleryPageView");
+var ChangePassPageView = require("../view/ChangePassPageView");
 var GalleryCountryPageTmp = require("../view/GalleryCountryPageView");
 var NewPhotoPageView = require("../view/NewPhotoPageView");
 var ToursPageView = require("../view/ToursPageView");
@@ -19,7 +20,7 @@ var Router = Backbone.Router.extend({
     "admin/contacts": "contacts",
     "admin/feedbacks": "feedbacks",
     "admin/categories/new": "AddCategory",
-    "admin/categories": "categories",
+    "admin/password": "password",
     "admin/tours": "tours",
     "admin/tours/:id": "tourEdit",
     "admin/categories/:id/add": "addPhoto",
@@ -36,7 +37,7 @@ var Router = Backbone.Router.extend({
     this.mainPageView = new MainPageView({router: this});
     this.contactsPageView = new ContactsPageView({router: this});
     this.feedbacksPageView = new FeedbacksPageView({router: this});
-    this.galleryPageView = new GalleryPageView({router: this});
+    this.changePassPageView = new ChangePassPageView({router: this});
     this.galleryCountryPageTmp = new GalleryCountryPageTmp({router: this});
     this.newPhotoPageView = new NewPhotoPageView({router: this});
     this.toursPageView = new ToursPageView({router: this});
@@ -52,8 +53,8 @@ var Router = Backbone.Router.extend({
   feedbacks: function () {
     this.feedbacksPageView.render();
   },
-  categories: function() {
-    this.galleryPageView.render();
+  password: function() {
+    this.changePassPageView.render();
   },
   tours: function() {
     this.toursPageView.render();

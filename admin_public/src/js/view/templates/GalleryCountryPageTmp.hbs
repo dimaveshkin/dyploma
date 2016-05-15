@@ -1,3 +1,4 @@
+<h2 class="tour-category-header edit-tours-header">{{countryName}}</h2>
 <ul class="images-gallery">
   <li class="gallery-img-item city-item add-photo" data-city-id="{{id}}">
     <div class="plus">+</div>
@@ -11,21 +12,26 @@
            onclick="this.title = this.getAttribute('org_title');"
            onmouseout="this.title = this.getAttribute('org_title');">
           <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
-          <p class="img-caption">
-              {{#if is_best}}
-                <i class="icon-star best-remove" title="Удалить из избранного"></i>
-              {{else}}
-                <i class="icon-star-empty best-add" title="Добавить в избранное"></i>
-              {{/if}}
-            <i class="icon-cancel remove-photo" title="Удалить"></i>
+        </a>
+        <p class="img-caption">
+            {{#if is_best}}
+              <i class="icon-star best-remove" title="Удалить из избранного"></i>
+            {{else}}
+              <i class="icon-star-empty best-add" title="Добавить в избранное"></i>
+            {{/if}}
+          <i class="icon-cancel remove-photo" title="Удалить"></i>
             {{#if_eq src ../catCover}}
               <i class="icon-picture is-cover" title="Текущая обложка альбома" data-city-id="{{../id}}"></i>
             {{else}}
               <i class="icon-picture do-cover" title="Сделать обложкой альбома" data-city-id="{{../id}}"></i>
             {{/if_eq}}
-            <i class="edit-desc"></i>
-          </p>
-        </a>
+          <i class="icon-edit edit-desc" title="Редактировать описание"></i>
+          <span class="photo-desc js-hide">
+            <input type="text" name="title" placeholder="Название" class="frm-input photo-title" value="{{title}}">
+            <textarea name="desc" class="frm-input desc-area" placeholder="Описание">{{desc}}</textarea>
+            <button class="frm-ok save-desc">Сохранить</button>
+          </span>
+        </p>
       </li>
     {{/each}}
 </ul>

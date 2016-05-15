@@ -17,7 +17,6 @@ var GalleryPageView = Backbone.View.extend({
     "click li .best-remove": "removeFromBest",
     "click li .remove-photo": "removePhoto",
     "click li .do-cover": "doCover",
-    "click li .edit-desc": "editDesc",
     "click .add-photo": "addPhoto"
   },
   render: function (countryName) {
@@ -41,6 +40,47 @@ var GalleryPageView = Backbone.View.extend({
           this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' / ' + this.group.length + ' </span>';
         }
       });
+
+      $('.edit-desc').on('click', function (e) {
+        var root = $(e.target).closest('li');
+
+        if(root.find('.photo-desc').hasClass('js-hide')) {
+          root.find('.photo-desc').removeClass('js-hide');
+          root.find('.edit-desc').removeClass('icon-edit').addClass('icon-cancel-circled').attr('title', 'Отмена');
+        } else {
+          root.find('.edit-desc').addClass('icon-edit').removeClass('icon-cancel-circled').attr('title', 'Редактировать описание');
+          root.find('.photo-desc').addClass('js-hide');
+        }
+      });
+
+      $('.save-desc').on('click', function (e) {
+        var root = $(e.target).closest('li');
+
+        var title = root.find('.photo-title').val();
+        var desc = root.find('.desc-area').val();
+        var fullText = "";
+        if(title != '') {
+          fullText = "<b>" + title + "</b><br/>"
+        }
+
+        if(desc != '') {
+          fullText += desc + "<br/>"
+        }
+        $.ajax({
+          method: "PUT",
+          url: "/api/gallery/photo/update/" + root.attr('data-photo-id'),
+          data: { title: title, desc: desc }
+        })
+        .done(function(response) {
+              if (response.code === 200) {
+                root.find('.link-block').attr('title', fullText).attr('org_title', fullText);
+                root.find('.photo-desc').addClass('js-hide').attr('title', 'Редактировать описание');
+                root.find('.photo-desc').prev('.edit-desc').addClass('icon-edit').removeClass('icon-cancel-circled');
+              } else {
+                swal("Ошибка", response.error);
+              }
+        });
+      });
     });
   },
   addToBest: function (e) {
@@ -48,16 +88,12 @@ var GalleryPageView = Backbone.View.extend({
     $.get("/api/gallery/best/add/" + id, function () {
       $(e.target).removeClass('icon-star-empty best-add').addClass('icon-star best-remove').attr('title', 'Удалить из избранного');
     });
-    e.preventDefault();
-    e.stopPropagation();
   },
   removeFromBest: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
     $.get("/api/gallery/best/remove/" + id, function () {
       $(e.target).removeClass('icon-star best-remove').addClass('icon-star-empty best-add ').attr('title', 'Добавить в избранное');
     });
-    e.preventDefault();
-    e.stopPropagation();
   },
   removePhoto: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
@@ -82,26 +118,13 @@ var GalleryPageView = Backbone.View.extend({
 
       });
     });
-
-    e.preventDefault();
-    e.stopPropagation();
   },
   addPhoto: function () {
     this.router.navigate("/admin/categories/" + this.countryId + "/add", {trigger: true});
   },
-  editDesc: function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-
-  },
   doCover: function (e) {
-    e.preventDefault();
-    e.stopPropagation();
     var id = $(e.target).closest('li').attr("data-photo-id");
     var countryId = $(e.target).attr("data-city-id");
-
-
     swal({
       title: "Сменить обложку",
       text: "Вы действительно хотите сменить обложку альбома?",

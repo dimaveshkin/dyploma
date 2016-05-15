@@ -14,9 +14,6 @@ const express = require('express'),
 router.post('/upload', function (req, res) {//upload photo
     var form = new multiparty.Form({uploadDir: 'test'});
     form.parse(req, function(err, fields, files) {
-//      console.log(files);
-//      console.log(fields.id);
-
       db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
         if (err) throw err;
         console.log(name);
@@ -44,6 +41,18 @@ router.post('/upload', function (req, res) {//upload photo
         res.send(util.inspect({fields: fields, files: files}));
     });
 });
+
+router.put('/photo/update/:id', function (req, res) {//update title and desc in photo
+  db.query('UPDATE photos AS p SET ? WHERE id =' + req.params.id, {title: req.body.title, desc: req.body.desc},
+    function (err, result) {
+      if (err) {
+        res.json({code: 500, error:"Desc not changed"});
+        throw err;
+      }
+      res.json({code: 200, message:"Success!"})
+    });
+});
+
 
 router.get('/countries', function (req, res) {//countries list
     db.query('SELECT * FROM countries', function (err, rows, fields) {

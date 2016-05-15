@@ -1,9 +1,9 @@
 var Backbone = require("backbone");
 Backbone.$ = window.$;
 var swal = require("sweetalert");
-var mainPageTmp = require("./templates/MainPageTmp.hbs");
+var mainPageTmp = require("./templates/ChangePassTmp.hbs");
 
-var MainPageView = Backbone.View.extend({
+var ChangePassPageView = Backbone.View.extend({
   el: ".dashboard",
   template: mainPageTmp,
   initialize: function () {
@@ -34,4 +34,4 @@ var MainPageView = Backbone.View.extend({
   }
 });
 
-module.exports = MainPageView;
+module.exports = ChangePassPageView;
