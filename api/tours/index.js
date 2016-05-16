@@ -45,14 +45,25 @@ router.get('/:id', function (req, res) { //get tour by id
         rows[0].schedule = JSON.parse(rows[0].schedule);
         rows[0].not_inclusive = JSON.parse(rows[0].not_inclusive);
         rows[0].inclusive = JSON.parse(rows[0].inclusive);
-        rows[0].startDate = rows[0].startDate.toLocaleDateString("ru-RU");
-        rows[0].endDate = rows[0].endDate.toLocaleDateString("ru-RU");
+        console.log(rows[0].startDate);
+        rows[0].startDate = formatDate(rows[0].startDate, ".");
+        rows[0].endDate = formatDate(rows[0].endDate, ".");
 
         response.data = imgPath.JSONPath(rows, 'img')[0];
         response.message = "Тур найден.";
         response.code = 200;
         res.send(response);
     });
+});
+
+router.put('/:id', function (req, res) {
+    console.log("sending");
+    db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, req.body, function (err, result) {
+            if (err) {
+                res.json({code: 500, message:"Tour was not changed"});
+            }
+            res.json({code: 200, message:"Success!"})
+        });
 });
 
 router.get('/remove/:id', function (req, res) { //get tour by id
@@ -132,6 +143,10 @@ router.post('/add', function (req, res) {//add new request
         res.send({error: 'Вы неверно ввели символы'});
     }
 });
+
+function formatDate (date, joinSymb) {
+    return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join(joinSymb + "");
+}
 
 module.exports = router;
 
