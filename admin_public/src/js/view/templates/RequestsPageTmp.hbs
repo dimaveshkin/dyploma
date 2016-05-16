@@ -1,0 +1,20 @@
+<h2 class="tour-category-header edit-tours-header">Заявки на участие в фототурах</h2>
+<table class="table requests-tbl">
+    <thead>
+        <tr>
+            <td>Название</td>
+            <td>Дата</td>
+            <td>Количество заявок</td>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each tours}}
+        <tr data-tour-id="{{id}}" class="tour-item">
+            <td>{{title}}</td>
+            <td>{{#getDate startDate endDate}}{{/getDate}}</td>
+            <td>{{count}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+
+</table>

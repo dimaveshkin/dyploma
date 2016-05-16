@@ -10,6 +10,18 @@
   }
 }
 
+.table.feedbacks-tbl {
+  thead {
+    tr {
+      background: #94A19A;
+
+      &:hover {
+        background: #94A19A;
+      }
+    }
+  }
+}
+
 .feedbacks-tbl tr td {
   cursor: auto;
 }

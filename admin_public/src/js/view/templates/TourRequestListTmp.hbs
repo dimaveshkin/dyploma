@@ -1,0 +1,27 @@
+<!--<h2 class="tour-category-header edit-tours-header">Заявки на участие в фототурах</h2>-->
+<table class="table requests-tbl request-list">
+    <thead>
+    <tr>
+        <td>Отправитель</td>
+        <td>Заявка</td>
+        <td>Дата</td>
+        <td>Статус</td>
+        <td>Управление</td>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each requests}}
+        <tr data-request-id="{{id}}">
+            <td>{{name}}<br>({{email}})</td>
+            <td>{{application}}</td>
+            <td>{{#getDateTime date}}{{/getDateTime}}</td>
+            <td>{{status}}</td>
+            <td>
+                <i class="icon-thumbs-up request-accept"></i>
+                <i class="icon-thumbs-down request-reject"></i>
+                <i class="icon-cancel request-delte"></i>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
