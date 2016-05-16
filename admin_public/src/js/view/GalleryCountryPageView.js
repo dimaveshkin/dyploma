@@ -20,8 +20,8 @@ var GalleryPageView = Backbone.View.extend({
     "click .add-photo": "addPhoto"
   },
   render: function (countryName) {
-    //$('.item-active').removeClass('item-active');
-    //$('#nav-gallery').addClass('item-active');
+    $('.active').removeClass('active');
+    $('#categories').addClass('active');
 
     var that = this;
 

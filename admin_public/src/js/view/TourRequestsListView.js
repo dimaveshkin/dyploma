@@ -17,6 +17,9 @@ var TourRequestListView = Backbone.View.extend({
         "click .request-delete": "deleteRequest"
     },
     render: function (id) {
+        $('.active').removeClass('active');
+        $('#requests').addClass('active');
+
         var that = this;
 
         $.get('/api/tours/requests/' + id , function (requests) {

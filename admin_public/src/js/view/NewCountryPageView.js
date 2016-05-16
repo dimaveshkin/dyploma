@@ -14,17 +14,9 @@ var NewCountryPageView = Backbone.View.extend({
     this.router = options.router;
     _.bindAll(this, "render");
   },
-  events: {
-//    "click li .best-add": "addToBest",
-//    "click li .best-remove": "removeFromBest",
-//    "click li .remove-photo": "removePhoto",
-//    "click li .do-cover": "doCover",
-//    "click li .edit-desc": "editDesc",
-//    "click .add-photo": "addPhoto"
-  },
   render: function () {
-    //$('.item-active').removeClass('item-active');
-    //$('#nav-gallery').addClass('item-active');
+    $('.active').removeClass('active');
+    $('#categories').addClass('active');
 
     var that = this;
     that.$el.html(that.template());

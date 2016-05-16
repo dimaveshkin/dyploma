@@ -16,6 +16,9 @@ var RequestsPageView = Backbone.View.extend({
         "click tbody .tour-item": "showRequest"
     },
     render: function () {
+        $('.active').removeClass('active');
+        $('#requests').addClass('active');
+
         var that = this;
 
         $.get('/api/tours/requests', function (tours) {

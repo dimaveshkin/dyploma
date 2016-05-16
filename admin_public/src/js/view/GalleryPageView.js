@@ -11,6 +11,9 @@ var GalleryPageView = Backbone.View.extend({
     this.router = options.router;
   },
   render: function () {
+    $('.active').removeClass('active');
+    $('#categories').addClass('active');
+
     var that = this;
 
     $.get("/api/gallery/countries", function (countries) {

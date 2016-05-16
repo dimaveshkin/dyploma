@@ -10,6 +10,8 @@ var ChangePassPageView = Backbone.View.extend({
 
   },
   render: function () {
+    $('.active').removeClass('active');
+    $('#password').addClass('active');
     this.$el.html(this.template());
   },
   events: {

@@ -20,6 +20,9 @@ var ToursEditCreateView = Backbone.View.extend({
         // "#longitude change": "lngChange"
     },
     render: function (options) {
+        $('.active').removeClass('active');
+        $('#tours').addClass('active');
+
         var that = this;
 
         this.tourID = options.tourID;
