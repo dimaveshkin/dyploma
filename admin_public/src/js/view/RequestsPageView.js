@@ -2,6 +2,7 @@ var Backbone = require("backbone");
 Backbone.$ = window.$;
 var _ = require("underscore");
 var requestsPageTmp = require("./templates/RequestsPageTmp.hbs");
+var noRequestsPageTmp = require("./templates/NoRequestsTmp.hbs");
 var helpers = require("./templates/helpers/helpers");
 
 var RequestsPageView = Backbone.View.extend({
@@ -18,9 +19,12 @@ var RequestsPageView = Backbone.View.extend({
         var that = this;
 
         $.get('/api/tours/requests', function (tours) {
-            that.$el.html(that.template({tours: tours}));
+            if(tours.length)  {
+                that.$el.html(that.template({tours: tours}));
+            } else {
+                that.$el.html(noRequestsPageTmp());
+            }
         });
-
     },
     showRequest: function (e) {
         var id = $(e.target).closest('tr').attr("data-tour-id");

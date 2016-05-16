@@ -19,4 +19,43 @@
   td {
     cursor: default;
   }
+
+  .request-accept {
+    cursor: pointer;
+    color: #9fd574;
+
+    &:hover {
+      color: #509111;
+    }
+  }
+
+  .request-reject {
+    cursor: pointer;
+    color: #c76e62;
+
+    &:hover {
+      color: #c73c3e;
+    }
+  }
+
+  .request-delete {
+    cursor: pointer;
+    color: #e73f00;
+
+    &:hover {
+      color: #ff4500;
+    }
+  }
+
+  .new-request {
+    background: rgba(0, 200, 213, 0.27);
+  }
+
+  .accepted-request {
+    background: rgba(159, 213, 116, 0.83);
+  }
+
+  .rejected-request {
+    background: rgba(231, 186, 0, 0.58);
+  }
 }

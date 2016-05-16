@@ -16,7 +16,7 @@ router.get('/', function (req, res) { //get tours list
 });
 
 router.get('/requests', function (req, res) { //get tours list which have requests
-    db.query('SELECT t.id, t.title, startDate, endDate, COUNT(r.id) as count FROM tours AS t INNER JOIN requests AS r ON r.tour_id = t.id GROUP BY t.title', function (err, rows, fields) {
+    db.query('SELECT t.id, t.title, startDate, endDate, COUNT(r.id) as count, t.places FROM tours AS t INNER JOIN requests AS r ON r.tour_id = t.id GROUP BY t.title', function (err, rows, fields) {
         if (err) throw err;
 
         res.send(rows);
@@ -28,6 +28,48 @@ router.get('/requests/:id', function (req, res) { //get requests by tour id
         if (err) throw err;
 
         res.send(rows);
+    });
+});
+
+router.post('/requests/accept/:id', function (req, res) { //accept requests by id
+    db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 2}, function(err, result) {
+        if (err) {
+            res.send({
+                error: "Can't accept request",
+                code: 500
+            });
+            throw err;
+        }
+        res.send({
+            message: "Accepted",
+            code: 200
+        });
+    });
+});
+
+router.post('/requests/reject/:id', function (req, res) { //reject requests by id
+    db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 3}, function(err, result) {
+        if (err) {
+            res.send({
+                error: "Can't reject request",
+                code: 500
+            });
+            throw err;
+        }
+        res.send({
+            message: "Rejected",
+            code: 200
+        });
+    });
+});
+
+router.post('/requests/delete/:id', function (req, res) { //delete requests by id
+    db.query('DELETE FROM requests WHERE id =' + req.params.id, function (err, rows) {
+        if (err) {
+            res.json({code: 500, error:"Nothing has been deleted!"});
+            throw err;
+        }
+        res.json({code: 200, message:"Success!"});
     });
 });
 

@@ -64,9 +64,7 @@ var NewCountryPageView = Backbone.View.extend({
           } else {
             swal("Категория добавлена", "Категория успешно добавлена", "success");
             window.history.back();
-
           }
-
         }
       });
       return false;
