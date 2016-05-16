@@ -15,6 +15,22 @@ router.get('/', function (req, res) { //get tours list
     });
 });
 
+router.get('/requests', function (req, res) { //get tours list which have requests
+    db.query('SELECT t.id, t.title, startDate, endDate, COUNT(r.id) as count FROM tours AS t INNER JOIN requests AS r ON r.tour_id = t.id GROUP BY t.title', function (err, rows, fields) {
+        if (err) throw err;
+
+        res.send(rows);
+    });
+});
+
+router.get('/requests/:id', function (req, res) { //get requests by tour id
+    db.query('SELECT r.id, r.name, r.email, r.application, r.date, s.status FROM requests AS r, request_statuses AS s WHERE s.id = r.status AND tour_id = ' + db.escape(req.params.id) + ' ORDER BY(s.status) desc', function (err, rows, fields) {
+        if (err) throw err;
+
+        res.send(rows);
+    });
+});
+
 router.get('/prev', function (req, res) { //get tours list
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate <= NOW()', function (err, rows, fields) {
         if (err) throw err;

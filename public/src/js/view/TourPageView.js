@@ -20,7 +20,7 @@ var TourPageView = Backbone.View.extend({
         this.$el.addClass("grey-background-after");
 
         $.get("/api/tours/" + id, function (tour) {
-          that.$el.html(that.template(tour[0]));
+          that.$el.html(that.template(tour.data));
 
           $(".fancybox").fancybox({
             prevEffect	: 'none',
