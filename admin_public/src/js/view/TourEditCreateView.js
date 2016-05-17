@@ -68,13 +68,24 @@ var ToursEditCreateView = Backbone.View.extend({
         });
     },
     initMap: function () {
-        var that = this;
+        var that = this,
+            latLngObj = {};
 
         this.map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 15.8203125, lng: 48.69096039092549},
             zoom: 3,
             disableDefaultUI: true
         });
+
+        if(!this.isCreating) {
+            latLngObj = {
+                lat: parseInt(this.tourData.latitude, 10),
+                lng: parseInt(this.tourData.longitude, 10)
+            };
+
+            this.createMarker(latLngObj);
+            this.map.setCenter(latLngObj);
+        }
 
         this.map.addListener("click", function (event) {
             var lat = event.latLng.lat();
@@ -168,19 +179,19 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit.cost = this.$cost.val();
         dataToSubmit.complexity = this.$complexity.val();
         dataToSubmit.latitude = this.$latitude.val();
-        dataToSubmit.longtitude = this.$longitude.val();
-        dataToSubmit.inclusive = JSON.stringify(inclusiveArr);
-        dataToSubmit.not_inclusive = JSON.stringify(notInclusiveArr);
-        dataToSubmit.schedule = JSON.stringify(tripScheduleArr);
+        dataToSubmit.longitude = this.$longitude.val();
+        dataToSubmit.inclusive = inclusiveArr;
+        dataToSubmit.not_inclusive = notInclusiveArr;
+        dataToSubmit.schedule = tripScheduleArr;
 
         dataToSubmit = JSON.stringify(dataToSubmit);
-
         $.ajax({
             method: "PUT",
             url: "/api/tours/" + this.tourID,
             data: dataToSubmit,
-            dataType: "json",
-            success: function (reponse) {
+            contentType: 'application/json', // content type sent to server
+            dataType: 'json', //Expected data format from server
+            success: function (response) {
                 if(response.code === 200) {
                     swal("Успех!", "Фототур успешно изменен.", "success")
                 } else {
