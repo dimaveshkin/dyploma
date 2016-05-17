@@ -184,10 +184,9 @@ var ToursEditCreateView = Backbone.View.extend({
                     swal("Ошибка!", "Не удалось сохранить фототур.", "error")
                 }
             },
-            error: function (a, b, c) {
-                console.log(a);
-                console.log(b);
-                console.log(c);
+            error: function (xhr, mes, err) {
+                console.log(mes);
+                console.log(err);
             }
         });
     },
