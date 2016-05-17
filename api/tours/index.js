@@ -116,6 +116,13 @@ router.get('/:id', function (req, res) { //get tour by id
 
 router.put('/:id', function (req, res) {
     console.log("sending");
+
+    req.body.schedule = JSON.stringify(req.body.schedule);
+    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
+    req.body.inclusive = JSON.stringify(req.body.inclusive);
+    req.body.startDate = formatDateForDB(req.body.startDate);
+    req.body.endDate = formatDateForDB(req.body.endDate);
+
     db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, req.body, function (err, result) {
             if (err) {
                 res.json({code: 500, message:"Tour was not changed"});
@@ -204,6 +211,11 @@ router.post('/add', function (req, res) {//add new request
 
 function formatDate (date, joinSymb) {
     return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join(joinSymb + "");
+}
+
+function formatDateForDB (dateStr) {
+    var dateArr = dateStr.split(".");
+    return dateArr.reverse().join("-");
 }
 
 module.exports = router;
