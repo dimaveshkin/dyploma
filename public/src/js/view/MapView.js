@@ -73,8 +73,8 @@ var NotFoundPageView = Backbone.View.extend({
 
             //TODO: change to normal lng lat
             latlng = {
-                lat: Number(tour.longitude),
-                lng: Number(tour.latitude)
+                lat: Number(tour.latitude),
+                lng: Number(tour.longitude)
             };
 
             marker = new google.maps.Marker({
