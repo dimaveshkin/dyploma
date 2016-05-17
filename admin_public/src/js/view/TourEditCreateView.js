@@ -111,6 +111,8 @@ var ToursEditCreateView = Backbone.View.extend({
                 $.ajax(url).done(function (response) {
                     if(response.code === 200) {
                         that.tourData = response.data;
+                        that.tourData.startDate = formatDateToString(new Date(that.tourData.startDate), ".");
+                        that.tourData.endDate = formatDateToString(new Date(that.tourData.endDate), ".");
                         that.$el.html(that.template(response.data));
                         resolve();
                     } else {
@@ -119,7 +121,7 @@ var ToursEditCreateView = Backbone.View.extend({
                     }
                 });
             } else {
-                this.$el.html(that.template({}));
+                that.$el.html(that.template({}));
                 resolve();
             }
         });
@@ -136,7 +138,8 @@ var ToursEditCreateView = Backbone.View.extend({
         var dataToSubmit = {},
             inclusiveArr = [],
             notInclusiveArr = [],
-            tripScheduleArr = [];
+            tripScheduleArr = [],
+            validationResult;
 
         this.$tripScheduleList.find(".day-schedule-list").each(function (index, el) {
             var $list = $(el),
@@ -184,7 +187,86 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit.not_inclusive = notInclusiveArr;
         dataToSubmit.schedule = tripScheduleArr;
 
+
+        //TODO: change to normal photoa
+        dataToSubmit.img = {
+            head: ["1.jpg"],
+            center: ["1.jpg"],
+            footer: ["1.jpg"]
+        };
+
+        dataToSubmit.cover = "1.jpg";
+
+        validationResult = this.validateTour(dataToSubmit);
+
+        if(validationResult.hasError) {
+            swal("Ошибка", validationResult.message, "error");
+            return;
+        }
+
         dataToSubmit = JSON.stringify(dataToSubmit);
+
+        if(this.isCreating) {
+            this.postNewTour(dataToSubmit);
+        } else {
+            this.putChanges(dataToSubmit);
+        }
+    },
+    validateTour: function (tourData) {
+        var hasError = false,
+            errMsgArr = [];
+
+        if($.trim(tourData.title) === "") {
+            errMsgArr.push("Название не может быть пустой строкой.");
+            hasError = true;
+        }
+
+        if($.trim(tourData.desc) === "") {
+            errMsgArr.push("Описание не может быть пустой строкой.");
+            hasError = true;
+        }
+
+        if($.trim(tourData.startDate) === "" || $.trim(tourData.startDate) === "") {
+            errMsgArr.push("Укажите даты начала и конца тура.");
+            hasError = true;
+        }
+
+        if($.trim(tourData.longitude) === "" || $.trim(tourData.latitude) === "") {
+            errMsgArr.push("Укажите координаты места проведения тура.");
+            hasError = true;
+        }
+
+        if($.trim(tourData.complexity) === "") {
+            errMsgArr.push("Укажите сложность тура.");
+            hasError = true;
+        }
+
+        if($.trim(tourData.cost) === "") {
+            errMsgArr.push("Укажите стоимость тура.");
+            hasError = true;
+        }
+
+        if(tourData.inclusive.length === 0) {
+            errMsgArr.push("Укажите, что входит в стоимость тура.");
+            hasError = true;
+        }
+
+        if(tourData.not_inclusive.length === 0) {
+            errMsgArr.push("Укажите, что не входит в стоимость тура.");
+            hasError = true;
+        }
+
+        if(tourData.schedule.length === 0) {
+            errMsgArr.push("Расписание должно включать в себя хотя бы один день.");
+            hasError = true;
+        }
+
+        return {
+            hasError: hasError,
+            message: errMsgArr.join("\n")
+        };
+    },
+    putChanges: function (dataToSubmit) {
         $.ajax({
             method: "PUT",
             url: "/api/tours/" + this.tourID,
@@ -194,6 +276,26 @@ var ToursEditCreateView = Backbone.View.extend({
             success: function (response) {
                 if(response.code === 200) {
                     swal("Успех!", "Фототур успешно изменен.", "success")
+                } else {
+                    swal("Ошибка!", "Не удалось сохранить фототур.", "error")
+                }
+            },
+            error: function (xhr, mes, err) {
+                console.log(mes);
+                console.log(err);
+            }
+        });
+    },
+    postNewTour: function (dataToSubmit) {
+        $.ajax({
+            method: "POST",
+            url: "/api/tours",
+            data: dataToSubmit,
+            contentType: 'application/json', // content type sent to server
+            dataType: 'json', //Expected data format from server
+            success: function (response) {
+                if(response.code === 200) {
+                    swal("Успех!", "Фототур успешно сохранен.", "success")
                 } else {
                     swal("Ошибка!", "Не удалось сохранить фототур.", "error")
                 }
@@ -281,7 +383,10 @@ function daysBetween(date1, date2) {
     var date2_ms = date2.getTime();
     var difference_ms = Math.abs(date1_ms - date2_ms);
     return Math.round(difference_ms/ONE_DAY) + 1
+}
 
+function formatDateToString (date, joinSymb) {
+    return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join(joinSymb + "");
 }
 
 module.exports = ToursEditCreateView;

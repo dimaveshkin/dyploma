@@ -26,6 +26,7 @@ var Router = Backbone.Router.extend({
     "admin/requests/:id": "tourRequests",
     "admin/requests": "requests",
     "admin/tours": "tours",
+    "admin/tours/new": "tourCreate",
     "admin/tours/:id": "tourEdit",
     "admin/categories/:id/add": "addPhoto",
     "admin/categories/:name": "countryCategory",
@@ -67,6 +68,9 @@ var Router = Backbone.Router.extend({
   },
   tourEdit: function(id) {
     this.tourEditCreateView.render({ tourID: id, router: this });
+  },
+  tourCreate: function() {
+    this.tourEditCreateView.render({ router: this });
   },
   countryCategory: function (name) {
     this.galleryCountryPageTmp.render(name);
