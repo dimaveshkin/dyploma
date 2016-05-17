@@ -43,6 +43,7 @@ var ToursEditCreateView = Backbone.View.extend({
         this.$longitude = this.$el.find("#longitude");
         this.$latitude = this.$el.find("#latitude");
         this.$cost = this.$el.find("#cost");
+        this.$places = this.$el.find("#places");
         this.$complexity = this.$el.find("#complexity");
         this.$inclusiveList = this.$el.find("#inclusive-list");
         this.$notInclusiveList = this.$el.find("#not-inclusive-list");
@@ -180,6 +181,7 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit.startDate = this.$startDate.val();
         dataToSubmit.endDate = this.$endDate.val();
         dataToSubmit.cost = this.$cost.val();
+        dataToSubmit.places = this.$places.val();
         dataToSubmit.complexity = this.$complexity.val();
         dataToSubmit.latitude = this.$latitude.val();
         dataToSubmit.longitude = this.$longitude.val();
@@ -243,6 +245,11 @@ var ToursEditCreateView = Backbone.View.extend({
 
         if($.trim(tourData.cost) === "") {
             errMsgArr.push("Укажите стоимость тура.");
+            hasError = true;
+        }
+
+        if($.trim(tourData.places) === "" || parseInt(tourData.places, "10") < 1) {
+            errMsgArr.push("Укажите количество мест.");
             hasError = true;
         }
 
