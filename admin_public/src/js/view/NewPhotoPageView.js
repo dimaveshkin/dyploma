@@ -17,6 +17,9 @@ var GalleryPageView = Backbone.View.extend({
     //"change #select-file": "showPhotos"
   },
   render: function (countryId) {
+    $('.active').removeClass('active');
+    $('#categories').addClass('active');
+
     this.$el.html(this.template({countryId: countryId}));
 
     var that = this;

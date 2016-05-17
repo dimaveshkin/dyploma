@@ -4,6 +4,7 @@
         <tr>
             <td>Название</td>
             <td>Дата</td>
+            <td>Количество мест</td>
             <td>Количество заявок</td>
         </tr>
     </thead>
@@ -12,6 +13,7 @@
         <tr data-tour-id="{{id}}" class="tour-item">
             <td>{{title}}</td>
             <td>{{#getDate startDate endDate}}{{/getDate}}</td>
+            <td>{{places}}</td>
             <td>{{count}}</td>
         </tr>
     {{/each}}

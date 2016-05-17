@@ -15,6 +15,9 @@ var FeedbacksPageView = Backbone.View.extend({
     "click tr .remove-feedback": "removeFeedback"
   },
   render: function () {
+    $('.active').removeClass('active');
+    $('#feedbacks').addClass('active');
+
     var self = this;
     self.$el.html(self.template());
     $.get('/api/feedback/', function (feedbacks) {

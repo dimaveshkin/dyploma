@@ -10,6 +10,10 @@ var ContactsPageView = Backbone.View.extend({
 
   },
   render: function () {
+
+    $('.active').removeClass('active');
+    $('#contacts').addClass('active');
+
     var self = this;
 
     $.get('/api/socials', function (socials) {

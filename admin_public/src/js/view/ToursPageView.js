@@ -20,6 +20,9 @@ var ToursPageView = Backbone.View.extend({
         "click .prev-tours-header": "togglePrevTours"
     },
     render: function () {
+        $('.active').removeClass('active');
+        $('#tours').addClass('active');
+
         var $prevList, $nextList, $prevHeader, $nextHeader;
         this.$el.html(this.template());
 

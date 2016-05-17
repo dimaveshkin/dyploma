@@ -11,15 +11,28 @@
     </thead>
     <tbody>
     {{#each requests}}
-        <tr data-request-id="{{id}}">
+        <tr data-request-id="{{id}}"
+            {{#if_eq status 'Новая'}}class="new-request"{{/if_eq}}
+            {{#if_eq status 'Принятая'}}class="accepted-request"{{/if_eq}}
+            {{#if_eq status 'Отклоненная'}} class="rejected-request"{{/if_eq}}
+
+        >
             <td>{{name}}<br>({{email}})</td>
             <td>{{application}}</td>
             <td>{{#getDateTime date}}{{/getDateTime}}</td>
-            <td>{{status}}</td>
+            <td class="status">{{status}}</td>
             <td>
-                <i class="icon-thumbs-up request-accept"></i>
-                <i class="icon-thumbs-down request-reject"></i>
-                <i class="icon-cancel request-delte"></i>
+                {{#if_eq status "Новая"}}
+                    <i class="icon-thumbs-up request-accept" title="Принять заявку"></i>
+                    <i class="icon-thumbs-down request-reject" title="Отклонить заявку"></i>
+                    <i class="icon-cancel request-delete" title="Удалить заявку"></i>
+                {{/if_eq}}
+                {{#if_eq status "Принятая"}}
+                    <i class="icon-thumbs-down request-reject" title="Отклонить заявку"></i>
+                {{/if_eq}}
+                {{#if_eq  status "Отклоненная"}}
+                    <i class="icon-cancel request-delete" title="Удалить заявку"></i>
+                {{/if_eq}}
             </td>
         </tr>
     {{/each}}
