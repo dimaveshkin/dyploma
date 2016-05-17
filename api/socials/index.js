@@ -1,5 +1,6 @@
 const express = require('express'),
     router = express.Router(),
+    checkAdmin = require('../../middleware/checkAdmin'),
     db = require('../../helpers/db');
 
 router.get('/', function (req, res) { //get all socials
@@ -10,7 +11,7 @@ router.get('/', function (req, res) { //get all socials
     });
 });
 
-router.put('/', function (req, res) { //updates all socials
+router.put('/', checkAdmin, function (req, res) { //updates all socials
   db.query('UPDATE contacts SET ?',[req.body],
       function(err, result) {
         if (err) throw err;

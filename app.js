@@ -47,11 +47,11 @@ app.get("/captcha.png", function(req, res, next) {
 app.use("/api", apiRouter);
 
 app.use("/admin", function (req, res) {
-  //  if(req.session.admin) {
+   // if(req.session.admin) {
         res.sendFile(__dirname + "/admin_public/build/pass.html");
    // } else {
    //     res.sendFile(__dirname + "/public/build/login.html");
-  //  }
+   // }
 });
 
 app.use("/adminstatic/**", checkAdmin);

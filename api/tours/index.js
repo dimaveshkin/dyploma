@@ -3,6 +3,7 @@ const express = require('express'),
     imgPath = require('../../helpers/imgPath'),
     db = require('../../helpers/db'),
     del = require('del'),
+    checkAdmin = require('../../middleware/checkAdmin'),
     TOURS_SOURCE = "/images/tours/",
     imgBuildDeletePath = "images/build/tours/";
 
@@ -15,7 +16,7 @@ router.get('/', function (req, res) { //get tours list
     });
 });
 
-router.post('/', function (req, res) { //get tours list
+router.post('/', checkAdmin, function (req, res) { //get tours list
 
     req.body.schedule = JSON.stringify(req.body.schedule);
     req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
@@ -34,7 +35,7 @@ router.post('/', function (req, res) { //get tours list
     });
 });
 
-router.get('/requests', function (req, res) { //get tours list which have requests
+router.get('/requests',checkAdmin, function (req, res) { //get tours list which have requests
     db.query('SELECT t.id, t.title, startDate, endDate, COUNT(r.id) as count, t.places FROM tours AS t INNER JOIN requests AS r ON r.tour_id = t.id GROUP BY t.title', function (err, rows, fields) {
         if (err) throw err;
 
@@ -42,7 +43,7 @@ router.get('/requests', function (req, res) { //get tours list which have reques
     });
 });
 
-router.get('/requests/:id', function (req, res) { //get requests by tour id
+router.get('/requests/:id',checkAdmin, function (req, res) { //get requests by tour id
     db.query('SELECT r.id, r.name, r.email, r.application, r.date, s.status FROM requests AS r, request_statuses AS s WHERE s.id = r.status AND tour_id = ' + db.escape(req.params.id) + ' ORDER BY(s.status) desc', function (err, rows, fields) {
         if (err) throw err;
 
@@ -50,7 +51,7 @@ router.get('/requests/:id', function (req, res) { //get requests by tour id
     });
 });
 
-router.post('/requests/accept/:id', function (req, res) { //accept requests by id
+router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept requests by id
     db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 2}, function(err, result) {
         if (err) {
             res.send({
@@ -66,7 +67,7 @@ router.post('/requests/accept/:id', function (req, res) { //accept requests by i
     });
 });
 
-router.post('/requests/reject/:id', function (req, res) { //reject requests by id
+router.post('/requests/reject/:id',checkAdmin, function (req, res) { //reject requests by id
     db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 3}, function(err, result) {
         if (err) {
             res.send({
@@ -82,7 +83,7 @@ router.post('/requests/reject/:id', function (req, res) { //reject requests by i
     });
 });
 
-router.post('/requests/delete/:id', function (req, res) { //delete requests by id
+router.post('/requests/delete/:id',checkAdmin, function (req, res) { //delete requests by id
     db.query('DELETE FROM requests WHERE id =' + req.params.id, function (err, rows) {
         if (err) {
             res.json({code: 500, error:"Nothing has been deleted!"});
@@ -132,7 +133,7 @@ router.get('/:id', function (req, res) { //get tour by id
     });
 });
 
-router.put('/:id', function (req, res) {
+router.put('/:id',checkAdmin, function (req, res) {
     console.log("sending");
 
     req.body.schedule = JSON.stringify(req.body.schedule);
@@ -150,7 +151,7 @@ router.put('/:id', function (req, res) {
         });
 });
 
-router.get('/remove/:id', function (req, res) { //get tour by id
+router.get('/remove/:id',checkAdmin, function (req, res) { //get tour by id
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
         var imgDeleteArr = [], img = {}, cover;
 
