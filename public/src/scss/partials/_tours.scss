@@ -98,7 +98,7 @@
   .form-elem.captcha {
     vertical-align: top;
     display: inline-block;
-    width: 50%;
+    width: 49%;
   }
 
   .captcha-img{
@@ -205,7 +205,22 @@
   padding: 10px;
 }
 
+@media (max-width: 1366px) {
+  .tours .img-caption .tour-name {
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 1024px) {
+
+  .map .filters label {
+    font-size: 1.8rem;
+  }
+
+  .tours-wrapper .heading {
+    font-size: 2.5rem;
+  }
+
   .selected-tour-body {
     .selected-tour-img,
     .selected-tour-desc {
@@ -221,4 +236,7 @@
     }
   }
 
+  .tours .img-caption .tour-name {
+    font-size: 1.8rem;
+  }
 }
