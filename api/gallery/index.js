@@ -19,14 +19,15 @@ router.post('/upload', checkAdmin, function (req, res) {//upload photo
         if (err) throw err;
         console.log(name);
         var international = name[0].international;
+          console.log(util.inspect(files));
 
-        for(var i = 0, length = files.image.length; i < length; i++) {
-          fs.rename(files.image[i].path, imgBuildDeletePath + international + "/" + files.image[i].originalFilename, function(err) {
+        for(var i = 0, length = files.images.length; i < length; i++) {
+          fs.rename(files.images[i].path, imgBuildDeletePath + international + "/" + files.images[i].originalFilename, function(err) {
             if ( err ) console.log('ERROR: ' + err);
           });
 
           var photo = {
-            src: international + "/" + files.image[i].originalFilename,
+            src: international + "/" + files.images[i].originalFilename,
             country_id: fields.id,
             is_best: 0,
             title: fields['title[]'][i],

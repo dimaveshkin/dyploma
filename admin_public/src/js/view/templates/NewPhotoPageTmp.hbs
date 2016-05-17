@@ -1,9 +1,9 @@
 <form id="uploadForm"
-      enctype="multipart/form-data"
+
       action="/api/gallery/upload"
       method="POST">
   <label class="select-label">
-    <input type="file" name="image" id="select-file" multiple="multiple" />
+    <input type="file" name="images" id="select-file" multiple="multiple" />
     <span class="frm-ok">Выбрать фото <i class=" icon-upload"></i></span>
   </label>
   <input type="hidden" name="id" value="{{countryId}}"/>
