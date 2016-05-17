@@ -81,7 +81,6 @@
     .captcha {
       width: 45%;
       margin-top: 0;
-      margin-right: 15px;
       vertical-align: top;
       display: inline-block;
     }
@@ -89,36 +88,31 @@
 
 .feedback-form {
   display: inline-block;
-  text-align: center;
-
-
+  text-align: right;
 }
   .captcha-img {
     height: auto;
-    margin-right: 20px;
   }
 }
 
 @media (max-width: 1024px) {
-  .contact-page {
-    text-align: center;
+  .contact-page { text-align: center;
 
-    .chatrov-photo {
-      width: 94%;
-    }
+    .chatrov-photo { width: 94%; }
 
     .quote {
       margin-top: 30px;
       width: 94%;
       margin-left: 0;
 
-      .author {
-        margin-top: 0;
-      }
+      .author { margin-top: 0; }
     }
+    .write-to { width: 94%; }
+  }
+}
 
-    .write-to {
-      width: 94%;
-    }
+@media (max-width: 1366px) {
+  .contact-page {
+    .write-to { width: 94%; }
   }
 }

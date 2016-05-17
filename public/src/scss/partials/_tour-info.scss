@@ -197,6 +197,7 @@
     padding: 40px 20px;
     overflow: hidden;
     transition: all .7s;
+    text-align: right;
 
     &:hover {
       & + .form-half {
@@ -240,7 +241,7 @@
     padding: 10px;
 
     &.captcha {
-      width: 50%;
+      width: 45%;
     }
   }
   .submit-btn {
@@ -274,6 +275,14 @@
     width: 50%;
     padding-bottom: 35%;
   }
+  
+}
+
+
+@media (max-width: 1366px) {
+  .form-wrapper {
+    width: 94%;
+  }
 
   .inclusive-list {
     padding: 35px 25px;
@@ -283,4 +292,3 @@
     }
   }
 }
-

@@ -40,4 +40,13 @@
       }
     }
   }
+  .toAdmin {
+    color: #fff;
+    font: 2rem "Forum";
+    display: block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
