@@ -108,6 +108,7 @@ router.get('/:id', function (req, res) { //get tour by id
         rows[0].endDate = formatDate(rows[0].endDate, ".");
 
         response.data = imgPath.JSONPath(rows, 'img')[0];
+        imgPath.concatPath(rows, 'cover', '/images/tours/');
         response.message = "Тур найден.";
         response.code = 200;
         res.send(response);
@@ -131,7 +132,7 @@ router.put('/:id', function (req, res) {
         });
 });
 
-router.get('/remove/:id', function (req, res) { //get tour by id
+router.get('/remove/:id', function (req, res) { //remove tour by id
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
         var imgDeleteArr = [], img, cover;
 

@@ -81,6 +81,54 @@
             {{/each}}
         </ul>
     </div>
+    <form method="POST" action=""
+    <ul class="images-gallery">
+        <li class="gallery-img-item">
+            <div class="gallery-img" style="background-image: url({{cover}})"></div>
+            <p class="img-caption">
+                <label>
+                    <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
+                    <input type="file" class="js-hide select-file" name="files">
+                </label>
+            </p>
+        </li>
+    </ul>
+    <ul class="images-gallery">
+        {{#each img.head}}
+            <li class="gallery-img-item">
+                <div class="gallery-img" style="background-image: url({{this}})"></div>
+                <p class="img-caption">
+                    <label>
+                        <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
+                        <input type="file" class="js-hide select-file" name="files" >
+                    </label>
+                </p>
+            </li>
+        {{/each}}
+        {{#each img.center}}
+            <li class="gallery-img-item">
+                <div class="gallery-img" style="background-image: url({{this}})"></div>
+                <p class="img-caption">
+                    <label>
+                        <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
+                        <input type="file" class="js-hide select-file" name="files">
+                    </label>
+                </p>
+            </li>
+        {{/each}}
+        {{#each img.footer}}
+            <li class="gallery-img-item">
+                <div class="gallery-img" style="background-image: url({{this}})"></div>
+                <p class="img-caption">
+                    <label>
+                        <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
+                        <input type="file" class="js-hide select-file" name="files">
+                    </label>
+                </p>
+            </li>
+        {{/each}}
+    </ul>
+
 </div>
 <div class="tour-controls">
     <button class="save-changes btn" id="save-changes">Сохранить изменения</button>

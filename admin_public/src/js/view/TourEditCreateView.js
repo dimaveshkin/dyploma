@@ -54,6 +54,7 @@ var ToursEditCreateView = Backbone.View.extend({
         this.$addNotInclusive = this.$el.find("#add-not-inclusive");
         this.$saveChanges = this.$el.find("#save-changes");
         this.$cancelChanges = this.$el.find("#cancel-changes");
+        this.$selectedFiles = this.$el.find(".select-file");
 
         this.attachEvents();
     },
@@ -131,6 +132,7 @@ var ToursEditCreateView = Backbone.View.extend({
         this.$el.find(".delete-field").click(this.deleteField);
         this.$cancelChanges.click(this.cancelChanges);
         this.$saveChanges.click(this.saveChanges);
+        this.$selectedFiles.change(this.selectFile);
     },
     saveChanges: function (e) {
         var dataToSubmit = {},
@@ -261,6 +263,25 @@ var ToursEditCreateView = Backbone.View.extend({
             map: this.map,
             title: 'Выбраная точка'
         });
+    },
+    selectFile: function (e) {
+        var root =  $(e.target).closest('li');
+
+        //console.log($(e.target).closest('div.gallery-img'));
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+            var the_url = event.target.result;
+            console.log(root.find('.gallery-img').css("background-image"));
+            root.find('.gallery-img').css("background-image", "url('" + the_url + "')");
+            //background-image: url(" data:image/jpg;base64,");
+
+            //$('.images-gallery').append(fileUploadTmp({src: the_url}));
+            //$('.select-label').addClass('js-hide');
+            //$('.upload').removeClass('js-hide');
+        };
+
+        reader.readAsDataURL(this.files[0]);
     }
 });
 
