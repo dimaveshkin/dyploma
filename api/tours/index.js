@@ -15,6 +15,25 @@ router.get('/', function (req, res) { //get tours list
     });
 });
 
+router.post('/', function (req, res) { //get tours list
+
+    req.body.schedule = JSON.stringify(req.body.schedule);
+    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
+    req.body.inclusive = JSON.stringify(req.body.inclusive);
+    req.body.img = JSON.stringify(req.body.img);
+    req.body.startDate = formatDateForDB(req.body.startDate);
+    req.body.endDate = formatDateForDB(req.body.endDate);
+    
+    db.query('INSERT INTO tours SET ?', req.body, function (err, rows, fields) {
+        if (err) {
+            res.json({code: 500, message: "Не удалось сохранить фототур."});
+            return;
+        }
+
+        res.json({code: 200, message: "Фототур сохранен."});
+    });
+});
+
 router.get('/requests', function (req, res) { //get tours list which have requests
     db.query('SELECT t.id, t.title, startDate, endDate, COUNT(r.id) as count, t.places FROM tours AS t INNER JOIN requests AS r ON r.tour_id = t.id GROUP BY t.title', function (err, rows, fields) {
         if (err) throw err;
@@ -103,9 +122,8 @@ router.get('/:id', function (req, res) { //get tour by id
         rows[0].schedule = JSON.parse(rows[0].schedule);
         rows[0].not_inclusive = JSON.parse(rows[0].not_inclusive);
         rows[0].inclusive = JSON.parse(rows[0].inclusive);
-        console.log(rows[0].startDate);
-        rows[0].startDate = formatDate(rows[0].startDate, ".");
-        rows[0].endDate = formatDate(rows[0].endDate, ".");
+        // rows[0].startDate = formatDate(rows[0].startDate, ".");
+        // rows[0].endDate = formatDate(rows[0].endDate, ".");
 
         response.data = imgPath.JSONPath(rows, 'img')[0];
         imgPath.concatPath(rows, 'cover', '/images/tours/');
@@ -121,6 +139,7 @@ router.put('/:id', function (req, res) {
     req.body.schedule = JSON.stringify(req.body.schedule);
     req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
     req.body.inclusive = JSON.stringify(req.body.inclusive);
+    req.body.img = JSON.stringify(req.body.img);
     req.body.startDate = formatDateForDB(req.body.startDate);
     req.body.endDate = formatDateForDB(req.body.endDate);
 
@@ -134,7 +153,7 @@ router.put('/:id', function (req, res) {
 
 router.get('/remove/:id', function (req, res) { //remove tour by id
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
-        var imgDeleteArr = [], img, cover;
+        var imgDeleteArr = [], img = {}, cover;
 
         if (err) {
             res.send({
@@ -143,7 +162,9 @@ router.get('/remove/:id', function (req, res) { //remove tour by id
             });
         }
 
-        img = JSON.parse(rows[0].img);
+        if(rows[0].img){
+            img = JSON.parse(rows[0].img);
+        }
 
         if (img.head) {
             img.head.forEach(function (imgName) {
