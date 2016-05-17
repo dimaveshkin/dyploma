@@ -81,14 +81,14 @@
             {{/each}}
         </ul>
     </div>
-    <form method="POST" action=""
+    <form method="POST" action="/api/tours/{{id}}" id="update-tour">
     <ul class="images-gallery">
         <li class="gallery-img-item">
             <div class="gallery-img" style="background-image: url({{cover}})"></div>
             <p class="img-caption">
                 <label>
                     <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
-                    <input type="file" class="js-hide select-file" name="files">
+                    <input type="file" class="js-hide select-file" name="cover">
                 </label>
             </p>
         </li>
@@ -100,7 +100,7 @@
                 <p class="img-caption">
                     <label>
                         <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
-                        <input type="file" class="js-hide select-file" name="files" >
+                        <input type="file" class="js-hide select-file" name="head" >
                     </label>
                 </p>
             </li>
@@ -111,7 +111,7 @@
                 <p class="img-caption">
                     <label>
                         <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
-                        <input type="file" class="js-hide select-file" name="files">
+                        <input type="file" class="js-hide select-file" name="center">
                     </label>
                 </p>
             </li>
@@ -122,13 +122,14 @@
                 <p class="img-caption">
                     <label>
                         <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>
-                        <input type="file" class="js-hide select-file" name="files">
+                        <input type="file" class="js-hide select-file" name="footer">
                     </label>
                 </p>
             </li>
         {{/each}}
     </ul>
-
+        <input type="hidden" id="data-to-submit" name="data">
+    </form>
 </div>
 <div class="tour-controls">
     <button class="save-changes btn" id="save-changes">Сохранить изменения</button>

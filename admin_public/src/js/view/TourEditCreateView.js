@@ -269,24 +269,32 @@ var ToursEditCreateView = Backbone.View.extend({
         };
     },
     putChanges: function (dataToSubmit) {
-        $.ajax({
-            method: "PUT",
-            url: "/api/tours/" + this.tourID,
-            data: dataToSubmit,
-            contentType: 'application/json', // content type sent to server
-            dataType: 'json', //Expected data format from server
+        console.log(dataToSubmit);
+        $('#data-to-submit').val(dataToSubmit);
+
+        $('#update-tour').ajaxSubmit({
             success: function (response) {
-                if(response.code === 200) {
-                    swal("Успех!", "Фототур успешно изменен.", "success")
-                } else {
-                    swal("Ошибка!", "Не удалось сохранить фототур.", "error")
-                }
-            },
-            error: function (xhr, mes, err) {
-                console.log(mes);
-                console.log(err);
+                swal("Сохраненно", "Фототур успешно изменен.", "success")
             }
         });
+        //$.ajax({
+        //    method: "PUT",
+        //    url: "/api/tours/" + this.tourID,
+        //    data: dataToSubmit,
+        //    contentType: 'application/json', // content type sent to server
+        //    dataType: 'json', //Expected data format from server
+        //    success: function (response) {
+        //        if(response.code === 200) {
+        //            swal("Успех!", "Фототур успешно изменен.", "success")
+        //        } else {
+        //            swal("Ошибка!", "Не удалось сохранить фототур.", "error")
+        //        }
+        //    },
+        //    error: function (xhr, mes, err) {
+        //        console.log(mes);
+        //        console.log(err);
+        //    }
+        //});
     },
     postNewTour: function (dataToSubmit) {
         $.ajax({
