@@ -252,3 +252,35 @@
     float: right;
   }
 }
+
+@media (max-width: 1024px) {
+  .tour-desc .tour-text {
+    padding: 0;
+  }
+
+  .tour-desc .tour-prop {
+    padding: 5px 35px;
+  }
+
+  .tour-prop-item {
+    text-align: center;
+
+    .prop-icon {
+      margin-right: 0;
+    }
+  }
+
+  .tour-footer-imgs .tour-footer-img {
+    width: 50%;
+    padding-bottom: 35%;
+  }
+
+  .inclusive-list {
+    padding: 35px 25px;
+
+    .inclusive-text {
+      width: 76%;
+    }
+  }
+}
+

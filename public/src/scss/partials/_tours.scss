@@ -204,3 +204,21 @@
 .gallery-wrapper {
   padding: 10px;
 }
+
+@media (max-width: 1024px) {
+  .selected-tour-body {
+    .selected-tour-img,
+    .selected-tour-desc {
+      width: 100%;
+
+      h4 {
+        margin-top: 10px;
+      }
+    }
+
+    .active-tour-btn-holder {
+      text-align: center;
+    }
+  }
+
+}

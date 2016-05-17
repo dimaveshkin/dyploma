@@ -98,3 +98,27 @@
     margin-right: 20px;
   }
 }
+
+@media (max-width: 1024px) {
+  .contact-page {
+    text-align: center;
+
+    .chatrov-photo {
+      width: 94%;
+    }
+
+    .quote {
+      margin-top: 30px;
+      width: 94%;
+      margin-left: 0;
+
+      .author {
+        margin-top: 0;
+      }
+    }
+
+    .write-to {
+      width: 94%;
+    }
+  }
+}
