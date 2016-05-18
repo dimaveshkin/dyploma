@@ -194,6 +194,7 @@ router.get('/:id', function (req, res) { //get tour by id
             }
         }
 
+
         response.message = "Тур найден.";
         response.code = 200;
         res.send(response);
@@ -233,7 +234,7 @@ router.post('/:id', checkAdmin, function (req, res) {
                 for(part in files) {
                     for(i = 0; i < files[part].length; i++){
                        var path = imgBuildDeletePath + files[part][i].originalFilename;
-                        fs.rename(files[part][i].path, path, function(err) {
+                       fs.rename(files[part][i].path, path, function(err) {
                             if ( err ) console.log('ERROR: ' + err);
                         });
                     }
@@ -354,8 +355,6 @@ function formatDateForDB (dateStr) {
 }
 
 function updateTour(data, id) {
-    console.log(data);
-
     data.schedule = JSON.stringify(data.schedule);
     data.not_inclusive = JSON.stringify(data.not_inclusive);
     data.inclusive = JSON.stringify(data.inclusive);

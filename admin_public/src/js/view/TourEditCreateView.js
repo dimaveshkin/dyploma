@@ -12,7 +12,7 @@ var swal = require("sweetalert");
 var ToursEditCreateView = Backbone.View.extend({
     el: ".dashboard",
     initialize: function (options) {
-        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile");
+        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile", "validateTour");
         this.router = options.router;
     },
     events: {
@@ -296,6 +296,11 @@ var ToursEditCreateView = Backbone.View.extend({
             hasError = true;
         }
 
+        if(!$(".select-file[name='cover']").val() && this.isCreating) {
+            errMsgArr.push("Добавьте обложку тура");
+            hasError = true;
+        }
+
         return {
             hasError: hasError,
             message: errMsgArr.join("\n")
@@ -326,24 +331,6 @@ var ToursEditCreateView = Backbone.View.extend({
                 console.log(err);
             }
         });
-        //$.ajax({
-        //    method: "POST",
-        //    url: "/api/tours",
-        //    data: dataToSubmit,
-        //    contentType: 'application/json', // content type sent to server
-        //    dataType: 'json', //Expected data format from server
-        //    success: function (response) {
-        //        if(response.code === 200) {
-        //            swal("Успех!", "Фототур успешно сохранен.", "success")
-        //        } else {
-        //            swal("Ошибка!", "Не удалось сохранить фототур.", "error")
-        //        }
-        //    },
-        //    error: function (xhr, mes, err) {
-        //        console.log(mes);
-        //        console.log(err);
-        //    }
-        //});
     },
     cancelChanges: function (e) {
         this.render({tourID: this.tourID});
@@ -413,9 +400,10 @@ var ToursEditCreateView = Backbone.View.extend({
             var the_url = event.target.result;
             console.log(root.find('.gallery-img').css("background-image"));
             root.find('.gallery-img').css("background-image", "url('" + the_url + "')");
-            if(that.isCreating) {
-                root.find('.gallery-img').html('').removeClass('plus');
-                root.find('.img-caption').html(' <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>');
+            if(root.hasClass('add-pics')) {
+            root.removeClass('add-pics');
+            root.find('.gallery-img').html('').removeClass('plus');
+            root.find('.img-caption').html('<i class="icon-spin3 change-photo" title="Заменить фотографию"></i>');
             }
         };
 

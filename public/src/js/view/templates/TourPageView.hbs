@@ -1,10 +1,12 @@
 <div class="tour-page">
   <ul class="tour-head-imgs">
     {{#each img.head}}
-      <li class="tour-head-img " style="background-image: url({{this}})">
-        <a href="{{this}}" title="{{#if desc}}{{desc}}<br/>{{/if}}" class="fancybox link-block" rel="all-gallery" onmouseover="this.setAttribute('org_title', this.title); this.title='';" onclick="this.title = this.getAttribute('org_title');" onmouseout="this.title = this.getAttribute('org_title');">
-        </a>
-      </li>
+        {{#if this}}
+            <li class="tour-head-img" style="background-image: url({{this}})"></li>
+
+        {{else}}
+            <img src="" height="50px">
+        {{/if}}
     {{/each}}
   </ul>
   <article class="tour-desc">
@@ -45,7 +47,9 @@
     </ul>
     <ul class="tour-center-imgs">
         {{#each img.center}}
-          <li class="tour-center-img" style="background-image: url({{this}})"></li>
+            {{#if this}}
+                <li class="tour-center-img" style="background-image: url({{this}})"></li>
+            {{/if}}
         {{/each}}
     </ul>
     <ul class="tour-order">
@@ -88,7 +92,9 @@
     </ul>
     <ul class="tour-footer-imgs">
         {{#each img.footer}}
-          <li class="tour-footer-img" style="background-image: url({{this}})"></li>
+            {{#if this}}
+              <li class="tour-footer-img" style="background-image: url({{this}})"></li>
+            {{/if}}
         {{/each}}
     </ul>
   </article>

@@ -8,7 +8,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  //background-image: url("../images/israel_1.jpg");
+    //background-image: url("../images/israel_1.jpg");
 }
 
 .images-gallery {
@@ -61,7 +61,7 @@
   border: 2px dashed #c0c0c0;
   text-align: center;
   color: #c0c0c0;
-  transition: all .6s;
+  transition: color .6s;
   font-size: 168px;
 
   &:hover {

@@ -195,6 +195,7 @@ div.ui-datepicker {
 }
 
 .tour-field {
+
   .add-pics {
     cursor: pointer;
     border: 2px dashed #c0c0c0;
@@ -208,4 +209,8 @@ div.ui-datepicker {
       width: initial;
     }
   }
+}
+.images-gallery .gallery-img-item label {
+  display: block;
+  width: initial;
 }
