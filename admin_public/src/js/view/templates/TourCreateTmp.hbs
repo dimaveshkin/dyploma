@@ -67,8 +67,101 @@
         <ul class="input-group" id="trip-schedule-list">
         </ul>
     </div>
+    <form method="POST" action="/api/tours/{{id}}" id="create-tour">
+        <div class="tour-field">
+            <label>Обложка фототура</label>
+            <ul class="images-gallery">
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                            <input type="file" class="js-hide select-file" name="cover">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="tour-field">
+            <label>Фотографии вверху</label>
+            <ul class="images-gallery">
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="head">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="head">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="head">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="tour-field">
+            <label>Фотографии в центре</label>
+            <ul class="images-gallery">
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="center">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="center">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="tour-field">
+            <label>Фотографии внизу</label>
+            <ul class="images-gallery">
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="footer">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="footer">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="footer">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+                <li class="add-pics gallery-img-item">
+                    <label>
+                        <div class="plus gallery-img">+</div>
+                        <input type="file" class="js-hide select-file" name="footer">
+                        <p class="img-caption">Добавить</p>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <input type="hidden" id="data-to-submit" name="data">
+    </form>
 </div>
 <div class="tour-controls">
-    <button class="save-changes btn" id="save-changes">Создать фототур</button>
-    <button class="cancel-changes btn" id="cancel-changes">Отменить</button>
+    <button class="save-changes btn frm-ok" id="save-changes">Создать фототур</button>
+    <button class="cancel-changes btn delete-btn" id="cancel-changes">Отменить</button>
 </div>

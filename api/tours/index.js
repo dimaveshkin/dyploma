@@ -164,6 +164,8 @@ router.post('/:id', checkAdmin, function (req, res) {
 
                 if(data.cover) {
                     console.log('cover');
+                } else {
+                    delete  data.cover;
                 }
 
                 for(part in files) {

@@ -12,7 +12,7 @@ var swal = require("sweetalert");
 var ToursEditCreateView = Backbone.View.extend({
     el: ".dashboard",
     initialize: function (options) {
-        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker");
+        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile");
         this.router = options.router;
     },
     events: {
@@ -227,9 +227,9 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit = JSON.stringify(dataToSubmit);
 
         if(this.isCreating) {
-            this.postNewTour(dataToSubmit);
+            this.postNewTour(dataToSubmit);//добавить новый
         } else {
-            this.putChanges(dataToSubmit);
+            this.putChanges(dataToSubmit);//обновить
         }
     },
     validateTour: function (tourData) {
@@ -410,22 +410,21 @@ var ToursEditCreateView = Backbone.View.extend({
     },
     selectFile: function (e) {
         var root =  $(e.target).closest('li');
+        var that = this;
 
-        //console.log($(e.target).closest('div.gallery-img'));
         var reader = new FileReader();
 
         reader.onload = function (event) {
             var the_url = event.target.result;
             console.log(root.find('.gallery-img').css("background-image"));
             root.find('.gallery-img').css("background-image", "url('" + the_url + "')");
-            //background-image: url(" data:image/jpg;base64,");
-
-            //$('.images-gallery').append(fileUploadTmp({src: the_url}));
-            //$('.select-label').addClass('js-hide');
-            //$('.upload').removeClass('js-hide');
+            if(that.isCreating) {
+                root.find('.gallery-img').html('').removeClass('plus');
+                root.find('.img-caption').html(' <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>');
+            }
         };
 
-        reader.readAsDataURL(this.files[0]);
+        reader.readAsDataURL($(e.target)[0].files[0]);
     }
 });
 
