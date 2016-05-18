@@ -3,7 +3,7 @@
     <thead>
     <tr>
         <td>Отправитель</td>
-        <td>Заявка</td>
+        <td>Комментарий</td>
         <td>Дата</td>
         <td>Статус</td>
         <td>Управление</td>
@@ -31,6 +31,7 @@
                     <i class="icon-thumbs-down request-reject" title="Отклонить заявку"></i>
                 {{/if_eq}}
                 {{#if_eq  status "Отклоненная"}}
+                    <i class="icon-thumbs-up request-accept" title="Принять заявку"></i>
                     <i class="icon-cancel request-delete" title="Удалить заявку"></i>
                 {{/if_eq}}
             </td>

@@ -37,7 +37,17 @@ router.post('/', checkAdmin, function (req, res) { //get tours list
 });
 
 router.get('/requests',checkAdmin, function (req, res) { //get tours list which have requests
-    db.query('SELECT t.id, t.title, startDate, endDate, COUNT(r.id) as count, t.places FROM tours AS t INNER JOIN requests AS r ON r.tour_id = t.id GROUP BY t.title', function (err, rows, fields) {
+    db.query("SELECT t.id, t.title, startDate, endDate," +
+        "COUNT(r.id) as count_all," +
+        "SUM(IF(rs.status = 'Новая', 1, 0)) as count_new," +
+        "SUM(IF(rs.status = 'Принятая', 1, 0)) as count_approved," +
+        "SUM(IF(rs.status = 'Отклоненная', 1, 0)) as count_declined,t.places " +
+        "FROM tours AS t " +
+        "INNER JOIN requests AS r " +
+        "ON r.tour_id = t.id " +
+        "INNER JOIN request_statuses as rs " +
+        "ON r.status = rs.id " +
+        "GROUP BY t.title", function (err, rows, fields) {
         if (err) throw err;
 
         res.send(rows);

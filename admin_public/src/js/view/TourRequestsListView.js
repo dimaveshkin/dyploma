@@ -35,6 +35,7 @@ var TourRequestListView = Backbone.View.extend({
                 swal("Ошибка", response.error);
             } else {
                 root.find('.status').text('Принятая');
+                root.removeClass();
                 root.addClass('accepted-request');
                 $(e.target).closest('td').html('<i class="icon-thumbs-down request-reject" title="Отклонить заявку"></i>');
             }
@@ -48,8 +49,9 @@ var TourRequestListView = Backbone.View.extend({
                 swal("Ошибка", response.error);
             } else {
                 root.find('.status').text('Отклоненная');
+                root.removeClass();
                 root.addClass('rejected-request');
-                $(e.target).closest('td').html('<i class="icon-cancel request-delete" title="Удалить заявку"></i>');
+                $(e.target).closest('td').html('<i class="icon-thumbs-up request-accept" title="Принять заявку"></i><i class="icon-cancel request-delete" title="Удалить заявку"></i>');
             }
         });
     },
