@@ -22,18 +22,13 @@ var TourPageView = Backbone.View.extend({
         $.get("/api/tours/" + id, function (tour) {
           that.$el.html(that.template(tour.data));
 
-          $(".fancybox").fancybox({
-            prevEffect	: 'none',
-            nextEffect	: 'none',
-            helpers	: {
-              title	: {
-                type: 'outside'
-              }
-            },
-            beforeShow : function() {
-              this.title = (this.index + 1) + ' / ' + this.group.length + ' </span>';
+            //var areAllNotNull = tour.data.img.head.every(function(i) {
+            //    return i === null; });
+            //    console.log(areAllNotNull);
+            if((tour.data.img.head.every(function(i) { return i === null; }))) {
+                $('.grey-background-after').addClass('no-head-img');
             }
-          });
+
         });
     },
     events: {
