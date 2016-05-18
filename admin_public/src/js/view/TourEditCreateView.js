@@ -302,24 +302,39 @@ var ToursEditCreateView = Backbone.View.extend({
         };
     },
     putChanges: function (dataToSubmit) {
-        //console.log(dataToSubmit);
         $('#data-to-submit').val(dataToSubmit);
-
 
         $('#update-tour').ajaxSubmit({
             success: function (response) {
                 swal("Сохраненно", "Фототур успешно изменен.", "success")
+            },
+            error: function (xhr, mes, err) {
+                console.log(mes);
+                console.log(err);
+            }
+        });
+    },
+    postNewTour: function (dataToSubmit) {
+        $('#data-to-submit').val(dataToSubmit);
+
+        $('#create-tour').ajaxSubmit({
+            success: function (response) {
+                swal("Добавлено", "Фототур успешно добавлен.", "success")
+            },
+            error: function (xhr, mes, err) {
+                console.log(mes);
+                console.log(err);
             }
         });
         //$.ajax({
-        //    method: "PUT",
-        //    url: "/api/tours/" + this.tourID,
+        //    method: "POST",
+        //    url: "/api/tours",
         //    data: dataToSubmit,
         //    contentType: 'application/json', // content type sent to server
         //    dataType: 'json', //Expected data format from server
         //    success: function (response) {
         //        if(response.code === 200) {
-        //            swal("Успех!", "Фототур успешно изменен.", "success")
+        //            swal("Успех!", "Фототур успешно сохранен.", "success")
         //        } else {
         //            swal("Ошибка!", "Не удалось сохранить фототур.", "error")
         //        }
@@ -329,26 +344,6 @@ var ToursEditCreateView = Backbone.View.extend({
         //        console.log(err);
         //    }
         //});
-    },
-    postNewTour: function (dataToSubmit) {
-        $.ajax({
-            method: "POST",
-            url: "/api/tours",
-            data: dataToSubmit,
-            contentType: 'application/json', // content type sent to server
-            dataType: 'json', //Expected data format from server
-            success: function (response) {
-                if(response.code === 200) {
-                    swal("Успех!", "Фототур успешно сохранен.", "success")
-                } else {
-                    swal("Ошибка!", "Не удалось сохранить фототур.", "error")
-                }
-            },
-            error: function (xhr, mes, err) {
-                console.log(mes);
-                console.log(err);
-            }
-        });
     },
     cancelChanges: function (e) {
         this.render({tourID: this.tourID});
