@@ -135,8 +135,7 @@ router.get('/:id', function (req, res) { //get tour by id
     });
 });
 
-router.put('/:id',checkAdmin, function (req, res) {
-router.post('/:id', function (req, res) {
+router.post('/:id', checkAdmin, function (req, res) {
     var form = new multiparty.Form({uploadDir: 'test'});
     form.parse(req, function(err, fields, files) {
         var data = {};
@@ -175,7 +174,7 @@ router.post('/:id', function (req, res) {
 
 });
 
-router.put('/:id', function (req, res) {
+router.put('/:id', checkAdmin, function (req, res) {
     console.log("sending");
 
     req.body.schedule = JSON.stringify(req.body.schedule);
@@ -193,8 +192,7 @@ router.put('/:id', function (req, res) {
     });
 });
 
-router.get('/remove/:id',checkAdmin, function (req, res) { //get tour by id
-router.get('/remove/:id', function (req, res) { //remove tour by id
+router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
         var imgDeleteArr = [], img = {}, cover;
 
