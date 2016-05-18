@@ -7,7 +7,7 @@ const express = require('express'),
 router.post('/change', checkAdmin, function (req, res) {//change password
     compare(req.session.login, function (err, rows, fields) {
         if (rows && rows[0].password == cryptPassword(req.body.oldPassword)) {
-            db.query('UPDATE users SET ?', [
+            db.query('UPDATE users SET ? WHERE id = ' + req.session.userId, [
                     {password: cryptPassword(req.body.password)}
                 ],
                 function (err, result) {
@@ -16,10 +16,24 @@ router.post('/change', checkAdmin, function (req, res) {//change password
                     res.send(true);
                 });
         } else {
-            res.send({error: 'Пароль не верный'})
+            res.send({code: 500, error: 'Пароль не верный'})
         }
     });
+});
 
+router.post('/add', checkAdmin, function (req, res) {//change password
+    db.query('INSERT INTO users SET ?', {
+        login: req.body.login,
+        password: cryptPassword(req.body.password)
+    },
+        function (err, result) {
+            if (err) {
+                res.send({code: 500, message: err.message});
+                return;
+            }
+
+            res.send({code: 200, message: "Пользователь добавлен."});
+        });
 });
 
 router.post('/login', function (req, res) {//compare password
@@ -28,7 +42,7 @@ router.post('/login', function (req, res) {//compare password
     if (req.session.captcha == req.body.captcha) {
         compare(req.body.login, function (err, rows, fields) {
             if (rows.length) {
-                if(rows[0].password == cryptPassword(req.body.password)){
+                if (rows[0].password == cryptPassword(req.body.password)) {
                     req.session.userId = rows[0].id;
                     req.session.admin = true;
                     req.session.login = req.body.login;

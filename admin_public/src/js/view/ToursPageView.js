@@ -17,7 +17,8 @@ var ToursPageView = Backbone.View.extend({
     },
     events: {
         "click .next-tours-header": "toggleNextTours",
-        "click .prev-tours-header": "togglePrevTours"
+        "click .prev-tours-header": "togglePrevTours",
+        "click #new-tour-btn": "newTour"
     },
     render: function () {
         $('.active').removeClass('active');
@@ -59,6 +60,9 @@ var ToursPageView = Backbone.View.extend({
         });
 
         this.$nextHeader.toggleClass("hidden");
+    },
+    newTour: function (e) {
+        e.stopPropagation();
     }
 });
 

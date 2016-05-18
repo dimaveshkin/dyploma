@@ -22,7 +22,7 @@
 .tour-cover-wrapper {
   float: left;
   width: 20%;
-  margin: 0 15px 10px 0;
+  margin: 0 10px 0 0;
 }
 
 .tour-cover {
@@ -48,7 +48,7 @@
 }
 
 .tour-item {
-  padding-bottom: 5px;
+  padding-bottom: 15px;
 }
 
 .tour-item + .tour-item {
@@ -56,8 +56,8 @@
   border-top: 1px solid #000;
 }
 
-.tour-control, .tour-controls {
-  padding: 5px;
+.tour-control {
+  float: right;
 }
 
 .tour-control:hover {
@@ -138,4 +138,23 @@
 
 div.ui-datepicker {
   font-size: 16px;
+}
+
+.save-changes {
+  background: #94a19a;
+  font: 1.8rem Forum;
+}
+
+.cancel-changes {
+  font: 1.8rem Forum;
+  background: gray;
+}
+
+.new-tour-btn {
+  float: right;
+  margin: 0 !important;
+}
+
+.new-tour-btn:hover {
+  text-decoration: underline;
 }

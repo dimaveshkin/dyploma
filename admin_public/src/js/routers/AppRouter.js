@@ -8,6 +8,7 @@ var MainPageView = require("../view/GalleryPageView");
 var ContactsPageView = require("../view/ContactsPageView");
 var FeedbacksPageView = require("../view/FeedbacksPageView");
 var ChangePassPageView = require("../view/ChangePassPageView");
+var AddUserPageView = require("../view/AddUserPageView");
 var GalleryCountryPageTmp = require("../view/GalleryCountryPageView");
 var NewPhotoPageView = require("../view/NewPhotoPageView");
 var ToursPageView = require("../view/ToursPageView");
@@ -15,6 +16,7 @@ var NewCountryPageView = require("../view/NewCountryPageView");
 var TourEditCreateView = require("../view/TourEditCreateView");
 var RequestsPageView = require("../view/RequestsPageView");
 var TourRequestListView = require("../view/TourRequestsListView");
+var BestPhotosPageView = require("../view/BestPhotosPageView");
 
 var Router = Backbone.Router.extend({
   routes: {
@@ -23,9 +25,11 @@ var Router = Backbone.Router.extend({
     "admin/feedbacks": "feedbacks",
     "admin/categories/new": "AddCategory",
     "admin/password": "password",
+    "admin/new": "addUser",
     "admin/requests/:id": "tourRequests",
     "admin/requests": "requests",
     "admin/tours": "tours",
+    "admin/best": "bestPhotos",
     "admin/tours/new": "tourCreate",
     "admin/tours/:id": "tourEdit",
     "admin/categories/:id/add": "addPhoto",
@@ -43,6 +47,7 @@ var Router = Backbone.Router.extend({
     this.contactsPageView = new ContactsPageView({router: this});
     this.feedbacksPageView = new FeedbacksPageView({router: this});
     this.changePassPageView = new ChangePassPageView({router: this});
+    this.addUserPageView = new AddUserPageView({router: this});
     this.galleryCountryPageTmp = new GalleryCountryPageTmp({router: this});
     this.newPhotoPageView = new NewPhotoPageView({router: this});
     this.toursPageView = new ToursPageView({router: this});
@@ -50,6 +55,7 @@ var Router = Backbone.Router.extend({
     this.newCountryPageView = new NewCountryPageView({router: this});
     this.requestsPageView = new RequestsPageView({router: this});
     this.tourRequestListView = new TourRequestListView({router: this});
+    this.bestPhotosPageView = new BestPhotosPageView({router: this});
   },
   index: function () {
     this.mainPageView.render();
@@ -65,6 +71,12 @@ var Router = Backbone.Router.extend({
   },
   tours: function() {
     this.toursPageView.render();
+  },
+  addUser: function() {
+    this.addUserPageView.render();
+  },
+  bestPhotos: function () {
+    this.bestPhotosPageView.render();
   },
   tourEdit: function(id) {
     this.tourEditCreateView.render({ tourID: id, router: this });
