@@ -5,7 +5,10 @@
             <td>Название</td>
             <td>Дата</td>
             <td>Количество мест</td>
-            <td>Количество заявок</td>
+            <td>Всего заявок</td>
+            <td>Новых заявок</td>
+            <td>Принято заявок</td>
+            <td>Отклонено заявок</td>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +17,10 @@
             <td>{{title}}</td>
             <td>{{#getDate startDate endDate}}{{/getDate}}</td>
             <td>{{places}}</td>
-            <td>{{count}}</td>
+            <td>{{count_all}}</td>
+            <td class="new-request">{{count_new}}</td>
+            <td class="accepted-request">{{count_approved}}</td>
+            <td class="rejected-request">{{count_declined}}</td>
         </tr>
     {{/each}}
     </tbody>
