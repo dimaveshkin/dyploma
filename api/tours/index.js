@@ -120,6 +120,14 @@ router.get('/next', function (req, res) { //get tours list
     });
 });
 
+router.get('/active', function (req, res) { //get tours list
+    db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate <= CURDATE() AND CURDATE() <= endDate', function (err, rows, fields) {
+        if (err) throw err;
+
+        res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+    });
+});
+
 router.get('/:id', function (req, res) { //get tour by id
     db.query('SELECT *  FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
         var response = {};

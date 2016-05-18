@@ -3,28 +3,26 @@ var _ = require("underscore");
 Backbone.$ = window.$;
 var EventBus = require("../helpers/EventBus");
 
-var activeTourViewTmp = require("./templates/ActiveTourViewTmp.hbs");
+var selectedTourViewTmp = require("./templates/SelectedTourViewTmp.hbs");
 
-var ActiveTourView = Backbone.View.extend({
-    el: ".active-tour",
-    template: activeTourViewTmp,
+var SelectedTourView = Backbone.View.extend({
+    el: ".selected-tour",
+    template: selectedTourViewTmp,
     initialize: function (options) {
         _.bindAll(this, "showTourDetails");
         this.router = options.router;
+        EventBus.on("prevtour:select nexttour:select", this.render, this)
     },
     events: {
         "click .active-tour-btn": "showTourDetails"
     },
-    render: function (){
-        var that = this;
-        $.get("/api/tours/active", function (tour) {
-            that.tour = tour;
-            that.$el.html(that.template(tour));
-        });
+    render: function (tour){
+        this.tour = tour;
+        this.$el.html(this.template(tour));
     },
     showTourDetails: function () {
         this.router.navigate("tours/" + this.tour.id, {trigger: true});
     }
 });
 
-module.exports = ActiveTourView;
+module.exports = SelectedTourView;
