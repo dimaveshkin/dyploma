@@ -192,14 +192,30 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit.schedule = tripScheduleArr;
 
 
-        //TODO: change to normal photoa
         dataToSubmit.img = {
-            head: ["1.jpg"],
-            center: ["1.jpg"],
-            footer: ["1.jpg"]
+            head: [],
+            center: [],
+            footer: []
         };
 
-        dataToSubmit.cover = "1.jpg";
+        var headImg = $(".select-file[name='head']");
+        var centerImg = $(".select-file[name='center']");
+        var footerImg = $(".select-file[name='footer']");
+
+        headImg.each(function( index ) {
+            dataToSubmit.img.head.push($( this ).val().replace(/^.*?([^\\\/]*)$/, '$1'));
+        });
+
+        centerImg.each(function( index ) {
+            dataToSubmit.img.center.push($( this ).val().replace(/^.*?([^\\\/]*)$/, '$1'));
+        });
+
+        footerImg.each(function( index ) {
+            dataToSubmit.img.footer.push($( this ).val().replace(/^.*?([^\\\/]*)$/, '$1'));
+        });
+
+
+        dataToSubmit.cover = $(".select-file[name='cover']").val().replace(/^.*?([^\\\/]*)$/, '$1') ||'';
 
         validationResult = this.validateTour(dataToSubmit);
 
@@ -276,8 +292,9 @@ var ToursEditCreateView = Backbone.View.extend({
         };
     },
     putChanges: function (dataToSubmit) {
-        console.log(dataToSubmit);
+        //console.log(dataToSubmit);
         $('#data-to-submit').val(dataToSubmit);
+
 
         $('#update-tour').ajaxSubmit({
             success: function (response) {

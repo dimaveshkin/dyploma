@@ -5,6 +5,7 @@ const express = require('express'),
     del = require('del'),
     TOURS_SOURCE = "/images/tours/",
     imgBuildDeletePath = "images/build/tours/",
+    fs = require('fs'),
     multiparty = require('multiparty');
 
 router.get('/', function (req, res) { //get tours list
@@ -141,26 +142,59 @@ router.post('/:id', function (req, res) {
 
         if(!files) {
             data = JSON.parse(req.body.data);
+
+            delete  data.img;
+            delete  data.cover;
+            res.send(updateTour(data, req.params.id));
         } else {
             data = JSON.parse(fields.data);
+            db.query('SELECT * FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
+                if (err) throw err;
+
+                var dbImg = JSON.parse(rows[0].img);
+
+                for(var part in data.img) {
+                    for(var i = 0; i < data.img[part].length; i++){
+                        if(!data.img[part][i]) {
+                            data.img[part][i] = dbImg[part][i];
+                        }
+                    }
+                }
+
+                if(data.cover) {
+                    console.log('cover');
+                }
+
+                for(part in files) {
+                    for(i = 0; i < files[part].length; i++){
+                       var path = imgBuildDeletePath + files[part][i].originalFilename;
+                        fs.rename(files[part][i].path, path, function(err) {
+                            if ( err ) console.log('ERROR: ' + err);
+                        });
+                    }
+                }
+                console.log(data);
+
+                data.img = JSON.stringify(data.img);
+                res.send(updateTour(data, req.params.id));
+
+            });
+
         }
 
+        //console.log(data);
 
-        data.schedule = JSON.stringify(data.schedule);
-        data.not_inclusive = JSON.stringify(data.not_inclusive);
-        data.inclusive = JSON.stringify(data.inclusive);
-        data.img = JSON.stringify(data.img);
-        data.startDate = formatDateForDB(data.startDate);
-        data.endDate = formatDateForDB(data.endDate);
-
-        console.log(files.head.length);
-        db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, data, function (err, result) {
-            if (err) {
-                res.json({code: 500, message:"Tour was not changed"});
-            }
-            res.json({code: 200, message:"Success!"})
-        });
+        //db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, data, function (err, result) {
+        //    if (err) {
+        //        res.json({code: 500, message:"Tour was not changed"});
+        //    }
+        //    res.json({code: 200, message:"Success!"});
+        //});
     });
+
+
+
+
     //res.send('ok');
     //
     //req.body.schedule = JSON.stringify(req.body.schedule);
@@ -278,6 +312,23 @@ function formatDate (date, joinSymb) {
 function formatDateForDB (dateStr) {
     var dateArr = dateStr.split(".");
     return dateArr.reverse().join("-");
+}
+
+function updateTour(data, id) {
+    console.log(data);
+
+    data.schedule = JSON.stringify(data.schedule);
+    data.not_inclusive = JSON.stringify(data.not_inclusive);
+    data.inclusive = JSON.stringify(data.inclusive);
+    data.startDate = formatDateForDB(data.startDate);
+    data.endDate = formatDateForDB(data.endDate);
+
+    db.query('UPDATE tours AS t SET ? WHERE id = ' + id, data, function (err, result) {
+        if (err) {
+            return {code: 500, message:"Tour was not changed"};
+        }
+        return {code: 200, message:"Success!"};
+    });
 }
 
 module.exports = router;
