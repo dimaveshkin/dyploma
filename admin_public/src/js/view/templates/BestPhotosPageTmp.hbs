@@ -1,0 +1,24 @@
+<h2 class="tour-category-header edit-tours-header">Избранные фотографии</h2>
+<ul class="images-gallery">
+    {{#each photos}}
+      <li class="gallery-img-item city-item" data-photo-id="{{id}}">
+        <a href="{{src}}" rel="city-gallery" class="fancybox link-block"
+           title="{{#if title}}<b>{{title}}</b><br/>{{/if}}{{#if desc}}{{desc}}<br/>{{/if}}"
+           onmouseover="this.setAttribute('org_title', this.title); this.title='';"
+           onclick="this.title = this.getAttribute('org_title');"
+           onmouseout="this.title = this.getAttribute('org_title');">
+          <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
+        </a>
+        <p class="img-caption">
+          <i class="icon-star best-remove" title="Удалить из избранного"></i>
+          <i class="icon-cancel remove-photo" title="Удалить"></i>
+          <i class="icon-edit edit-desc" title="Редактировать описание"></i>
+          <span class="photo-desc js-hide">
+            <input type="text" name="title" placeholder="Название" class="frm-input photo-title" value="{{title}}">
+            <textarea name="desc" class="frm-input desc-area" placeholder="Описание">{{desc}}</textarea>
+            <button class="frm-ok save-desc">Сохранить</button>
+          </span>
+        </p>
+      </li>
+    {{/each}}
+</ul>

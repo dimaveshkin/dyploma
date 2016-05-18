@@ -2,6 +2,7 @@ const express = require('express'),
     router = express.Router(),
     db = require('../../helpers/db'),
     imgPath = require('../../helpers/imgPath'),
+    checkAdmin = require('../../middleware/checkAdmin'),
     del = require('del'),
     transliteration = require('transliteration.cyr'),
     imgSrcDeletePath = "images/src/",
@@ -11,7 +12,7 @@ const express = require('express'),
     fs = require('fs'),
     multiparty = require('multiparty');
 
-router.post('/upload', function (req, res) {//upload photo
+router.post('/upload', checkAdmin, function (req, res) {//upload photo
     var form = new multiparty.Form({uploadDir: 'test'});
     form.parse(req, function(err, fields, files) {
       db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
@@ -43,7 +44,7 @@ router.post('/upload', function (req, res) {//upload photo
     });
 });
 
-router.put('/photo/update/:id', function (req, res) {//update title and desc in photo
+router.put('/photo/update/:id', checkAdmin, function (req, res) {//update title and desc in photo
   db.query('UPDATE photos AS p SET ? WHERE id =' + req.params.id, {title: req.body.title, desc: req.body.desc},
     function (err, result) {
       if (err) {
@@ -69,7 +70,7 @@ router.get('/countries', function (req, res) {//countries list
 });
 
 
-router.get('/cover/:countryId/:photoId', function (req, res) {//change cover for country
+router.get('/cover/:countryId/:photoId', checkAdmin, function (req, res) {//change cover for country
   db.query('SELECT src FROM photos WHERE id = ' + req.params.photoId, function (err, pic, fields) {
     if (err) throw err;
 
@@ -86,7 +87,7 @@ router.get('/cover/:countryId/:photoId', function (req, res) {//change cover for
 
 
 
-router.post('/countries/add', function (req, res) {//add new empty country
+router.post('/countries/add', checkAdmin, function (req, res) {//add new empty country
 
     var post = {
         name: req.body.country,
@@ -125,7 +126,7 @@ router.get('/best', function (req, res) {//best
     });
 });
 //TODO: check admin
-router.get('/best/add/:id', function (req, res) {//add to best
+router.get('/best/add/:id', checkAdmin, function (req, res) {//add to best
     db.query('UPDATE photos SET is_best = 1 WHERE id = ? ', [req.params.id],
         function (err, result) {
             if (err) throw err;
@@ -133,7 +134,7 @@ router.get('/best/add/:id', function (req, res) {//add to best
         });
 });
 
-router.get('/best/remove/:id', function (req, res) {//remove from best
+router.get('/best/remove/:id', checkAdmin, function (req, res) {//remove from best
     db.query('UPDATE photos SET is_best = 0 WHERE id = ?', [req.params.id],
         function (err, result) {
             if (err) throw err;
@@ -149,7 +150,7 @@ router.get('/all', function (req, res) { //all
     });
 });
 
-router.get('/photo/remove/:id', function (req, res) { //remove photo by id
+router.get('/photo/remove/:id', checkAdmin, function (req, res) { //remove photo by id
 
   db.query('SELECT src FROM photos WHERE id = ' + req.params.id, function (err, src, fields) {
     if (err) throw err;
@@ -196,7 +197,7 @@ router.get('/country/:location', function (req, res) { //by country
 });
 
 //TODO: check admin
-router.get('/country/remove/:location', function (req, res) { //by country
+router.get('/country/remove/:location', checkAdmin, function (req, res) { //by country
     db.query('SELECT id FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows, fields) {
         var id, photos = [];
         if (err) throw err;
