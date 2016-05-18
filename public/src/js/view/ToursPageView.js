@@ -9,6 +9,7 @@ var TourRequestView = require("./TourRequestView");
 var NextTourView = require("./NextToursView");
 var PrevTourView = require("./PrevToursView");
 var ActiveTourView = require("./ActiveTourView");
+var SelectedTourView = require("./SelectedTourView");
 
 var ToursPageView = Backbone.View.extend({
     el: ".main",
@@ -28,6 +29,7 @@ var ToursPageView = Backbone.View.extend({
         this.nextToursView = new NextTourView();
         this.prevToursView = new PrevTourView();
         this.activeTourView = new ActiveTourView({router: this.router});
+        this.selectedTourView = new SelectedTourView({router: this.router});
 
         this.mapView.render();
         this.tourRequestView.render();
