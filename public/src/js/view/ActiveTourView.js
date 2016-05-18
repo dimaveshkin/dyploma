@@ -17,9 +17,11 @@ var ActiveTourView = Backbone.View.extend({
     },
     render: function (){
         var that = this;
-        $.get("/api/tours/active", function (tour) {
-            that.tour = tour;
-            that.$el.html(that.template(tour));
+        $.get("/api/tours/active", function (tours) {
+            if(tours.length){
+                that.tour = tours[0];
+                that.$el.html(that.template(that.tour));
+            }
         });
     },
     showTourDetails: function () {

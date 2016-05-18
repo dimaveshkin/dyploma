@@ -55,9 +55,11 @@ var PrevToursView = Backbone.View.extend({
         this.renderTours(tours);
     },
     renderTours: function (tours) {
-        this.$el.html(this.template({years: this.years, tours: tours}));
-        this.$el.find(".year-link[data-year='"+ this.chosenYear +"']").addClass("active");
-        $(".prev-tours-gallery").bxSlider(this.slidersOpt);
+        if(tours.length) {
+            this.$el.html(this.template({years: this.years, tours: tours}));
+            this.$el.find(".year-link[data-year='" + this.chosenYear + "']").addClass("active");
+            $(".prev-tours-gallery").bxSlider(this.slidersOpt);
+        }
     },
     filterYear: function (e) {
         var chosenYear = $(e.currentTarget).data("year");

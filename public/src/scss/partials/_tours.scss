@@ -176,7 +176,7 @@
   }
 }
 
-.selected-tour {
+.selected-tour, .active-tour  {
   .selected-tour-img {
   }
 
@@ -221,7 +221,7 @@
     font-size: 2.5rem;
   }
 
-  .selected-tour-body {
+  .selected-tour-body, .active-tour {
     .selected-tour-img,
     .selected-tour-desc {
       width: 100%;
