@@ -28,10 +28,11 @@ router.post('/', checkAdmin, function (req, res) { //insert new tour
         } else {
             data = JSON.parse(fields.data);
         }
-
-        for(var part in data.img) {
+         for(var part in data.img) {
             for(var i = 0; i < data.img[part].length; i++){
-                data.img[part][i] =  path.basename(files[part][i].path);
+                if(data.img[part][i] !== "") {
+                    data.img[part][i] =  path.basename(files[part].shift().path);
+                }
             }
         }
         data.cover =  path.basename(files['cover'][0].path);
@@ -201,12 +202,12 @@ router.post('/:id', checkAdmin, function (req, res) {
                 if (err) throw err;
 
                 var dbImg = JSON.parse(rows[0].img);
-                for(var part in data.img) {
+                    for(var part in data.img) {
                     for(var i = 0; i < data.img[part].length; i++){
-                        if(!data.img[part][i]) {
+                        if(data.img[part][i] !== "") {
+                            data.img[part][i] =  path.basename(files[part].shift().path);
+                        } else if(dbImg[part][i] !== "") {
                             data.img[part][i] = dbImg[part][i];
-                        } else {
-                            data.img[part][i] =  path.basename(files[part][i].path);
                         }
                     }
                 }
