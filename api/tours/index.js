@@ -7,6 +7,7 @@ const express = require('express'),
     TOURS_SOURCE = "/images/tours/",
     imgBuildDeletePath = "images/build/tours/",
     fs = require('fs'),
+    path = require('path'),
     multiparty = require('multiparty');
 
 router.get('/', function (req, res) { //get tours list
@@ -19,7 +20,7 @@ router.get('/', function (req, res) { //get tours list
 });
 
 router.post('/', checkAdmin, function (req, res) { //insert new tour
-    var form = new multiparty.Form({uploadDir: 'test'});
+    var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
     form.parse(req, function(err, fields, files) {
         var data = {};
         if(!files) {
@@ -28,6 +29,13 @@ router.post('/', checkAdmin, function (req, res) { //insert new tour
             data = JSON.parse(fields.data);
         }
 
+        for(var part in data.img) {
+            for(var i = 0; i < data.img[part].length; i++){
+                data.img[part][i] =  path.basename(files[part][i].path);
+            }
+        }
+        data.cover =  path.basename(files['cover'][0].path);
+
         data.schedule = JSON.stringify(data.schedule);
         data.not_inclusive = JSON.stringify(data.not_inclusive);
         data.inclusive = JSON.stringify(data.inclusive);
@@ -35,16 +43,6 @@ router.post('/', checkAdmin, function (req, res) { //insert new tour
         data.startDate = formatDateForDB(data.startDate);
         data.endDate = formatDateForDB(data.endDate);
 
-        for(var part in files) {
-            for(var i = 0; i < files[part].length; i++){
-                var path = imgBuildDeletePath + files[part][i].originalFilename;
-                fs.rename(files[part][i].path, path, function(err) {
-                    if ( err ) console.log('ERROR: ' + err);
-                });
-            }
-        }
-
-        console.log(data);
         db.query('INSERT INTO tours SET ?', data, function (err, rows, fields) {
             if (err) {
                 res.json({code: 500, message: "Не удалось сохранить фототур."});
@@ -56,29 +54,6 @@ router.post('/', checkAdmin, function (req, res) { //insert new tour
     });
 
 });
-
-//router.post('/', checkAdmin, function (req, res) { //insert new tour
-//    var form = new multiparty.Form({uploadDir: 'test'});
-//    form.parse(req, function(err, fields, files) {
-//
-//    });
-//    req.body.schedule = JSON.stringify(req.body.schedule);
-//    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
-//    req.body.inclusive = JSON.stringify(req.body.inclusive);
-//    req.body.img = JSON.stringify(req.body.img);
-//    req.body.startDate = formatDateForDB(req.body.startDate);
-//    req.body.endDate = formatDateForDB(req.body.endDate);
-//
-//    db.query('INSERT INTO tours SET ?', req.body, function (err, rows, fields) {
-//        if (err) {
-//            res.json({code: 500, message: "Не удалось сохранить фототур."});
-//            return;
-//        }
-//
-//        res.json({code: 200, message: "Фототур сохранен."});
-//    });
-//});
-
 
 router.get('/requests',checkAdmin, function (req, res) { //get tours list which have requests
     db.query("SELECT t.id, t.title, startDate, endDate," +
@@ -210,7 +185,7 @@ router.get('/:id', function (req, res) { //get tour by id
 });
 
 router.post('/:id', checkAdmin, function (req, res) {
-    var form = new multiparty.Form({uploadDir: 'test'});
+    var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
     form.parse(req, function(err, fields, files) {
         var data = {};
 
@@ -226,26 +201,20 @@ router.post('/:id', checkAdmin, function (req, res) {
                 if (err) throw err;
 
                 var dbImg = JSON.parse(rows[0].img);
-
                 for(var part in data.img) {
                     for(var i = 0; i < data.img[part].length; i++){
                         if(!data.img[part][i]) {
                             data.img[part][i] = dbImg[part][i];
+                        } else {
+                            data.img[part][i] =  path.basename(files[part][i].path);
                         }
                     }
                 }
 
                 if(!data.cover) {
                     delete  data.cover;
-                }
-
-                for(part in files) {
-                    for(i = 0; i < files[part].length; i++){
-                       var path = imgBuildDeletePath + files[part][i].originalFilename;
-                       fs.rename(files[part][i].path, path, function(err) {
-                            if ( err ) console.log('ERROR: ' + err);
-                        });
-                    }
+                } else {
+                    data.cover =  path.basename(files['cover'][0].path)
                 }
                 data.img = JSON.stringify(data.img);
                 res.send(updateTour(data, req.params.id));
@@ -254,24 +223,6 @@ router.post('/:id', checkAdmin, function (req, res) {
         }
     });
 });
-
-//router.put('/:id', checkAdmin, function (req, res) {
-//    console.log("sending");
-//
-//    req.body.schedule = JSON.stringify(req.body.schedule);
-//    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
-//    req.body.inclusive = JSON.stringify(req.body.inclusive);
-//    req.body.img = JSON.stringify(req.body.img);
-//    req.body.startDate = formatDateForDB(req.body.startDate);
-//    req.body.endDate = formatDateForDB(req.body.endDate);
-//
-//    db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, req.body, function (err, result) {
-//        if (err) {
-//            res.json({code: 500, message:"Tour was not changed"});
-//        }
-//        res.json({code: 200, message:"Success!"})
-//    });
-//});
 
 router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
@@ -315,7 +266,10 @@ router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
                 });
             }
             imgDeleteArr = imgDeleteArr.map(function (imgName) {
-                return imgBuildDeletePath + imgName;
+                if(imgName != '') {
+                    return imgBuildDeletePath + imgName;
+                }
+                    return '';
             });
 
             del(imgDeleteArr).then(function (paths) {
