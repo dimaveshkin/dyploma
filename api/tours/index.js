@@ -6,6 +6,7 @@ const express = require('express'),
     checkAdmin = require('../../middleware/checkAdmin'),
     TOURS_SOURCE = "/images/tours/",
     imgBuildDeletePath = "images/build/tours/",
+    fs = require('fs'),
     multiparty = require('multiparty');
 
 router.get('/', function (req, res) { //get tours list
@@ -17,24 +18,67 @@ router.get('/', function (req, res) { //get tours list
     });
 });
 
-router.post('/', checkAdmin, function (req, res) { //get tours list
-
-    req.body.schedule = JSON.stringify(req.body.schedule);
-    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
-    req.body.inclusive = JSON.stringify(req.body.inclusive);
-    req.body.img = JSON.stringify(req.body.img);
-    req.body.startDate = formatDateForDB(req.body.startDate);
-    req.body.endDate = formatDateForDB(req.body.endDate);
-    
-    db.query('INSERT INTO tours SET ?', req.body, function (err, rows, fields) {
-        if (err) {
-            res.json({code: 500, message: "Не удалось сохранить фототур."});
-            return;
+router.post('/', checkAdmin, function (req, res) { //insert new tour
+    var form = new multiparty.Form({uploadDir: 'test'});
+    form.parse(req, function(err, fields, files) {
+        var data = {};
+        if(!files) {
+            data = JSON.parse(req.body.data);
+        } else {
+            data = JSON.parse(fields.data);
         }
 
-        res.json({code: 200, message: "Фототур сохранен."});
+        data.schedule = JSON.stringify(data.schedule);
+        data.not_inclusive = JSON.stringify(data.not_inclusive);
+        data.inclusive = JSON.stringify(data.inclusive);
+        data.img = JSON.stringify(data.img);
+        data.startDate = formatDateForDB(data.startDate);
+        data.endDate = formatDateForDB(data.endDate);
+
+        for(var part in files) {
+            for(var i = 0; i < files[part].length; i++){
+                var path = imgBuildDeletePath + files[part][i].originalFilename;
+                fs.rename(files[part][i].path, path, function(err) {
+                    if ( err ) console.log('ERROR: ' + err);
+                });
+            }
+        }
+
+        console.log(data);
+        db.query('INSERT INTO tours SET ?', data, function (err, rows, fields) {
+            if (err) {
+                res.json({code: 500, message: "Не удалось сохранить фототур."});
+                throw err;
+            }
+
+            res.json({code: 200, message: "Фототур сохранен."});
+        });
     });
+
 });
+
+//router.post('/', checkAdmin, function (req, res) { //insert new tour
+//    var form = new multiparty.Form({uploadDir: 'test'});
+//    form.parse(req, function(err, fields, files) {
+//
+//    });
+//    req.body.schedule = JSON.stringify(req.body.schedule);
+//    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
+//    req.body.inclusive = JSON.stringify(req.body.inclusive);
+//    req.body.img = JSON.stringify(req.body.img);
+//    req.body.startDate = formatDateForDB(req.body.startDate);
+//    req.body.endDate = formatDateForDB(req.body.endDate);
+//
+//    db.query('INSERT INTO tours SET ?', req.body, function (err, rows, fields) {
+//        if (err) {
+//            res.json({code: 500, message: "Не удалось сохранить фототур."});
+//            return;
+//        }
+//
+//        res.json({code: 200, message: "Фототур сохранен."});
+//    });
+//});
+
 
 router.get('/requests',checkAdmin, function (req, res) { //get tours list which have requests
     db.query("SELECT t.id, t.title, startDate, endDate," +
@@ -145,8 +189,19 @@ router.get('/:id', function (req, res) { //get tour by id
         // rows[0].startDate = formatDate(rows[0].startDate, ".");
         // rows[0].endDate = formatDate(rows[0].endDate, ".");
 
+
         response.data = imgPath.JSONPath(rows, 'img')[0];
+        //console.log(response.data);
         imgPath.concatPath(rows, 'cover', '/images/tours/');
+
+        for(var part in response.data.img) {
+            for(var i = 0; i < response.data.img[part].length; i++){
+                if(response.data.img[part][i] === TOURS_SOURCE) {
+                    delete response.data.img[part][i];
+                }
+            }
+        }
+
         response.message = "Тур найден.";
         response.code = 200;
         res.send(response);
@@ -160,55 +215,62 @@ router.post('/:id', checkAdmin, function (req, res) {
 
         if(!files) {
             data = JSON.parse(req.body.data);
+
+            delete  data.img;
+            delete  data.cover;
+            res.send(updateTour(data, req.params.id));
         } else {
             data = JSON.parse(fields.data);
+            db.query('SELECT * FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
+                if (err) throw err;
+
+                var dbImg = JSON.parse(rows[0].img);
+
+                for(var part in data.img) {
+                    for(var i = 0; i < data.img[part].length; i++){
+                        if(!data.img[part][i]) {
+                            data.img[part][i] = dbImg[part][i];
+                        }
+                    }
+                }
+
+                if(!data.cover) {
+                    delete  data.cover;
+                }
+
+                for(part in files) {
+                    for(i = 0; i < files[part].length; i++){
+                       var path = imgBuildDeletePath + files[part][i].originalFilename;
+                        fs.rename(files[part][i].path, path, function(err) {
+                            if ( err ) console.log('ERROR: ' + err);
+                        });
+                    }
+                }
+                data.img = JSON.stringify(data.img);
+                res.send(updateTour(data, req.params.id));
+
+            });
         }
-
-
-        data.schedule = JSON.stringify(data.schedule);
-        data.not_inclusive = JSON.stringify(data.not_inclusive);
-        data.inclusive = JSON.stringify(data.inclusive);
-        data.img = JSON.stringify(data.img);
-        data.startDate = formatDateForDB(data.startDate);
-        data.endDate = formatDateForDB(data.endDate);
-
-        console.log(files.head.length);
-        db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, data, function (err, result) {
-            if (err) {
-                res.json({code: 500, message:"Tour was not changed"});
-            }
-            res.json({code: 200, message:"Success!"})
-        });
-    });
-    //res.send('ok');
-    //
-    //req.body.schedule = JSON.stringify(req.body.schedule);
-    //req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
-    //req.body.inclusive = JSON.stringify(req.body.inclusive);
-    //req.body.img = JSON.stringify(req.body.img);
-    //req.body.startDate = formatDateForDB(req.body.startDate);
-    //req.body.endDate = formatDateForDB(req.body.endDate);
-    //
-
-});
-
-router.put('/:id', checkAdmin, function (req, res) {
-    console.log("sending");
-
-    req.body.schedule = JSON.stringify(req.body.schedule);
-    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
-    req.body.inclusive = JSON.stringify(req.body.inclusive);
-    req.body.img = JSON.stringify(req.body.img);
-    req.body.startDate = formatDateForDB(req.body.startDate);
-    req.body.endDate = formatDateForDB(req.body.endDate);
-
-    db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, req.body, function (err, result) {
-        if (err) {
-            res.json({code: 500, message:"Tour was not changed"});
-        }
-        res.json({code: 200, message:"Success!"})
     });
 });
+
+//router.put('/:id', checkAdmin, function (req, res) {
+//    console.log("sending");
+//
+//    req.body.schedule = JSON.stringify(req.body.schedule);
+//    req.body.not_inclusive = JSON.stringify(req.body.not_inclusive);
+//    req.body.inclusive = JSON.stringify(req.body.inclusive);
+//    req.body.img = JSON.stringify(req.body.img);
+//    req.body.startDate = formatDateForDB(req.body.startDate);
+//    req.body.endDate = formatDateForDB(req.body.endDate);
+//
+//    db.query('UPDATE tours AS t SET ? WHERE id = ' + req.params.id, req.body, function (err, result) {
+//        if (err) {
+//            res.json({code: 500, message:"Tour was not changed"});
+//        }
+//        res.json({code: 200, message:"Success!"})
+//    });
+//});
 
 router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
@@ -297,6 +359,23 @@ function formatDate (date, joinSymb) {
 function formatDateForDB (dateStr) {
     var dateArr = dateStr.split(".");
     return dateArr.reverse().join("-");
+}
+
+function updateTour(data, id) {
+    console.log(data);
+
+    data.schedule = JSON.stringify(data.schedule);
+    data.not_inclusive = JSON.stringify(data.not_inclusive);
+    data.inclusive = JSON.stringify(data.inclusive);
+    data.startDate = formatDateForDB(data.startDate);
+    data.endDate = formatDateForDB(data.endDate);
+
+    db.query('UPDATE tours AS t SET ? WHERE id = ' + id, data, function (err, result) {
+        if (err) {
+            return {code: 500, message:"Tour was not changed"};
+        }
+        return {code: 200, message:"Success!"};
+    });
 }
 
 module.exports = router;

@@ -12,7 +12,7 @@ var swal = require("sweetalert");
 var ToursEditCreateView = Backbone.View.extend({
     el: ".dashboard",
     initialize: function (options) {
-        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker");
+        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile");
         this.router = options.router;
     },
     events: {
@@ -192,14 +192,30 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit.schedule = tripScheduleArr;
 
 
-        //TODO: change to normal photoa
         dataToSubmit.img = {
-            head: ["1.jpg"],
-            center: ["1.jpg"],
-            footer: ["1.jpg"]
+            head: [],
+            center: [],
+            footer: []
         };
 
-        dataToSubmit.cover = "1.jpg";
+        var headImg = $(".select-file[name='head']");
+        var centerImg = $(".select-file[name='center']");
+        var footerImg = $(".select-file[name='footer']");
+
+        headImg.each(function( index ) {
+            dataToSubmit.img.head.push($( this ).val().replace(/^.*?([^\\\/]*)$/, '$1'));
+        });
+
+        centerImg.each(function( index ) {
+            dataToSubmit.img.center.push($( this ).val().replace(/^.*?([^\\\/]*)$/, '$1'));
+        });
+
+        footerImg.each(function( index ) {
+            dataToSubmit.img.footer.push($( this ).val().replace(/^.*?([^\\\/]*)$/, '$1'));
+        });
+
+
+        dataToSubmit.cover = $(".select-file[name='cover']").val().replace(/^.*?([^\\\/]*)$/, '$1') ||'';
 
         validationResult = this.validateTour(dataToSubmit);
 
@@ -211,9 +227,9 @@ var ToursEditCreateView = Backbone.View.extend({
         dataToSubmit = JSON.stringify(dataToSubmit);
 
         if(this.isCreating) {
-            this.postNewTour(dataToSubmit);
+            this.postNewTour(dataToSubmit);//добавить новый
         } else {
-            this.putChanges(dataToSubmit);
+            this.putChanges(dataToSubmit);//обновить
         }
     },
     validateTour: function (tourData) {
@@ -286,23 +302,39 @@ var ToursEditCreateView = Backbone.View.extend({
         };
     },
     putChanges: function (dataToSubmit) {
-        console.log(dataToSubmit);
         $('#data-to-submit').val(dataToSubmit);
 
         $('#update-tour').ajaxSubmit({
             success: function (response) {
                 swal("Сохраненно", "Фототур успешно изменен.", "success")
+            },
+            error: function (xhr, mes, err) {
+                console.log(mes);
+                console.log(err);
+            }
+        });
+    },
+    postNewTour: function (dataToSubmit) {
+        $('#data-to-submit').val(dataToSubmit);
+
+        $('#create-tour').ajaxSubmit({
+            success: function (response) {
+                swal("Добавлено", "Фототур успешно добавлен.", "success")
+            },
+            error: function (xhr, mes, err) {
+                console.log(mes);
+                console.log(err);
             }
         });
         //$.ajax({
-        //    method: "PUT",
-        //    url: "/api/tours/" + this.tourID,
+        //    method: "POST",
+        //    url: "/api/tours",
         //    data: dataToSubmit,
         //    contentType: 'application/json', // content type sent to server
         //    dataType: 'json', //Expected data format from server
         //    success: function (response) {
         //        if(response.code === 200) {
-        //            swal("Успех!", "Фототур успешно изменен.", "success")
+        //            swal("Успех!", "Фототур успешно сохранен.", "success")
         //        } else {
         //            swal("Ошибка!", "Не удалось сохранить фототур.", "error")
         //        }
@@ -312,26 +344,6 @@ var ToursEditCreateView = Backbone.View.extend({
         //        console.log(err);
         //    }
         //});
-    },
-    postNewTour: function (dataToSubmit) {
-        $.ajax({
-            method: "POST",
-            url: "/api/tours",
-            data: dataToSubmit,
-            contentType: 'application/json', // content type sent to server
-            dataType: 'json', //Expected data format from server
-            success: function (response) {
-                if(response.code === 200) {
-                    swal("Успех!", "Фототур успешно сохранен.", "success")
-                } else {
-                    swal("Ошибка!", "Не удалось сохранить фототур.", "error")
-                }
-            },
-            error: function (xhr, mes, err) {
-                console.log(mes);
-                console.log(err);
-            }
-        });
     },
     cancelChanges: function (e) {
         this.render({tourID: this.tourID});
@@ -393,22 +405,21 @@ var ToursEditCreateView = Backbone.View.extend({
     },
     selectFile: function (e) {
         var root =  $(e.target).closest('li');
+        var that = this;
 
-        //console.log($(e.target).closest('div.gallery-img'));
         var reader = new FileReader();
 
         reader.onload = function (event) {
             var the_url = event.target.result;
             console.log(root.find('.gallery-img').css("background-image"));
             root.find('.gallery-img').css("background-image", "url('" + the_url + "')");
-            //background-image: url(" data:image/jpg;base64,");
-
-            //$('.images-gallery').append(fileUploadTmp({src: the_url}));
-            //$('.select-label').addClass('js-hide');
-            //$('.upload').removeClass('js-hide');
+            if(that.isCreating) {
+                root.find('.gallery-img').html('').removeClass('plus');
+                root.find('.img-caption').html(' <i class="icon-spin3 change-photo" title="Заменить фотографию"></i>');
+            }
         };
 
-        reader.readAsDataURL(this.files[0]);
+        reader.readAsDataURL($(e.target)[0].files[0]);
     }
 });
 

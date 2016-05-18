@@ -158,3 +158,54 @@ div.ui-datepicker {
 .new-tour-btn:hover {
   text-decoration: underline;
 }
+
+
+.change-photo {
+  color: #696969;
+  cursor: pointer;
+
+  &:hover {
+    color: #509111;
+    display: inline-block;
+    animation: spin 2s infinite linear;
+  }
+}
+
+.add-pics {
+  border: 2px dashed #c0c0c0;
+  text-align: center;
+  color: #c0c0c0;
+  transition: all .6s;
+  font-size: 168px;
+
+  label {
+    display: block;
+  }
+
+  &:hover {
+    color: #000;
+    border-color: #000;
+  }
+
+  .plus {
+    height: 0;
+    padding-bottom: 60%;
+    line-height: 168px;
+  }
+}
+
+.tour-field {
+  .add-pics {
+    cursor: pointer;
+    border: 2px dashed #c0c0c0;
+    text-align: center;
+    color: #c0c0c0;
+    transition: all .6s;
+    font-size: 168px;
+
+    label {
+      display: block;
+      width: initial;
+    }
+  }
+}
