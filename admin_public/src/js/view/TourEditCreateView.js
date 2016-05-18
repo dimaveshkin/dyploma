@@ -245,8 +245,18 @@ var ToursEditCreateView = Backbone.View.extend({
             hasError = true;
         }
 
+        if(parseInt(tourData.complexity, "10") < 1 || parseInt(tourData.complexity, "10") > 5) {
+            errMsgArr.push("Укажите сложность в пределе от 1 (легкий) до 5 (сложный).");
+            hasError = true;
+        }
+
         if($.trim(tourData.cost) === "") {
             errMsgArr.push("Укажите стоимость тура.");
+            hasError = true;
+        }
+
+        if(parseInt(tourData.cost) < 0) {
+            errMsgArr.push("Стоимость тура не может быть меньше нуля.");
             hasError = true;
         }
 
