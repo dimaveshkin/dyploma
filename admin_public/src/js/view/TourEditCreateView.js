@@ -15,10 +15,6 @@ var ToursEditCreateView = Backbone.View.extend({
         _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile", "validateTour", "putChanges", "postNewTour");
         this.router = options.router;
     },
-    events: {
-        // "#latitude change": "latChange",
-        // "#longitude change": "lngChange"
-    },
     render: function (options) {
         $('.active').removeClass('active');
         $('#tours').addClass('active');

@@ -3,7 +3,6 @@ var _ = require("underscore");
 Backbone.$ = window.$;
 
 var AppView = require("../view/AppView");
-//var MainPageView = require("../view/MainPageView");
 var MainPageView = require("../view/GalleryPageView");
 var ContactsPageView = require("../view/ContactsPageView");
 var FeedbacksPageView = require("../view/FeedbacksPageView");

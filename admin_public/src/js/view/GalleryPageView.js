@@ -22,7 +22,6 @@ var GalleryPageView = Backbone.View.extend({
       $('.country-gallery-link').on('click', function (e) {
         e.preventDefault();
         that.router.navigate("admin/categories/" + $(e.currentTarget).data("countryname"), {trigger: true});
-        //that.router.navigate("gallery/" + $(e.currentTarget).data("countryname"), {trigger: true});
       });
 
       $('.add-city').on('click', function (e) {
@@ -50,7 +49,6 @@ var GalleryPageView = Backbone.View.extend({
             }
           });
         });
-        //that.router.navigate("categories/" + $(e.currentTarget).data("countryname"), {trigger: true});
 
         e.preventDefault();
         e.stopPropagation();

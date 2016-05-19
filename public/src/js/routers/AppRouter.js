@@ -11,7 +11,6 @@ var CountryGalleryPageView = require("../view/CountryGalleryPageView");
 var TourPageView = require("../view/TourPageView");
 var ToursPageView = require("../view/ToursPageView");
 var LoginPageView = require("../view/LoginPageView");
-var socials = require("../models/SocialsModel");
 
 var Router = Backbone.Router.extend({
     routes: {

@@ -37,10 +37,6 @@ var NewCountryPageView = Backbone.View.extend({
 
       $('.spinner').removeClass('js-hide');
 
-      //if ($("#select-file").val() != '') {
-      //  $('.cover').val($("#select-file")[0].files[0].name);
-      //}
-
       $.post("/api/gallery/countries/add", $("#new-city").serialize(), function (response) {
         if (response.error) {
           swal("Ошибка", response.error);
@@ -79,24 +75,6 @@ var NewCountryPageView = Backbone.View.extend({
         reader.readAsDataURL(this.files[i]);
       }
     });
-
-
-    //
-//    $.get("/api/gallery/country/" + countryName, function (photos) {
-//
-//      $(".fancybox").fancybox({
-//        prevEffect: 'none',
-//        nextEffect: 'none',
-//        helpers: {
-//          title: {
-//            type: 'outside'
-//          }
-//        },
-//        beforeShow: function () {
-//          this.title = (this.title ? '' + this.title + '' : '') + ' <span class="num">' + (this.index + 1) + ' / ' + this.group.length + ' </span>';
-//        }
-//      });
-//    });
   }
 });
 

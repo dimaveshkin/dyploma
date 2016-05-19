@@ -31,21 +31,7 @@ var GalleryPageView = Backbone.View.extend({
 
         reader.readAsDataURL(this.files[i]);
       }
-
-
-
-    //another way
-//      window.URL = window.webkitURL || window.URL; // Vendor prefixed in Chrome.
-//
-//      for (var i = 0; i < this.files.length; i++) {
-////        var src = window.URL.createObjectURL(this.files[i]);
-//        $('.images-gallery').append(fileUploadTmp({src: window.URL.createObjectURL(this.files[i])}));
-//        $('.select-label').addClass('js-hide');
-//          $('.upload').removeClass('js-hide');
-////        window.URL.revokeObjectURL(src);
-//      }
     });
-
 
     $('#uploadForm').submit(function () {
       $('.spinner').removeClass('js-hide');
