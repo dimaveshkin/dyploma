@@ -37,9 +37,9 @@ var NewCountryPageView = Backbone.View.extend({
 
       $('.spinner').removeClass('js-hide');
 
-      if ($("#select-file").val() != '') {
-        $('.cover').val($("#select-file")[0].files[0].name);
-      }
+      //if ($("#select-file").val() != '') {
+      //  $('.cover').val($("#select-file")[0].files[0].name);
+      //}
 
       $.post("/api/gallery/countries/add", $("#new-city").serialize(), function (response) {
         if (response.error) {
