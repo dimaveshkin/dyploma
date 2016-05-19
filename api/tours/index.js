@@ -8,7 +8,8 @@ const express = require('express'),
     imgBuildDeletePath = "images/build/tours/",
     fs = require('fs'),
     path = require('path'),
-    multiparty = require('multiparty');
+    multiparty = require('multiparty'),
+    mail = require('../../helpers/mailSender');
 
 router.get('/', function (req, res) { //get tours list
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t', function (err, rows, fields) {
@@ -95,6 +96,17 @@ router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept re
             message: "Accepted",
             code: 200
         });
+
+        db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id=' + req.params.id, function(err, rows, fields) {
+            var mailOptions = {
+                subject: 'Заявка на фототур ' + rows[0].title , // Subject line
+                html: 'Ваша заявка на фототур <b>'  +  rows[0].title + '</b> принята.',// html body
+                to: rows[0].email// to
+            };
+
+            mail(mailOptions);
+        });
+
     });
 });
 
@@ -110,6 +122,16 @@ router.post('/requests/reject/:id',checkAdmin, function (req, res) { //reject re
         res.send({
             message: "Rejected",
             code: 200
+        });
+
+        db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id=' + req.params.id, function(err, rows, fields) {
+            var mailOptions = {
+                subject: 'Заявка на фототур ' + rows[0].title , // Subject line
+                html: 'Ваша заявка на фототур '  +  rows[0].title + ' <b>отклонена.</b>',// html body
+                to: rows[0].email// to
+            };
+
+            mail(mailOptions);
         });
     });
 });
@@ -307,9 +329,8 @@ router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
 });
 
 
-router.post('/add', function (req, res) {//add new request
+router.post('/create/new', function (req, res) {//add new request
     var request = {};
-
     if (req.session.captcha == req.body.captha) {
         request.date = new Date();
         request.name = req.body.name;
@@ -317,6 +338,7 @@ router.post('/add', function (req, res) {//add new request
         request.application = req.body.application;
         request.status = 1;
         request.tour_id = req.body.tour_id;
+
 
         db.query('INSERT INTO requests SET ?', request, function (err, result) {
 

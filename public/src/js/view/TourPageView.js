@@ -53,7 +53,7 @@ var TourPageView = Backbone.View.extend({
             isError = true;
         }
         if (!isError) {
-            $.post("/api/tours/add", ($('#apply-form').serialize() + '&tour_id=' + this.id))
+            $.post("/api/tours/create/new", ($('#apply-form').serialize() + '&tour_id=' + this.id))
                 .done(function (data) {
                     if (!data.error) {
                         $(' #apply-form')[0].reset();
