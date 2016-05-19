@@ -12,7 +12,7 @@ var swal = require("sweetalert");
 var ToursEditCreateView = Backbone.View.extend({
     el: ".dashboard",
     initialize: function (options) {
-        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile", "validateTour", "putChanges");
+        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile", "validateTour", "putChanges", "postNewTour");
         this.router = options.router;
     },
     events: {
@@ -323,6 +323,8 @@ var ToursEditCreateView = Backbone.View.extend({
         });
     },
     postNewTour: function (dataToSubmit) {
+        var that = this;
+
         $('#data-to-submit').val(dataToSubmit);
 
         $('#create-tour').ajaxSubmit({
