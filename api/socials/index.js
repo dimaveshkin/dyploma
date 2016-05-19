@@ -3,7 +3,10 @@ const express = require('express'),
     checkAdmin = require('../../middleware/checkAdmin'),
     db = require('../../helpers/db');
 
-router.get('/', function (req, res) { //get all socials
+/**
+ * get  links to socials networks
+ */
+router.get('/', function (req, res) {
     db.query('SELECT * FROM contacts', function (err, rows, fields) {
         if (err) throw err;
 
@@ -11,7 +14,10 @@ router.get('/', function (req, res) { //get all socials
     });
 });
 
-router.put('/', checkAdmin, function (req, res) { //updates all socials
+/**
+ * update links to socials networks
+ */
+router.put('/', checkAdmin, function (req, res) {
   db.query('UPDATE contacts SET ?',[req.body],
       function(err, result) {
         if (err) throw err;

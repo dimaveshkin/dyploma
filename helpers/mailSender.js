@@ -8,6 +8,11 @@ var transporter = nodemailer.createTransport({
     }
 });
 
+/**
+ * send email
+ * @param object with subject, email, text params
+ * @returns {*}
+ */
 module.exports = function (paramns) {
     var mailOptions = {
         from: 'chatrovsite@yandex.ru' // sender address

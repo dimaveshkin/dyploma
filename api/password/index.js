@@ -4,7 +4,10 @@ const express = require('express'),
     checkAdmin = require('../../middleware/checkAdmin'),
     cryptPassword = require('../../helpers/cryptPassword');
 
-router.post('/change', checkAdmin, function (req, res) {//change password
+/**
+ * change password for admin
+ */
+router.post('/change', checkAdmin, function (req, res) {
     compare(req.session.login, function (err, rows, fields) {
         if (rows && rows[0].password == cryptPassword(req.body.oldPassword)) {
             db.query('UPDATE users SET ? WHERE id = ' + req.session.userId, [
@@ -21,7 +24,10 @@ router.post('/change', checkAdmin, function (req, res) {//change password
     });
 });
 
-router.post('/add', checkAdmin, function (req, res) {//change password
+/**
+ * add new admin user
+ */
+router.post('/add', checkAdmin, function (req, res) {
     db.query('INSERT INTO users SET ?', {
         login: req.body.login,
         password: cryptPassword(req.body.password)
@@ -36,7 +42,10 @@ router.post('/add', checkAdmin, function (req, res) {//change password
         });
 });
 
-router.post('/login', function (req, res) {//compare password
+/**
+ * check login/password is correct
+ */
+router.post('/login', function (req, res) {
     console.log(req.body.captcha);
     console.log(req.session.captcha);
     if (req.session.captcha == req.body.captcha) {
@@ -60,12 +69,19 @@ router.post('/login', function (req, res) {//compare password
     }
 });
 
+/**
+ * logout form admin panel
+ */
 router.use('/logout', function (req, res, next) {//compare password
     req.session.destroy();
     res.redirect("/admin");
 });
 
-
+/**
+ * check existing input login in DB
+ * @param login
+ * @param cb
+ */
 function compare(login, cb) {
     db.query('SELECT * FROM users WHERE users.login = "' + login + '"', cb);
 }

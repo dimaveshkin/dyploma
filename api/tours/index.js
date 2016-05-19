@@ -11,7 +11,10 @@ const express = require('express'),
     multiparty = require('multiparty'),
     mail = require('../../helpers/mailSender');
 
-router.get('/', function (req, res) { //get tours list
+/**
+ * get tours list
+ */
+router.get('/', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t', function (err, rows, fields) {
         if (err) throw err;
 
@@ -20,7 +23,10 @@ router.get('/', function (req, res) { //get tours list
     });
 });
 
-router.post('/', checkAdmin, function (req, res) { //insert new tour
+/**
+ * add new tour to DB
+ */
+router.post('/', checkAdmin, function (req, res) {
     var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
     form.parse(req, function(err, fields, files) {
         var data = {};
@@ -57,7 +63,10 @@ router.post('/', checkAdmin, function (req, res) { //insert new tour
 
 });
 
-router.get('/requests',checkAdmin, function (req, res) { //get tours list which have requests
+/**
+ * get tours list which has requests from users
+ */
+router.get('/requests',checkAdmin, function (req, res) {
     db.query("SELECT t.id, t.title, startDate, endDate," +
         "COUNT(r.id) as count_all," +
         "SUM(IF(rs.status = 'Новая', 1, 0)) as count_new," +
@@ -75,7 +84,10 @@ router.get('/requests',checkAdmin, function (req, res) { //get tours list which 
     });
 });
 
-router.get('/requests/:id',checkAdmin, function (req, res) { //get requests by tour id
+/**
+ * get requests from user by tour id
+ */
+router.get('/requests/:id',checkAdmin, function (req, res) {
     db.query('SELECT r.id, r.name, r.email, r.application, r.date, s.status FROM requests AS r, request_statuses AS s WHERE s.id = r.status AND tour_id = ' + db.escape(req.params.id) + ' ORDER BY(s.status) desc', function (err, rows, fields) {
         if (err) throw err;
 
@@ -83,6 +95,9 @@ router.get('/requests/:id',checkAdmin, function (req, res) { //get requests by t
     });
 });
 
+/**
+ * accept request for tour by id
+ */
 router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept requests by id
     db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 2}, function(err, result) {
         if (err) {
@@ -110,7 +125,10 @@ router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept re
     });
 });
 
-router.post('/requests/reject/:id',checkAdmin, function (req, res) { //reject requests by id
+/**
+ * reject request for tour by id
+ */
+router.post('/requests/reject/:id',checkAdmin, function (req, res) {
     db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 3}, function(err, result) {
         if (err) {
             res.send({
@@ -136,7 +154,10 @@ router.post('/requests/reject/:id',checkAdmin, function (req, res) { //reject re
     });
 });
 
-router.post('/requests/delete/:id',checkAdmin, function (req, res) { //delete requests by id
+/**
+ * delete requests from Db by id
+ */
+router.post('/requests/delete/:id',checkAdmin, function (req, res) {
     db.query('DELETE FROM requests WHERE id =' + req.params.id, function (err, rows) {
         if (err) {
             res.json({code: 500, error:"Nothing has been deleted!"});
@@ -146,7 +167,10 @@ router.post('/requests/delete/:id',checkAdmin, function (req, res) { //delete re
     });
 });
 
-router.get('/prev', function (req, res) { //get tours list
+/**
+ * get passed tours list
+ */
+router.get('/prev', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate <= NOW()', function (err, rows, fields) {
         if (err) throw err;
 
@@ -154,7 +178,10 @@ router.get('/prev', function (req, res) { //get tours list
     });
 });
 
-router.get('/next', function (req, res) { //get tours list
+/**
+ * get future tours list
+ */
+router.get('/next', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate > NOW()', function (err, rows, fields) {
         if (err) throw err;
 
@@ -162,7 +189,10 @@ router.get('/next', function (req, res) { //get tours list
     });
 });
 
-router.get('/active', function (req, res) { //get tours list
+/**
+ * get active tour
+ */
+router.get('/active', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate <= CURDATE() AND CURDATE() <= endDate', function (err, rows, fields) {
         if (err) throw err;
 
@@ -170,7 +200,10 @@ router.get('/active', function (req, res) { //get tours list
     });
 });
 
-router.get('/:id', function (req, res) { //get tour by id
+/**
+ * get tour information by id
+ */
+router.get('/:id', function (req, res) {
     db.query('SELECT *  FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
         var response = {};
 
@@ -184,12 +217,9 @@ router.get('/:id', function (req, res) { //get tour by id
         rows[0].schedule = JSON.parse(rows[0].schedule);
         rows[0].not_inclusive = JSON.parse(rows[0].not_inclusive);
         rows[0].inclusive = JSON.parse(rows[0].inclusive);
-        // rows[0].startDate = formatDate(rows[0].startDate, ".");
-        // rows[0].endDate = formatDate(rows[0].endDate, ".");
-
 
         response.data = imgPath.JSONPath(rows, 'img')[0];
-        //console.log(response.data);
+
         imgPath.concatPath(rows, 'cover', '/images/tours/');
 
         for(var part in response.data.img) {
@@ -200,13 +230,15 @@ router.get('/:id', function (req, res) { //get tour by id
             }
         }
 
-
         response.message = "Тур найден.";
         response.code = 200;
         res.send(response);
     });
 });
 
+/**
+ * update tour info by id
+ */
 router.post('/:id', checkAdmin, function (req, res) {
     var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
     form.parse(req, function(err, fields, files) {
@@ -226,18 +258,18 @@ router.post('/:id', checkAdmin, function (req, res) {
                 var dbImg = JSON.parse(rows[0].img);
                 var imgDeleteArr = [];
 
-                    for(var part in data.img) {
-                        for(var i = 0; i < data.img[part].length; i++){
-                            if(data.img[part][i] !== "") {
-                                data.img[part][i] =  path.basename(files[part].shift().path);
+                for (var part in data.img) {
+                    for (var i = 0; i < data.img[part].length; i++) {
+                        if (data.img[part][i] !== "") {
+                            data.img[part][i] = path.basename(files[part].shift().path);
 
-                                if(dbImg[part][i] !== "") {
-                                    imgDeleteArr.push(dbImg[part][i]);
-                                }
-                            } else if(dbImg[part][i] !== "") {
-                                data.img[part][i] = dbImg[part][i];
+                            if (dbImg[part][i] !== "") {
+                                imgDeleteArr.push(dbImg[part][i]);
                             }
+                        } else if (dbImg[part][i] !== "") {
+                            data.img[part][i] = dbImg[part][i];
                         }
+                    }
                 }
 
                 if(!data.cover) {
@@ -267,7 +299,10 @@ router.post('/:id', checkAdmin, function (req, res) {
     });
 });
 
-router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
+/**
+ * remove tour by id
+ */
+router.get('/remove/:id', checkAdmin, function (req, res) {
     db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
         var imgDeleteArr = [], img = {}, cover;
 
@@ -328,8 +363,10 @@ router.get('/remove/:id', checkAdmin, function (req, res) { //remove tour by id
 
 });
 
-
-router.post('/create/new', function (req, res) {//add new request
+/**
+ * add new request for tour
+ */
+router.post('/create/new', function (req, res) {
     var request = {};
     if (req.session.captcha == req.body.captha) {
         request.date = new Date();
@@ -339,9 +376,7 @@ router.post('/create/new', function (req, res) {//add new request
         request.status = 1;
         request.tour_id = req.body.tour_id;
 
-
         db.query('INSERT INTO requests SET ?', request, function (err, result) {
-
             console.log(err);
             res.send(request);
         });
@@ -350,15 +385,32 @@ router.post('/create/new', function (req, res) {//add new request
     }
 });
 
+/**
+ * format date from DB
+ * @param date
+ * @param joinSymb
+ * @returns {string}
+ */
 function formatDate (date, joinSymb) {
     return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join(joinSymb + "");
 }
 
+/**
+ * format date for saving ing DB
+ * @param date
+ * @param joinSymb
+ * @returns {string}
+ */
 function formatDateForDB (dateStr) {
     var dateArr = dateStr.split(".");
     return dateArr.reverse().join("-");
 }
 
+/**
+ * update tour by id
+ * @param data
+ * @param id
+ */
 function updateTour(data, id) {
     data.schedule = JSON.stringify(data.schedule);
     data.not_inclusive = JSON.stringify(data.not_inclusive);

@@ -2,6 +2,13 @@ const GALLERY_SOURCE = "/images/gallery/",
       TOURS_SOURCE = "/images/tours/";
 
 module.exports = {
+  /**
+   * Contact filename with path
+   * @param objArray
+   * @param field
+   * @param src
+   * @returns {*}
+     */
   concatPath: function(objArray, field, src)  {
     if (!field) {
       field = 'src';
@@ -22,6 +29,14 @@ module.exports = {
 
     return objArray;
   },
+
+  /**
+   * Contact json filenames with path
+   * @param obj
+   * @param field
+   * @returns {*}
+   * @constructor
+     */
   JSONPath: function (obj, field) {
     for (var i = 0, length = obj.length; i < length; i++) {
       var tpm = JSON.parse(obj[i][field]);

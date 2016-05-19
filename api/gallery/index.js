@@ -5,7 +5,6 @@ const express = require('express'),
     checkAdmin = require('../../middleware/checkAdmin'),
     del = require('del'),
     transliteration = require('transliteration.cyr'),
-    imgSrcDeletePath = "images/src/",
     imgBuildDeletePath = "images/build/gallery/",
     http = require('http'),
     util = require('util'),
@@ -13,14 +12,17 @@ const express = require('express'),
     path = require('path'),
     multiparty = require('multiparty');
 
-router.post('/upload', checkAdmin, function (req, res) {//upload photo
+/**
+ * upload photo category by id
+ */
+router.post('/upload', checkAdmin, function (req, res) {
     var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
+
     form.parse(req, function (err, fields, files) {
         db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
             if (err) throw err;
-            console.log(name);
+
             var international = name[0].international;
-            console.log(util.inspect(files));
 
             for (var i = 0, length = files.images.length; i < length; i++) {
                 var newName = path.basename(files.images[i].path);
@@ -47,7 +49,10 @@ router.post('/upload', checkAdmin, function (req, res) {//upload photo
     });
 });
 
-router.put('/photo/update/:id', checkAdmin, function (req, res) {//update title and desc in photo
+/**
+ * update title and description of photo by id
+ */
+router.put('/photo/update/:id', checkAdmin, function (req, res) {
     db.query('UPDATE photos AS p SET ? WHERE id =' + req.params.id, {title: req.body.title, desc: req.body.desc},
         function (err, result) {
             if (err) {
@@ -58,8 +63,10 @@ router.put('/photo/update/:id', checkAdmin, function (req, res) {//update title 
         });
 });
 
-
-router.get('/countries', function (req, res) {//countries list
+/**
+ * return categories list
+ */
+router.get('/countries', function (req, res) {
     db.query('SELECT * FROM countries', function (err, rows, fields) {
         if (err) throw err;
         for (var i = 0; i < rows.length; i++) {
@@ -72,8 +79,10 @@ router.get('/countries', function (req, res) {//countries list
     });
 });
 
-
-router.get('/cover/:countryId/:photoId', checkAdmin, function (req, res) {//change cover for country
+/**
+ * change cover for country by id
+ */
+router.get('/cover/:countryId/:photoId', checkAdmin, function (req, res) {
     db.query('SELECT src FROM photos WHERE id = ' + req.params.photoId, function (err, pic, fields) {
         if (err) throw err;
 
@@ -88,8 +97,10 @@ router.get('/cover/:countryId/:photoId', checkAdmin, function (req, res) {//chan
     });
 });
 
-
-router.post('/countries/add', checkAdmin, function (req, res) {//add new empty country
+/**
+ * add new empty category to DB
+ */
+router.post('/countries/add', checkAdmin, function (req, res) {
     var post = {
         name: req.body.country,
         international: req.body.international || transliteration.transliterate(req.body.country),
@@ -110,15 +121,21 @@ router.post('/countries/add', checkAdmin, function (req, res) {//add new empty c
     });
 });
 
-router.get('/best', function (req, res) {//best
+/**
+ * get all best photos
+ */
+router.get('/best', function (req, res) {
     db.query('SELECT id, src, title, p.desc FROM photos as p where is_best = true', function (err, rows, fields) {
         if (err) throw err;
 
         res.send(imgPath.concatPath(rows));
     });
 });
-//TODO: check admin
-router.get('/best/add/:id', checkAdmin, function (req, res) {//add to best
+
+/**
+ * add photo to best by id
+ */
+router.get('/best/add/:id', checkAdmin, function (req, res) {
     db.query('UPDATE photos SET is_best = 1 WHERE id = ? ', [req.params.id],
         function (err, result) {
             if (err) throw err;
@@ -126,7 +143,10 @@ router.get('/best/add/:id', checkAdmin, function (req, res) {//add to best
         });
 });
 
-router.get('/best/remove/:id', checkAdmin, function (req, res) {//remove from best
+/**
+ * remove photo from best by id
+ */
+router.get('/best/remove/:id', checkAdmin, function (req, res) {
     db.query('UPDATE photos SET is_best = 0 WHERE id = ?', [req.params.id],
         function (err, result) {
             if (err) throw err;
@@ -134,7 +154,10 @@ router.get('/best/remove/:id', checkAdmin, function (req, res) {//remove from be
         });
 });
 
-router.get('/all', function (req, res) { //all
+/**
+ * get all photos from DB
+ */
+router.get('/all', function (req, res) {
     db.query('SELECT id, src, title, p.desc FROM photos as p', function (err, rows, fields) {
         if (err) throw err;
 
@@ -142,8 +165,10 @@ router.get('/all', function (req, res) { //all
     });
 });
 
-router.get('/photo/remove/:id', checkAdmin, function (req, res) { //remove photo by id
-
+/**
+ * remove photo by id
+ */
+router.get('/photo/remove/:id', checkAdmin, function (req, res) {
     db.query('SELECT src FROM photos WHERE id = ' + req.params.id, function (err, src, fields) {
         if (err) throw err;
         db.query('DELETE FROM photos WHERE id ="' + req.params.id + '"', function (err, rows) {
@@ -158,24 +183,20 @@ router.get('/photo/remove/:id', checkAdmin, function (req, res) { //remove photo
                 }
             });
         });
-
-
-//    res.send('ok');
-//    db.query('DELETE FROM photos WHERE id ="' + req.params.id + '"', function (err, rows) {
-//      if (err) throw err;
-//
-//    });
     });
-
 });
 
-
-router.get('/country/:location', function (req, res) { //by country
+/**
+ * get photos dy country name
+ */
+router.get('/country/:location', function (req, res) {
     var country = {};
+
     db.query('SELECT p.id, src, title, p.desc, name, p.is_best FROM photos as p, countries as c WHERE c.international ="' + req.params.location + '" AND p.country_id = c.id', function (err, rows, fields) {
         if (err) throw err;
-//        res.send(imgPath.concatPath(rows));
+
         country.list = imgPath.concatPath(rows);
+
         db.query('SELECT cover, id, name FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
             if (err) throw err;
             country.id = rows[0].id;
@@ -188,11 +209,15 @@ router.get('/country/:location', function (req, res) { //by country
     });
 });
 
-//TODO: check admin
-router.get('/country/remove/:location', checkAdmin, function (req, res) { //by country
+/**
+ * remove category by category name
+ */
+router.get('/country/remove/:location', checkAdmin, function (req, res) {
     db.query('SELECT id FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows, fields) {
         var id, photos = [];
+
         if (err) throw err;
+
         if (rows) {
             id = rows[0].id;
             db.query('SELECT src FROM photos WHERE country_id = ' + id, function (err, rows, fields) {
@@ -219,8 +244,10 @@ router.get('/country/remove/:location', checkAdmin, function (req, res) { //by c
     });
 });
 
-router.get('/getGallery', function (req, res) { //get all galery(all+best+countries)
-
+/**
+ * get all, best, categories photo
+ */
+router.get('/getGallery', function (req, res) {
     var gallery = {};
 
     executeQuery('SELECT id, src, title, p.desc FROM photos as p')
@@ -238,6 +265,12 @@ router.get('/getGallery', function (req, res) { //get all galery(all+best+countr
         });
 });
 
+/**
+ * exexute sql query and concat path form img
+ * @param query
+ * @param path
+ * @returns {Promise}
+ */
 function executeQuery(query, path) {
     return new Promise(function (resolve, reject) {
         db.query(query, function (err, rows, fields) {
