@@ -12,7 +12,7 @@ var swal = require("sweetalert");
 var ToursEditCreateView = Backbone.View.extend({
     el: ".dashboard",
     initialize: function (options) {
-        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile", "validateTour");
+        _.bindAll(this, "renderHTML", "saveChanges", "cancelChanges","addInputListItem", "initElements", "initMap", "startDateChange", "endDateChange", /*"latChange", "lngChange",*/ "createMarker", "selectFile", "validateTour", "putChanges");
         this.router = options.router;
     },
     events: {
@@ -307,11 +307,14 @@ var ToursEditCreateView = Backbone.View.extend({
         };
     },
     putChanges: function (dataToSubmit) {
+        var that = this;
+
         $('#data-to-submit').val(dataToSubmit);
 
         $('#update-tour').ajaxSubmit({
             success: function (response) {
-                swal("Сохраненно", "Фототур успешно изменен.", "success")
+                swal("Сохраненно", "Фототур успешно изменен.", "success");
+                that.router.navigate("admin/tours", {trigger: true});
             },
             error: function (xhr, mes, err) {
                 console.log(mes);
@@ -324,7 +327,8 @@ var ToursEditCreateView = Backbone.View.extend({
 
         $('#create-tour').ajaxSubmit({
             success: function (response) {
-                swal("Добавлено", "Фототур успешно добавлен.", "success")
+                swal("Добавлено", "Фототур успешно добавлен.", "success");
+                that.router.navigate("admin/tours", {trigger: true});
             },
             error: function (xhr, mes, err) {
                 console.log(mes);

@@ -13,7 +13,7 @@ const express = require('express'),
     multiparty = require('multiparty');
 
 router.post('/upload', checkAdmin, function (req, res) {//upload photo
-    var form = new multiparty.Form({uploadDir: 'test'});
+    var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
     form.parse(req, function(err, fields, files) {
       db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
         if (err) throw err;

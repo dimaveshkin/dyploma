@@ -11,11 +11,6 @@ var GalleryPageView = Backbone.View.extend({
     this.router = options.router;
     _.bindAll(this, "render");
   },
-  events: {
-    //"click li .best-add": "addToBest",
-    //"click li .best-remove": "removeFromBest",
-    //"change #select-file": "showPhotos"
-  },
   render: function (countryId) {
     $('.active').removeClass('active');
     $('#categories').addClass('active');
@@ -62,7 +57,6 @@ var GalleryPageView = Backbone.View.extend({
           window.history.back();
         }
       });
-      //Very important line, it disable the page refresh.
       return false;
     });
   }

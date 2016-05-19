@@ -182,15 +182,17 @@ div.ui-datepicker {
     display: block;
   }
 
-  &:hover {
+  &:hover .plus   {
     color: #000;
     border-color: #000;
+    transform: none !important;
   }
 
   .plus {
     height: 0;
     padding-bottom: 60%;
     line-height: 168px;
+    font-family: Forum;
   }
 }
 
