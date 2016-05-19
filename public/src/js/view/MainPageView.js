@@ -12,6 +12,7 @@ var MainPageView = Backbone.View.extend({
     render: function (){
         $('.item-active').removeClass('item-active');
         $('#nav-main').addClass('item-active');
+        this.$el.removeClass('no-head-img');
         this.$el.addClass("grey-background-after");
 
         this.$el.html(this.template());

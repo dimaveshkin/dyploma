@@ -21,6 +21,7 @@ var AppView = Backbone.View.extend({
         _.bindAll(this, "navGallery", "navMain", "navAbout", "navTours");
     },
     render: function () {
+        this.$el.removeClass("grey-background-after no-head-img");
         this.$el.html(this.template());
 
         var footerView = new FooterView();

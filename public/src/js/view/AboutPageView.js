@@ -13,7 +13,7 @@ var AboutPageView = Backbone.View.extend({
     render: function () {
         $('.item-active').removeClass('item-active');
         $('#nav-about').addClass('item-active');
-        this.$el.removeClass("grey-background-after");
+        this.$el.removeClass("grey-background-after no-head-img");
         this.$el.html(this.template());
     },
     events: {

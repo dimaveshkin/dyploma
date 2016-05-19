@@ -17,6 +17,8 @@ var GalleryPageView = Backbone.View.extend({
         $('.item-active').removeClass('item-active');
         $('#nav-gallery').addClass('item-active');
 
+        this.$el.removeClass("grey-background-after no-head-img");
+
         this.$el.html(this.template());
         $.get("/api/gallery/getGallery", function (gallery) {
             $('.cities-gallery').html(countriesListTmp({countries: gallery.counties}));
