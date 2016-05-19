@@ -12,7 +12,12 @@ module.exports = {
     }
 
     for (var i = 0, length = objArray.length; i < length; i++) {
-      objArray[i][field] = src + objArray[i][field];
+      if(field == 'cover' && objArray[i][field] === "") {
+        objArray[i][field] = src + 'default.jpg';
+      } else {
+        objArray[i][field] = src + objArray[i][field];
+      }
+
     }
 
     return objArray;
