@@ -18,7 +18,7 @@ router.get('/', checkAdmin, function (req, res) {
  * get feedback by id
  */
 router.get('/:id', checkAdmin, function (req, res) {
-    db.query('SELECT * FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
+    db.query('SELECT * FROM feedbacks WHERE id = ?', [req.params.id] , function (err, rows, fields) {
         if (err) throw err;
 
         res.send(rows[0]);
@@ -29,7 +29,7 @@ router.get('/:id', checkAdmin, function (req, res) {
  * delete feedback by id
  */
 router.delete('/:id', checkAdmin, function (req, res) { //delete feedback by id
-    db.query('DELETE  FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
+    db.query('DELETE  FROM feedbacks WHERE id = ?', [req.params.id] , function (err, rows, fields) {
         if (err) throw err;
 
         res.send(true);
@@ -48,7 +48,7 @@ router.post('/add', function (req, res) {
         feedback.email = req.body.email;
         feedback.feedback = req.body.feedback;
 
-        db.query('INSERT INTO feedbacks SET ?',feedback, function (err, result) {
+        db.query('INSERT INTO feedbacks SET ?', [feedback], function (err, result) {
             if (err) throw err;
 
             res.send(req.body);
@@ -56,6 +56,7 @@ router.post('/add', function (req, res) {
     } else {
         res.send({error: 'Вы неверно ввели символы'});
     }
+
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ const express = require('express'),
 router.post('/change', checkAdmin, function (req, res) {
     compare(req.session.login, function (err, rows, fields) {
         if (rows && rows[0].password == cryptPassword(req.body.oldPassword)) {
-            db.query('UPDATE users SET ? WHERE id = ' + req.session.userId, [
+            db.query('UPDATE users SET ? WHERE id = ' + db.escape(req.session.userId), [
                     {password: cryptPassword(req.body.password)}
                 ],
                 function (err, result) {
@@ -28,10 +28,9 @@ router.post('/change', checkAdmin, function (req, res) {
  * add new admin user
  */
 router.post('/add', checkAdmin, function (req, res) {
-    db.query('INSERT INTO users SET ?', {
+    db.query('INSERT INTO users SET ?', [{
         login: req.body.login,
-        password: cryptPassword(req.body.password)
-    },
+        password: cryptPassword(req.body.password)}],
         function (err, result) {
             if (err) {
                 res.send({code: 500, message: err.message});
@@ -83,7 +82,7 @@ router.use('/logout', function (req, res, next) {//compare password
  * @param cb
  */
 function compare(login, cb) {
-    db.query('SELECT * FROM users WHERE users.login = "' + login + '"', cb);
+    db.query('SELECT * FROM users WHERE users.login = ?', [login], cb);
 }
 module.exports = router;
 

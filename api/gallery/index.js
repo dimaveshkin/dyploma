@@ -19,7 +19,7 @@ router.post('/upload', checkAdmin, function (req, res) {
     var form = new multiparty.Form({uploadDir: imgBuildDeletePath});
 
     form.parse(req, function (err, fields, files) {
-        db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
+        db.query('SELECT international FROM countries WHERE id = ?', [fields.id], function (err, name, field) {
             if (err) throw err;
 
             var international = name[0].international;
@@ -39,7 +39,7 @@ router.post('/upload', checkAdmin, function (req, res) {
                     desc: fields['desc[]'][i]
                 };
 
-                db.query('INSERT INTO photos SET ?', photo, function (err, result) {
+                db.query('INSERT INTO photos SET ?', [photo], function (err, result) {
                     if (err) throw err;
                 });
             }
@@ -53,7 +53,7 @@ router.post('/upload', checkAdmin, function (req, res) {
  * update title and description of photo by id
  */
 router.put('/photo/update/:id', checkAdmin, function (req, res) {
-    db.query('UPDATE photos AS p SET ? WHERE id =' + req.params.id, {title: req.body.title, desc: req.body.desc},
+    db.query('UPDATE photos AS p SET ? WHERE id =' + db.escape(req.params.id), [{title: req.body.title, desc: req.body.desc}],
         function (err, result) {
             if (err) {
                 res.json({code: 500, error: "Desc not changed"});
@@ -83,10 +83,10 @@ router.get('/countries', function (req, res) {
  * change cover for country by id
  */
 router.get('/cover/:countryId/:photoId', checkAdmin, function (req, res) {
-    db.query('SELECT src FROM photos WHERE id = ' + req.params.photoId, function (err, pic, fields) {
+    db.query('SELECT src FROM photos WHERE id = ?', [req.params.photoId], function (err, pic, fields) {
         if (err) throw err;
 
-        db.query('UPDATE countries SET cover = "' + pic[0].src + '" WHERE id = ?', [req.params.countryId],
+        db.query('UPDATE countries SET cover = ' + db.escape(pic[0].src) + ' WHERE id = ?', [req.params.countryId],
             function (err, result) {
                 if (err) {
                     res.json({code: 500, error: "Cover not changed"});
@@ -107,7 +107,7 @@ router.post('/countries/add', checkAdmin, function (req, res) {
         cover: ""
     };
 
-    db.query('INSERT INTO countries SET ?', post, function (err, result) {
+    db.query('INSERT INTO countries SET ?', [post], function (err, result) {
         if (err) {
             res.json({code: 500, error: "Category not added"});
             throw err;
@@ -169,9 +169,9 @@ router.get('/all', function (req, res) {
  * remove photo by id
  */
 router.get('/photo/remove/:id', checkAdmin, function (req, res) {
-    db.query('SELECT src FROM photos WHERE id = ' + req.params.id, function (err, src, fields) {
+    db.query('SELECT src FROM photos WHERE id = ?', [req.params.id], function (err, src, fields) {
         if (err) throw err;
-        db.query('DELETE FROM photos WHERE id ="' + req.params.id + '"', function (err, rows) {
+        db.query('DELETE FROM photos WHERE id = ?', [req.params.id], function (err, rows) {
             if (err) throw err;
             del(imgBuildDeletePath + src[0].src).then(function (paths) {
                 if (paths) {
@@ -192,12 +192,12 @@ router.get('/photo/remove/:id', checkAdmin, function (req, res) {
 router.get('/country/:location', function (req, res) {
     var country = {};
 
-    db.query('SELECT p.id, src, title, p.desc, name, p.is_best FROM photos as p, countries as c WHERE c.international ="' + req.params.location + '" AND p.country_id = c.id', function (err, rows, fields) {
+    db.query('SELECT p.id, src, title, p.desc, name, p.is_best FROM photos as p, countries as c WHERE c.international =' + db.escape(req.params.location) + ' AND p.country_id = c.id', function (err, rows, fields) {
         if (err) throw err;
 
         country.list = imgPath.concatPath(rows);
 
-        db.query('SELECT cover, id, name FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
+        db.query('SELECT cover, id, name FROM countries WHERE international =' +  db.escape(req.params.location), function (err, rows, fields) {
             if (err) throw err;
             country.id = rows[0].id;
             imgPath.concatPath(rows, 'cover');
@@ -213,19 +213,19 @@ router.get('/country/:location', function (req, res) {
  * remove category by category name
  */
 router.get('/country/remove/:location', checkAdmin, function (req, res) {
-    db.query('SELECT id FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows, fields) {
+    db.query('SELECT id FROM countries WHERE international =' +  db.escape(req.params.location), function (err, rows, fields) {
         var id, photos = [];
 
         if (err) throw err;
 
         if (rows) {
             id = rows[0].id;
-            db.query('SELECT src FROM photos WHERE country_id = ' + id, function (err, rows, fields) {
+            db.query('SELECT src FROM photos WHERE country_id = ' + db.escape(id), function (err, rows, fields) {
                 rows.forEach(function (row) {
                     photos.push(imgBuildDeletePath + row.src);
                 });
 
-                db.query('DELETE FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows) {
+                db.query('DELETE FROM countries WHERE international =' + db.escape(req.params.location), function (err, rows) {
                     if (err) throw err;
                     console.log(rows);
                     del(photos).then(function (paths) {
