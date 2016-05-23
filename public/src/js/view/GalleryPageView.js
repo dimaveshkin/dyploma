@@ -81,8 +81,6 @@ var GalleryPageView = Backbone.View.extend({
                     $(element).text('Скрыть');
                 }
             }
-
-
         });
     }
 });

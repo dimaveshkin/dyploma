@@ -99,7 +99,7 @@ var BestPhotosPageView = Backbone.View.extend({
   },
   removeFromBest: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
-    $.get("/api/gallery/best/remove/" + id, function () {
+    $.get("/api/gallery/best/remove/" + id, function (response) {
       if(response.code !== 500) {
         $(e.target).removeClass('icon-star best-remove').addClass('icon-star-empty best-add ').attr('title', 'Добавить в избранное');
       } else {

@@ -39,12 +39,16 @@ var ToursPageView = Backbone.View.extend({
         var that = this;
 
         $.get(url, function (tours) {
-            tours.forEach(function (tour) {
-                var tourView = new ToursItemView({$parentList: $el, router: that.router, tour: tour});
-                tourView.render();
+            if(tours.code !== 500) {
+                tours.forEach(function (tour) {
+                    var tourView = new ToursItemView({$parentList: $el, router: that.router, tour: tour});
+                    tourView.render();
 
-                tourArray.push(tourView);
-            });
+                    tourArray.push(tourView);
+                });
+            } else {
+                swal("Ошибка", response.error);
+            }
         });
     },
     togglePrevTours: function () {

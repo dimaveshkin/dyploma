@@ -16,7 +16,14 @@ const express = require('express'),
  */
 router.get('/', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t', function (err, rows, fields) {
-        if (err) throw err;
+        if (err) {
+            res.send({
+                message: "Error in getting tours",
+                code: 500
+            });
+
+            return
+        }
 
         var obj = imgPath.concatPath(rows, 'cover', TOURS_SOURCE);
         res.send(obj);
@@ -55,7 +62,7 @@ router.post('/', checkAdmin, function (req, res) {
         db.query('INSERT INTO tours SET ?', [data], function (err, rows, fields) {
             if (err) {
                 res.json({code: 500, message: "Не удалось сохранить фототур."});
-                throw err;
+                return;
             }
 
             res.json({code: 200, message: "Фототур сохранен."});
@@ -79,9 +86,14 @@ router.get('/requests',checkAdmin, function (req, res) {
         "INNER JOIN request_statuses as rs " +
         "ON r.status = rs.id " +
         "GROUP BY t.title", function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(rows);
+        if (err) {
+            res.send({
+                message: "Error in getting requests",
+                code: 500
+            });
+        } else {
+            res.send(rows);
+        }
     });
 });
 
@@ -90,9 +102,14 @@ router.get('/requests',checkAdmin, function (req, res) {
  */
 router.get('/requests/:id',checkAdmin, function (req, res) {
     db.query('SELECT r.id, r.name, r.email, r.application, r.date, s.status FROM requests AS r, request_statuses AS s WHERE s.id = r.status AND tour_id = ' + db.escape(req.params.id) + ' ORDER BY(s.status) desc', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(rows);
+        if (err) {
+            res.send({
+                message: "Error in getting tours",
+                code: 500
+            });
+        } else {
+            res.send(rows);
+        }
     });
 });
 
@@ -106,14 +123,23 @@ router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept re
                 error: "Can't accept request",
                 code: 500
             });
-            throw err;
+            return;
         }
-        res.send({
-            message: "Accepted",
-            code: 200
-        });
 
         db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id= ?', [req.params.id], function(err, rows, fields) {
+            if (err) {
+                res.send({
+                    error: "Can't accept request",
+                    code: 500
+                });
+                return;
+            }
+
+            res.send({
+                message: "Accepted",
+                code: 200
+            });
+
             var mailOptions = {
                 subject: 'Заявка на фототур ' + rows[0].title , // Subject line
                 html: 'Ваша заявка на фототур <b>'  +  rows[0].title + '</b> принята.',// html body
@@ -122,7 +148,6 @@ router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept re
 
             mail(mailOptions);
         });
-
     });
 });
 
@@ -136,14 +161,22 @@ router.post('/requests/reject/:id',checkAdmin, function (req, res) {
                 error: "Can't reject request",
                 code: 500
             });
-            throw err;
+            return;
         }
-        res.send({
-            message: "Rejected",
-            code: 200
-        });
-
         db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id=' + db.escape(req.params.id), function(err, rows, fields) {
+            if (err) {
+                res.send({
+                    error: "Can't reject request",
+                    code: 500
+                });
+                return;
+            }
+
+            res.send({
+                message: "Rejected",
+                code: 200
+            });
+
             var mailOptions = {
                 subject: 'Заявка на фототур ' + rows[0].title , // Subject line
                 html: 'Ваша заявка на фототур '  +  rows[0].title + ' <b>отклонена.</b>',// html body
@@ -162,9 +195,9 @@ router.post('/requests/delete/:id',checkAdmin, function (req, res) {
     db.query('DELETE FROM requests WHERE id =' + db.escape(req.params.id), function (err, rows) {
         if (err) {
             res.json({code: 500, error:"Nothing has been deleted!"});
-            throw err;
+        } else {
+            res.json({code: 200, message:"Success!"});
         }
-        res.json({code: 200, message:"Success!"});
     });
 });
 
@@ -173,9 +206,11 @@ router.post('/requests/delete/:id',checkAdmin, function (req, res) {
  */
 router.get('/prev', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate <= NOW()', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+        if (err) {
+            res.json({code: 500, error:"Error in getting tours"});
+        } else {
+            res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+        }
     });
 });
 
@@ -184,9 +219,11 @@ router.get('/prev', function (req, res) {
  */
 router.get('/next', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate > NOW()', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+        if (err) {
+            res.json({code: 500, error: "Error in getting tours"});
+        } else {
+            res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+        }
     });
 });
 
@@ -195,9 +232,11 @@ router.get('/next', function (req, res) {
  */
 router.get('/active', function (req, res) {
     db.query('SELECT id, title, t.desc, startDate, endDate, latitude, longitude, cover  FROM tours as t WHERE startDate <= CURDATE() AND CURDATE() <= endDate', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+        if (err) {
+            res.json({code: 500, error: "Error in getting tour"});
+        } else {
+            res.send(imgPath.concatPath(rows, 'cover', TOURS_SOURCE));
+        }
     });
 });
 
@@ -208,10 +247,8 @@ router.get('/:id', function (req, res) {
     db.query('SELECT *  FROM tours WHERE id= ?', [req.params.id], function (err, rows, fields) {
         var response = {};
 
-        if (err) {
-            response.code = 500;
-            response.message = "Ошибка при поиске фототура!";
-            res.send(response);
+        if (err || !rows.length) {
+            res.json({code: 500, error: "Error in getting tour"});
             return;
         }
 
@@ -231,8 +268,6 @@ router.get('/:id', function (req, res) {
             }
         }
 
-        response.message = "Тур найден.";
-        response.code = 200;
         res.send(response);
     });
 });
@@ -254,7 +289,10 @@ router.post('/:id', checkAdmin, function (req, res) {
         } else {
             data = JSON.parse(fields.data);
             db.query('SELECT * FROM tours WHERE id= ?', [req.params.id], function (err, rows, fields) {
-                if (err) throw err;
+                if (err) {
+                    res.json({code: 500, error: "Error in updating tour"});
+                    return;
+                }
 
                 var dbImg = JSON.parse(rows[0].img);
                 var imgDeleteArr = [];
@@ -312,6 +350,7 @@ router.get('/remove/:id', checkAdmin, function (req, res) {
                 message: "Can't find such tour!",
                 code: 500
             });
+            return
         }
 
         if(rows[0].img){
@@ -332,17 +371,13 @@ router.get('/remove/:id', checkAdmin, function (req, res) {
 
         imgDeleteArr.push(rows[0].cover);
 
-        res.send({
-            message: "Deleted!",
-            code: 200
-        });
-
         db.query('DELETE FROM tours WHERE id = ?', [req.params.id], function (err, rows, fields) {
             if (err) {
                 res.send({
                     message: "Can't delete tour!",
                     code: 500
                 });
+                return
             }
             imgDeleteArr = imgDeleteArr.map(function (imgName) {
                 if(imgName != '') {
@@ -378,8 +413,11 @@ router.post('/create/new', function (req, res) {
         request.tour_id = req.body.tour_id;
 
         db.query('INSERT INTO requests SET ?', [request], function (err, result) {
-            console.log(err);
-            res.send(request);
+            if (err) {
+                res.json({code: 500, message: "Error in getting tour"});
+            } else {
+                res.send(request);
+            }
         });
     } else {
         res.send({error: 'Вы неверно ввели символы'});

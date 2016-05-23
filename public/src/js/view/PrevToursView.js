@@ -35,6 +35,10 @@ var PrevToursView = Backbone.View.extend({
         }
     },
     loadFromAjax: function (tours) {
+        if(tours.code === 500) {
+            swal("Ошибка", tours.error);
+            return;
+        }
         this.tours = _.map(tours, function (tour) {
             var date = new Date(tour.startDate);
             tour.startYear = date.getFullYear();

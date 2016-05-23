@@ -22,7 +22,7 @@ var FeedbacksPageView = Backbone.View.extend({
     var self = this;
     self.$el.html(self.template());
     $.get('/api/feedback/', function (feedbacks) {
-      if(response.code === 200) {
+      if(feedbacks.code !== 500) {
         if (feedbacks.length) {
           self.feedbacks = feedbacks;
           for (var i = 0, length = feedbacks.length; i < length; i++) {
@@ -32,7 +32,7 @@ var FeedbacksPageView = Backbone.View.extend({
           self.$el.html(nofeedbacksTmp());
         }
       } else {
-        swal("Ошибка!", response.message);
+        swal("Ошибка!", feedbacks.message);
       }
     });
   },
@@ -43,7 +43,7 @@ var FeedbacksPageView = Backbone.View.extend({
       url: '/api/feedback/' + id,
       type: 'DELETE',
       success: function (result) {
-        if(response.code === 200) {
+        if(result.code === 200) {
           $(e.target).closest('tr').remove();
           self.feedbacks = _.reject(self.feedbacks, function (d) {
             return d.id == id;
@@ -53,7 +53,7 @@ var FeedbacksPageView = Backbone.View.extend({
             self.$el.html(nofeedbacksTmp());
           }
         } else {
-          swal("Ошибка!", response.message);
+          swal("Ошибка!", result.message);
         }
       }
     });

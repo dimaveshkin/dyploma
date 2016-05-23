@@ -41,6 +41,9 @@ router.post('/upload', checkAdmin, function (req, res) {
                         });
                         return;
                     }
+                    //TODO: WTF?????!
+                    console.log(i);
+                    console.log(fields);
                     var photo = {
                         src: international + "/" + newName,
                         country_id: fields.id,
@@ -129,16 +132,23 @@ router.post('/countries/add', checkAdmin, function (req, res) {
         cover: ""
     };
 
-    db.query('INSERT INTO countries SET ?', [post], function (err, result) {
-        if (err) {
-            res.json({code: 500, error: "Category not added"});
-        } else {
-            if (!fs.existsSync(imgBuildDeletePath + post.international)) {
-                fs.mkdirSync(imgBuildDeletePath + post.international);
-            }
-            res.send({id: result.insertId});
+    try {
+        if (!fs.existsSync(imgBuildDeletePath + post.international)) {
+            fs.mkdirSync(imgBuildDeletePath + post.international);
         }
-    });
+
+        db.query('INSERT INTO countries SET ?', [post], function (err, result) {
+            if (err) {
+                res.json({code: 500, error: "Category not added"});
+            } else {
+                res.send({id: result.insertId});
+            }
+        });
+    }
+    catch(e) {
+        res.json({code: 500, error: "Нельзя создать папку с таким именем"});
+    }
+
 });
 
 /**
@@ -236,7 +246,7 @@ router.get('/country/:location', function (req, res) {
         country.list = imgPath.concatPath(rows);
 
         db.query('SELECT cover, id, name FROM countries WHERE international =' +  db.escape(req.params.location), function (err, rows, fields) {
-            if (err) {
+            if (err || !rows.length) {
                 res.json({code: 500, error: "Can't get photo"});
                 return;
             }
@@ -262,7 +272,7 @@ router.get('/country/remove/:location', checkAdmin, function (req, res) {
             return;
         }
 
-        if (rows) {
+        if (rows.length) {
             id = rows[0].id;
             db.query('SELECT src FROM photos WHERE country_id = ' + db.escape(id), function (err, rows, fields) {
                 if (err) {

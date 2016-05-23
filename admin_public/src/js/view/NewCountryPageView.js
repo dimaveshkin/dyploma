@@ -35,12 +35,12 @@ var NewCountryPageView = Backbone.View.extend({
         return false;
       }
 
-      $('.spinner').removeClass('js-hide');
-
       $.post("/api/gallery/countries/add", $("#new-city").serialize(), function (response) {
         if (response.error) {
-          swal("Ошибка", response.error);
+          swal("Ошибка", response.error, "error");
         } else {
+          $('.spinner').removeClass('js-hide');
+
           if ($("#select-file").val() != '') {
             $('.country-id').val(response.id);
             $('#new-city').ajaxSubmit({

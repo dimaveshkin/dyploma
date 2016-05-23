@@ -4,6 +4,7 @@ var _ = require("underscore");
 var requestsPageTmp = require("./templates/RequestsPageTmp.hbs");
 var noRequestsPageTmp = require("./templates/NoRequestsTmp.hbs");
 var helpers = require("./templates/helpers/helpers");
+var swal = require("sweetalert");
 
 var RequestsPageView = Backbone.View.extend({
     el: ".dashboard",
@@ -22,11 +23,16 @@ var RequestsPageView = Backbone.View.extend({
         var that = this;
 
         $.get('/api/tours/requests', function (tours) {
-            if(tours.length)  {
-                that.$el.html(that.template({tours: tours}));
+            if(tours.code !== 500) {
+                if(tours.length)  {
+                    that.$el.html(that.template({tours: tours}));
+                } else {
+                    that.$el.html(noRequestsPageTmp());
+                }
             } else {
-                that.$el.html(noRequestsPageTmp());
+                swal("Ошибка", tours.message);
             }
+
         });
     },
     showRequest: function (e) {

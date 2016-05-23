@@ -107,7 +107,7 @@ var ToursEditCreateView = Backbone.View.extend({
 
             if(!that.isCreating) {
                 $.ajax(url).done(function (response) {
-                    if(response.code === 200) {
+                    if(response.code !== 500) {
                         that.tourData = response.data;
                         that.tourData.startDate = formatDateToString(new Date(that.tourData.startDate), ".");
                         that.tourData.endDate = formatDateToString(new Date(that.tourData.endDate), ".");
@@ -315,6 +315,7 @@ var ToursEditCreateView = Backbone.View.extend({
             error: function (xhr, mes, err) {
                 console.log(mes);
                 console.log(err);
+                swal("Ошибка", mes);
             }
         });
     },
@@ -331,6 +332,7 @@ var ToursEditCreateView = Backbone.View.extend({
             error: function (xhr, mes, err) {
                 console.log(mes);
                 console.log(err);
+                swal("Ошибка", mes);
             }
         });
     },

@@ -1,6 +1,7 @@
 var Backbone = require("backbone");
 Backbone.$ = window.$;
 var swal = require("sweetalert");
+var _ = require("underscore");
 var TourPageViewTmp = require("./templates/TourPageView.hbs");
 var helpers = require('./templates/helpers/helpers');
 var validator = require("./templates/helpers/validator");
@@ -9,8 +10,9 @@ var TourPageView = Backbone.View.extend({
     el: ".main",
     template: TourPageViewTmp,
     id: null,
-    initialize: function () {
-
+    initialize: function (options) {
+        this.router = options.router;
+        _.bindAll(this, "render");
     },
     render: function (id) {
         $('.item-active').removeClass('item-active');
@@ -20,9 +22,16 @@ var TourPageView = Backbone.View.extend({
         this.$el.addClass("grey-background-after");
 
         $.get("/api/tours/" + id, function (tour) {
-          that.$el.html(that.template(tour.data));
-            
-            if((tour.data.img.head.every(function(i) { return i === null; }))) {
+            if(tour.code === 500) {
+                that.router.navigate("/404", {trigger: true});
+                swal("Ошибка", tour.error);
+                return
+            }
+            that.$el.html(that.template(tour.data));
+
+            if ((tour.data.img.head.every(function (i) {
+                    return i === null;
+                }))) {
                 $('.grey-background-after').addClass('no-head-img');
             }
 

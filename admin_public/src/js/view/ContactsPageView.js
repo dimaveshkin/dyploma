@@ -35,7 +35,7 @@ var ContactsPageView = Backbone.View.extend({
       url: "/api/socials/",
       data: $('#contacts-frm').serialize(),
       success: function(response){
-        if(response.code === 200) {
+        if(response.code !== 200) {
           swal("Сохраненно", "Данные успешно сохраненны", "success");
         }
          else {

@@ -23,8 +23,12 @@ var TourRequestListView = Backbone.View.extend({
         var that = this;
 
         $.get('/api/tours/requests/' + id , function (requests) {
-            that.requests = requests;
-            that.$el.html(that.template({requests: requests}));
+            if(requests.code !== 500) {
+                that.requests = requests;
+                that.$el.html(that.template({requests: requests}));
+            } else {
+                swal("Ошибка", response.message);
+            }
         });
     },
     acceptRequest: function(e) {
