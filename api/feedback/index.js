@@ -23,7 +23,7 @@ router.get('/', checkAdmin, function (req, res) {
  * get feedback by id
  */
 router.get('/:id', checkAdmin, function (req, res) {
-    db.query('SELECT * FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
+    db.query('SELECT * FROM feedbacks WHERE id = ?', [req.params.id], function (err, rows, fields) {
         if (err)  {
             res.send({
                 message: "Error in getting feedback",
@@ -39,7 +39,7 @@ router.get('/:id', checkAdmin, function (req, res) {
  * delete feedback by id
  */
 router.delete('/:id', checkAdmin, function (req, res) { //delete feedback by id
-    db.query('DELETE  FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
+    db.query('DELETE  FROM feedbacks WHERE id = ?', [req.params.id], function (err, rows, fields) {
         if (err) {
             res.send({
                 message: "Error in delete feedback operation",
@@ -66,7 +66,7 @@ router.post('/add', function (req, res) {
         feedback.email = req.body.email;
         feedback.feedback = req.body.feedback;
 
-        db.query('INSERT INTO feedbacks SET ?',feedback, function (err, result) {
+        db.query('INSERT INTO feedbacks SET ?', [feedback], function (err, result) {
             if (err){
                 res.send({
                     message: "Error in adding new feedback",

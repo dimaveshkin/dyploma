@@ -51,7 +51,8 @@ router.post('/', checkAdmin, function (req, res) {
         data.startDate = formatDateForDB(data.startDate);
         data.endDate = formatDateForDB(data.endDate);
 
-        db.query('INSERT INTO tours SET ?', data, function (err, rows, fields) {
+
+        db.query('INSERT INTO tours SET ?', [data], function (err, rows, fields) {
             if (err) {
                 res.json({code: 500, message: "Не удалось сохранить фототур."});
                 throw err;
@@ -99,7 +100,7 @@ router.get('/requests/:id',checkAdmin, function (req, res) {
  * accept request for tour by id
  */
 router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept requests by id
-    db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 2}, function(err, result) {
+    db.query('UPDATE requests SET ? WHERE id =' + db.escape(req.params.id), [{status: 2}], function(err, result) {
         if (err) {
             res.send({
                 error: "Can't accept request",
@@ -112,7 +113,7 @@ router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept re
             code: 200
         });
 
-        db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id=' + req.params.id, function(err, rows, fields) {
+        db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id= ?', [req.params.id], function(err, rows, fields) {
             var mailOptions = {
                 subject: 'Заявка на фототур ' + rows[0].title , // Subject line
                 html: 'Ваша заявка на фототур <b>'  +  rows[0].title + '</b> принята.',// html body
@@ -129,7 +130,7 @@ router.post('/requests/accept/:id',checkAdmin, function (req, res) { //accept re
  * reject request for tour by id
  */
 router.post('/requests/reject/:id',checkAdmin, function (req, res) {
-    db.query('UPDATE requests SET ? WHERE id =' + req.params.id, {status: 3}, function(err, result) {
+    db.query('UPDATE requests SET ? WHERE id =' + db.escape(req.params.id), [{status: 3}], function(err, result) {
         if (err) {
             res.send({
                 error: "Can't reject request",
@@ -142,7 +143,7 @@ router.post('/requests/reject/:id',checkAdmin, function (req, res) {
             code: 200
         });
 
-        db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id=' + req.params.id, function(err, rows, fields) {
+        db.query('SELECT * FROM tours AS t, requests AS r WHERE  t.id = r.tour_id AND r.id=' + db.escape(req.params.id), function(err, rows, fields) {
             var mailOptions = {
                 subject: 'Заявка на фототур ' + rows[0].title , // Subject line
                 html: 'Ваша заявка на фототур '  +  rows[0].title + ' <b>отклонена.</b>',// html body
@@ -158,7 +159,7 @@ router.post('/requests/reject/:id',checkAdmin, function (req, res) {
  * delete requests from Db by id
  */
 router.post('/requests/delete/:id',checkAdmin, function (req, res) {
-    db.query('DELETE FROM requests WHERE id =' + req.params.id, function (err, rows) {
+    db.query('DELETE FROM requests WHERE id =' + db.escape(req.params.id), function (err, rows) {
         if (err) {
             res.json({code: 500, error:"Nothing has been deleted!"});
             throw err;
@@ -204,7 +205,7 @@ router.get('/active', function (req, res) {
  * get tour information by id
  */
 router.get('/:id', function (req, res) {
-    db.query('SELECT *  FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
+    db.query('SELECT *  FROM tours WHERE id= ?', [req.params.id], function (err, rows, fields) {
         var response = {};
 
         if (err) {
@@ -252,7 +253,7 @@ router.post('/:id', checkAdmin, function (req, res) {
             res.send(updateTour(data, req.params.id));
         } else {
             data = JSON.parse(fields.data);
-            db.query('SELECT * FROM tours WHERE id=' + req.params.id, function (err, rows, fields) {
+            db.query('SELECT * FROM tours WHERE id= ?', [req.params.id], function (err, rows, fields) {
                 if (err) throw err;
 
                 var dbImg = JSON.parse(rows[0].img);
@@ -303,7 +304,7 @@ router.post('/:id', checkAdmin, function (req, res) {
  * remove tour by id
  */
 router.get('/remove/:id', checkAdmin, function (req, res) {
-    db.query('SELECT img, cover FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
+    db.query('SELECT img, cover FROM tours WHERE id = ?', [req.params.id], function (err, rows, fields) {
         var imgDeleteArr = [], img = {}, cover;
 
         if (err) {
@@ -336,7 +337,7 @@ router.get('/remove/:id', checkAdmin, function (req, res) {
             code: 200
         });
 
-        db.query('DELETE FROM tours WHERE id = ' + req.params.id, function (err, rows, fields) {
+        db.query('DELETE FROM tours WHERE id = ?', [req.params.id], function (err, rows, fields) {
             if (err) {
                 res.send({
                     message: "Can't delete tour!",
@@ -376,7 +377,7 @@ router.post('/create/new', function (req, res) {
         request.status = 1;
         request.tour_id = req.body.tour_id;
 
-        db.query('INSERT INTO requests SET ?', request, function (err, result) {
+        db.query('INSERT INTO requests SET ?', [request], function (err, result) {
             console.log(err);
             res.send(request);
         });
@@ -418,7 +419,7 @@ function updateTour(data, id) {
     data.startDate = formatDateForDB(data.startDate);
     data.endDate = formatDateForDB(data.endDate);
 
-    db.query('UPDATE tours AS t SET ? WHERE id = ' + id, data, function (err, result) {
+    db.query('UPDATE tours AS t SET ? WHERE id = ' + db.escape(id), [data], function (err, result) {
         if (err) {
             return {code: 500, message:"Tour was not changed"};
         }
