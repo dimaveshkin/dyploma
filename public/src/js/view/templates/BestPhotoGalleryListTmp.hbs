@@ -3,7 +3,7 @@
         <a href="{{src}}" rel="best-gallery" class="fancybox" rel="all-gallery link-block" title="{{#if title}}<b>{{title}}</b><br/>{{/if}}{{#if desc}}{{desc}}<br/>{{/if}}" onmouseover="this.setAttribute('org_title', this.title); this.title='';" onclick="this.title = this.getAttribute('org_title');" onmouseout="this.title = this.getAttribute('org_title');">
             <div class="gallery-img slider-img" style="background-image: url({{src}})"></div>
             {{#if desc}}
-                <p class="img-caption"><span class="caption-text">{{desc}}</span></p>
+                <!--<p class="img-caption"><span class="caption-text">{{desc}}</span></p>-->
             {{/if}}
         </a>
     </li>
