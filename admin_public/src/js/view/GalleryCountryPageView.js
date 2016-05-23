@@ -26,6 +26,10 @@ var GalleryPageView = Backbone.View.extend({
     var that = this;
 
     $.get("/api/gallery/country/" + countryName, function (photos) {
+      if(photos.code == 500) {
+        swal("Ошибка", photos.error);
+        return;
+      }
       that.$el.html(that.template({photos: photos.list, countryName: photos.name, id: photos.id, catCover: photos.cover}));
       that.countryId = photos.id;
       $(".fancybox").fancybox({
@@ -85,14 +89,22 @@ var GalleryPageView = Backbone.View.extend({
   },
   addToBest: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
-    $.get("/api/gallery/best/add/" + id, function () {
-      $(e.target).removeClass('icon-star-empty best-add').addClass('icon-star best-remove').attr('title', 'Удалить из избранного');
+    $.get("/api/gallery/best/add/" + id, function (response) {
+      if(response.code === 200) {
+        $(e.target).removeClass('icon-star-empty best-add').addClass('icon-star best-remove').attr('title', 'Удалить из избранного');
+      } else {
+        swal("Ошибка", response.message);
+      }
     });
   },
   removeFromBest: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
-    $.get("/api/gallery/best/remove/" + id, function () {
-      $(e.target).removeClass('icon-star best-remove').addClass('icon-star-empty best-add ').attr('title', 'Добавить в избранное');
+    $.get("/api/gallery/best/remove/" + id, function (response) {
+      if(response.code === 200) {
+        $(e.target).removeClass('icon-star best-remove').addClass('icon-star-empty best-add ').attr('title', 'Добавить в избранное');
+      } else {
+          swal("Ошибка", response.message);
+      }
     });
   },
   removePhoto: function (e) {
@@ -139,7 +151,7 @@ var GalleryPageView = Backbone.View.extend({
 
       $.get("/api/gallery/cover/" + countryId + "/" + id, function (response) {
         if (response.error) {
-          swal(response.error);
+          swal("Ошибка!", response.error);
         } else {
           $('.is-cover').removeClass('is-cover').addClass('do-cover').attr('title', 'Сделать обложкой альбома');
 

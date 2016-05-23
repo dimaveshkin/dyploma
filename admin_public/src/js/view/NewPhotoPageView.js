@@ -39,8 +39,13 @@ var GalleryPageView = Backbone.View.extend({
       $('.upload span').text('Загрузка');
       $(this).ajaxSubmit({
         success: function (response) {
-          swal("Загрузка завершена", "Фотографии успешно добавлены в альбом", "success");
-          window.history.back();
+          if(response.code !== 500) {
+            swal("Загрузка завершена", "Фотографии успешно добавлены в альбом", "success");
+            window.history.back();
+          } else {
+            swal("Ошибка!", response.message);
+          }
+
         }
       });
       return false;

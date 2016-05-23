@@ -45,8 +45,12 @@ var NewCountryPageView = Backbone.View.extend({
             $('.country-id').val(response.id);
             $('#new-city').ajaxSubmit({
               success: function (response) {
-                swal("Категория добавлена", "Категория успешно добавлена", "success");
-                that.router.navigate("admin/", {trigger: true});
+                if(response.code !== 500) {
+                  swal("Категория добавлена", "Категория успешно добавлена", "success");
+                  that.router.navigate("admin/", {trigger: true});
+                } else {
+                  swal("Ошибка!", response.message);
+                }
               }
             });
           } else {

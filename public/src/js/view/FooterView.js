@@ -14,7 +14,11 @@ var FooterView = Backbone.View.extend({
         var self = this;
 
         $.get('/api/socials', function (socials) {
-            self.$el.html(self.template(socials[0]));
+            if(socials.code !== 500) {
+                self.$el.html(self.template(socials[0]));
+            } else {
+                swal("Ошибка", socials.message);
+            }
         });
 
     }

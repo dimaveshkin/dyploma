@@ -8,9 +8,14 @@ const express = require('express'),
  */
 router.get('/', checkAdmin, function (req, res) {
     db.query('SELECT * FROM feedbacks ORDER BY date desc', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(rows);
+        if (err) {
+            res.send({
+                message: "Error in getting feedbacks",
+                code: 500
+            });
+        } else {
+            res.send(rows);
+        }
     });
 });
 
@@ -19,9 +24,14 @@ router.get('/', checkAdmin, function (req, res) {
  */
 router.get('/:id', checkAdmin, function (req, res) {
     db.query('SELECT * FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(rows[0]);
+        if (err)  {
+            res.send({
+                message: "Error in getting feedback",
+                code: 500
+            });
+        } else {
+            res.send(rows[0]);
+        }
     });
 });
 
@@ -30,9 +40,17 @@ router.get('/:id', checkAdmin, function (req, res) {
  */
 router.delete('/:id', checkAdmin, function (req, res) { //delete feedback by id
     db.query('DELETE  FROM feedbacks WHERE id = ' + req.params.id , function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(true);
+        if (err) {
+            res.send({
+                message: "Error in delete feedback operation",
+                code: 500
+            });
+        } else {
+            res.send({
+                message: "Deleted!",
+                code: 200
+            });
+        }
     });
 });
 
@@ -49,12 +67,21 @@ router.post('/add', function (req, res) {
         feedback.feedback = req.body.feedback;
 
         db.query('INSERT INTO feedbacks SET ?',feedback, function (err, result) {
-            if (err) throw err;
+            if (err){
+                res.send({
+                    message: "Error in adding new feedback",
+                    code: 500
+                });
+            } else {
+                res.send({
+                    message: req.body,
+                    code: 200
+                });
+            }
 
-            res.send(req.body);
         });
     } else {
-        res.send({error: 'Вы неверно ввели символы'});
+        res.send({ code: 200, error: 'Вы неверно ввели символы'});
     }
 });
 

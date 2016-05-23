@@ -17,7 +17,12 @@ var GalleryPageView = Backbone.View.extend({
     var that = this;
 
     $.get("/api/gallery/countries", function (countries) {
-      that.$el.html(that.template({countries: countries}));
+      if(countries.code === 500) {
+        swal("Ошибка!", countries.error);
+        return;
+      } else {
+        that.$el.html(that.template({countries: countries}));
+      }
 
       $('.country-gallery-link').on('click', function (e) {
         e.preventDefault();

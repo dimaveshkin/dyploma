@@ -1,6 +1,6 @@
 var Backbone = require("backbone");
 Backbone.$ = window.$;
-
+var swal = require("sweetalert");
 var countryGalleryPageTmp = require("./templates/CountryGalleryPageTmp.hbs");
 
 var CountryGalleryPageView = Backbone.View.extend({
@@ -17,6 +17,10 @@ var CountryGalleryPageView = Backbone.View.extend({
         this.$el.removeClass("grey-background-after no-head-img");
 
         $.get("/api/gallery/country/" + countryName, function (photos) {
+            if(photos.code == 500) {
+                swal("Ошибка", photos.error);
+                return;
+            }
             that.$el.html(that.template({photos: photos.list, countryName: photos.list[0].name}));
 
             $(".fancybox").fancybox({

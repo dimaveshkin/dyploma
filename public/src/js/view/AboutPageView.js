@@ -40,16 +40,20 @@ var AboutPageView = Backbone.View.extend({
 
         if(!isError) {
             $.post("api/feedback/add", $('#feedback-form').serialize())
-                .done(function (data) {
-                    if (!data.error) {
-                        $('#feedback-form')[0].reset();
-                        swal("Спасибо", "Спасибо за Ваше сообщение", "success");
-                        $('.captcha').removeClass('error');
-                        name.removeClass('js-valid');
-                        text.removeClass('js-valid');
-                        email.removeClass('js-valid');
+                .done(function (response) {
+                    if(response.code === 200) {
+                        if(!response.error) {
+                            $('#feedback-form')[0].reset();
+                            swal("Спасибо", "Спасибо за Ваше сообщение", "success");
+                            $('.captcha').removeClass('error');
+                            name.removeClass('js-valid');
+                            text.removeClass('js-valid');
+                            email.removeClass('js-valid');
+                        } else {
+                            $('.captcha').addClass('error');
+                        }
                     } else {
-                        $('.captcha').addClass('error');
+                        swal("Ошибка!", response.message);
                     }
                     $(".captcha-img").attr("src", "/captcha.png?" + (new Date()).getTime());
                 });

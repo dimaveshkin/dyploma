@@ -8,9 +8,14 @@ const express = require('express'),
  */
 router.get('/', function (req, res) {
     db.query('SELECT * FROM contacts', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(rows);
+        if (err) {
+            res.send({
+                message: "Error in getting socials",
+                code: 500
+            });
+        } else {
+            res.send(rows);
+        }
     });
 });
 
@@ -20,9 +25,14 @@ router.get('/', function (req, res) {
 router.put('/', checkAdmin, function (req, res) {
   db.query('UPDATE contacts SET ?',[req.body],
       function(err, result) {
-        if (err) throw err;
-
-        res.send(req.body);
+        if (err) {
+            res.send({
+                message: "Error in updating socials",
+                code: 500
+            });
+        } else {
+            res.send(req.body);
+        }
       });
 });
 

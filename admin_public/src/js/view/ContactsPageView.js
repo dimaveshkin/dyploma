@@ -17,7 +17,11 @@ var ContactsPageView = Backbone.View.extend({
     var self = this;
 
     $.get('/api/socials', function (socials) {
-      self.$el.html(self.template(socials[0]));
+      if(socials.code === 500) {
+        swal("Ошибка!", socials.message);
+      } else {
+        self.$el.html(self.template(socials[0]));
+      }
     });
   },
   events: {
@@ -30,12 +34,12 @@ var ContactsPageView = Backbone.View.extend({
       type: "PUT",
       url: "/api/socials/",
       data: $('#contacts-frm').serialize(),
-      success: function(data){
-        if (!data.error) {
+      success: function(response){
+        if(response.code === 200) {
           swal("Сохраненно", "Данные успешно сохраненны", "success");
         }
          else {
-          swal("Ошибка", data.error, "error");
+          swal("Ошибка", response.message);
         }
       }
     });

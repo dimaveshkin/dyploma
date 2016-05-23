@@ -24,7 +24,14 @@ var BestPhotosPageView = Backbone.View.extend({
     var that = this;
 
     $.get("/api/gallery/best", function (photos) {
-      that.$el.html(that.template({photos: photos}));
+      if(photos.code !== 500) {
+        that.$el.html(that.template({photos: photos}));
+      } else {
+        swal("Ошибка!", photos.error);
+        return;
+      }
+
+
       $(".fancybox").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -82,14 +89,22 @@ var BestPhotosPageView = Backbone.View.extend({
   },
   addToBest: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
-    $.get("/api/gallery/best/add/" + id, function () {
-      $(e.target).removeClass('icon-star-empty best-add').addClass('icon-star best-remove').attr('title', 'Удалить из избранного');
+    $.get("/api/gallery/best/add/" + id, function (response) {
+      if(response.code !== 500) {
+        $(e.target).removeClass('icon-star-empty best-add').addClass('icon-star best-remove').attr('title', 'Удалить из избранного');
+      } else {
+        swal("Ошибка", response.message);
+      }
     });
   },
   removeFromBest: function (e) {
     var id = $(e.target).closest('li').attr("data-photo-id");
     $.get("/api/gallery/best/remove/" + id, function () {
-      $(e.target).removeClass('icon-star best-remove').addClass('icon-star-empty best-add ').attr('title', 'Добавить в избранное');
+      if(response.code !== 500) {
+        $(e.target).removeClass('icon-star best-remove').addClass('icon-star-empty best-add ').attr('title', 'Добавить в избранное');
+      } else {
+        swal("Ошибка", response.message);
+      }
     });
   },
   removePhoto: function (e) {

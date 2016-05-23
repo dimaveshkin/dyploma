@@ -20,7 +20,13 @@ router.post('/upload', checkAdmin, function (req, res) {
 
     form.parse(req, function (err, fields, files) {
         db.query('SELECT international FROM countries WHERE id = ' + fields.id, function (err, name, field) {
-            if (err) throw err;
+            if (err) {
+                res.send({
+                    message: "Error in uploading photos",
+                    code: 500
+                });
+                return;
+            }
 
             var international = name[0].international;
 
@@ -28,24 +34,34 @@ router.post('/upload', checkAdmin, function (req, res) {
                 var newName = path.basename(files.images[i].path);
 
                 fs.rename(files.images[i].path, imgBuildDeletePath + international + "/" + newName, function (err) {
-                    if (err) console.log('ERROR: ' + err);
-                });
+                    if (err) {
+                        res.send({
+                            message: "Error in uploading photos",
+                            code: 500
+                        });
+                        return;
+                    }
+                    var photo = {
+                        src: international + "/" + newName,
+                        country_id: fields.id,
+                        is_best: 0,
+                        title: fields['title[]'][i],
+                        desc: fields['desc[]'][i]
+                    };
 
-                var photo = {
-                    src: international + "/" + newName,
-                    country_id: fields.id,
-                    is_best: 0,
-                    title: fields['title[]'][i],
-                    desc: fields['desc[]'][i]
-                };
-
-                db.query('INSERT INTO photos SET ?', photo, function (err, result) {
-                    if (err) throw err;
+                    db.query('INSERT INTO photos SET ?', photo, function (err, result) {
+                        if (err) {
+                            res.send({
+                                message: "Error in uploading photos",
+                                code: 500
+                            });
+                        } else {
+                            res.send(util.inspect({fields: fields, files: files}));
+                        }
+                    });
                 });
             }
         });
-
-        res.send(util.inspect({fields: fields, files: files}));
     });
 });
 
@@ -57,9 +73,9 @@ router.put('/photo/update/:id', checkAdmin, function (req, res) {
         function (err, result) {
             if (err) {
                 res.json({code: 500, error: "Desc not changed"});
-                throw err;
+            } else {
+                res.json({code: 200, message: "Success!"})
             }
-            res.json({code: 200, message: "Success!"})
         });
 });
 
@@ -68,14 +84,16 @@ router.put('/photo/update/:id', checkAdmin, function (req, res) {
  */
 router.get('/countries', function (req, res) {
     db.query('SELECT * FROM countries', function (err, rows, fields) {
-        if (err) throw err;
-        for (var i = 0; i < rows.length; i++) {
-            if (rows[i].cover === '') {
-                rows[i].cover = 'default.jpg';
+        if (err)  {
+            res.json({code: 500, error: "Can't get countries list"});
+        } else {
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].cover === '') {
+                    rows[i].cover = 'default.jpg';
+                }
             }
+            res.send(imgPath.concatPath(rows, 'cover'));
         }
-
-        res.send(imgPath.concatPath(rows, 'cover'));
     });
 });
 
@@ -84,15 +102,19 @@ router.get('/countries', function (req, res) {
  */
 router.get('/cover/:countryId/:photoId', checkAdmin, function (req, res) {
     db.query('SELECT src FROM photos WHERE id = ' + req.params.photoId, function (err, pic, fields) {
-        if (err) throw err;
+        if (err) {
+            res.json({code: 500, error: "Cover not changed"});
+            return;
+        }
 
         db.query('UPDATE countries SET cover = "' + pic[0].src + '" WHERE id = ?', [req.params.countryId],
             function (err, result) {
                 if (err) {
                     res.json({code: 500, error: "Cover not changed"});
-                    throw err;
+                } else {
+                    res.json({code: 200, message: "Success!"})
                 }
-                res.json({code: 200, message: "Success!"})
+
             });
     });
 });
@@ -110,14 +132,12 @@ router.post('/countries/add', checkAdmin, function (req, res) {
     db.query('INSERT INTO countries SET ?', post, function (err, result) {
         if (err) {
             res.json({code: 500, error: "Category not added"});
-            throw err;
+        } else {
+            if (!fs.existsSync(imgBuildDeletePath + post.international)) {
+                fs.mkdirSync(imgBuildDeletePath + post.international);
+            }
+            res.send({id: result.insertId});
         }
-
-        if (!fs.existsSync(imgBuildDeletePath + post.international)) {
-            fs.mkdirSync(imgBuildDeletePath + post.international);
-        }
-
-        res.send({id: result.insertId});
     });
 });
 
@@ -126,9 +146,11 @@ router.post('/countries/add', checkAdmin, function (req, res) {
  */
 router.get('/best', function (req, res) {
     db.query('SELECT id, src, title, p.desc FROM photos as p where is_best = true', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(imgPath.concatPath(rows));
+        if (err) {
+            res.json({code: 500, error: "Can't get best photos"});
+        } else {
+            res.send(imgPath.concatPath(rows));
+        }
     });
 });
 
@@ -138,8 +160,11 @@ router.get('/best', function (req, res) {
 router.get('/best/add/:id', checkAdmin, function (req, res) {
     db.query('UPDATE photos SET is_best = 1 WHERE id = ? ', [req.params.id],
         function (err, result) {
-            if (err) throw err;
-            res.send(true);
+            if (err) {
+                res.json({code: 500, message: "Photo not updated"});
+            } else {
+                res.json({code: 200, message: "Success!"})
+            }
         });
 });
 
@@ -149,8 +174,11 @@ router.get('/best/add/:id', checkAdmin, function (req, res) {
 router.get('/best/remove/:id', checkAdmin, function (req, res) {
     db.query('UPDATE photos SET is_best = 0 WHERE id = ?', [req.params.id],
         function (err, result) {
-            if (err) throw err;
-            res.send(true);
+            if (err) {
+                res.json({code: 500, message: "Photo not updated"});
+            } else {
+                res.json({code: 200, message: "Success!"})
+            }
         });
 });
 
@@ -159,9 +187,11 @@ router.get('/best/remove/:id', checkAdmin, function (req, res) {
  */
 router.get('/all', function (req, res) {
     db.query('SELECT id, src, title, p.desc FROM photos as p', function (err, rows, fields) {
-        if (err) throw err;
-
-        res.send(imgPath.concatPath(rows));
+        if (err) {
+            res.json({code: 500, message: "Can't get all photos"});
+        } else {
+            res.send(imgPath.concatPath(rows));
+        }
     });
 });
 
@@ -170,13 +200,18 @@ router.get('/all', function (req, res) {
  */
 router.get('/photo/remove/:id', checkAdmin, function (req, res) {
     db.query('SELECT src FROM photos WHERE id = ' + req.params.id, function (err, src, fields) {
-        if (err) throw err;
+        if (err) {
+            res.json({code: 500, error: "Can't remove photo"});
+            return;
+        }
         db.query('DELETE FROM photos WHERE id ="' + req.params.id + '"', function (err, rows) {
-            if (err) throw err;
+            if (err) {
+                res.json({code: 500, error: "Can't remove photo"});
+                return;
+            }
             del(imgBuildDeletePath + src[0].src).then(function (paths) {
                 if (paths) {
                     console.log("Deleted:\n" + paths.join("\n"));
-
                     res.json({code: 200, message: "Success!"})
                 } else {
                     res.json({code: 500, error: "Nothing has been deleted!"})
@@ -193,12 +228,18 @@ router.get('/country/:location', function (req, res) {
     var country = {};
 
     db.query('SELECT p.id, src, title, p.desc, name, p.is_best FROM photos as p, countries as c WHERE c.international ="' + req.params.location + '" AND p.country_id = c.id', function (err, rows, fields) {
-        if (err) throw err;
+        if (err) {
+            res.json({code: 500, error: "Can't get photo"});
+            return;
+        }
 
         country.list = imgPath.concatPath(rows);
 
         db.query('SELECT cover, id, name FROM countries WHERE international ="' + req.params.location + '"', function (err, rows, fields) {
-            if (err) throw err;
+            if (err) {
+                res.json({code: 500, error: "Can't get photo"});
+                return;
+            }
             country.id = rows[0].id;
             imgPath.concatPath(rows, 'cover');
             country.cover = rows[0].cover;
@@ -216,18 +257,27 @@ router.get('/country/remove/:location', checkAdmin, function (req, res) {
     db.query('SELECT id FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows, fields) {
         var id, photos = [];
 
-        if (err) throw err;
+        if (err) {
+            res.json({code: 500, message: "Can't remove category photo"});
+            return;
+        }
 
         if (rows) {
             id = rows[0].id;
             db.query('SELECT src FROM photos WHERE country_id = ' + id, function (err, rows, fields) {
+                if (err) {
+                    res.json({code: 500, message: "Can't remove category photo"});
+                    return;
+                }
                 rows.forEach(function (row) {
                     photos.push(imgBuildDeletePath + row.src);
                 });
 
                 db.query('DELETE FROM countries WHERE international = \'' + req.params.location + '\'', function (err, rows) {
-                    if (err) throw err;
-                    console.log(rows);
+                    if (err) {
+                        res.json({code: 500, message: "Can't remove category photo"});
+                        return;
+                    }
                     del(photos).then(function (paths) {
                         if (paths) {
                             console.log("Deleted:\n" + paths.join("\n"));
