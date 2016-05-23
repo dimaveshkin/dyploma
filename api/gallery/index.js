@@ -39,11 +39,9 @@ router.post('/upload', checkAdmin, function (req, res) {
                             message: "Error in uploading photos",
                             code: 500
                         });
-                        return;
+
                     }
-                    //TODO: WTF?????!
-                    console.log(i);
-                    console.log(fields);
+                });
                     var photo = {
                         src: international + "/" + newName,
                         country_id: fields.id,
@@ -62,7 +60,7 @@ router.post('/upload', checkAdmin, function (req, res) {
                             res.send(util.inspect({fields: fields, files: files}));
                         }
                     });
-                });
+
             }
         });
     });
